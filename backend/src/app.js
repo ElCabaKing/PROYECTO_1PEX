@@ -2,7 +2,8 @@
 import express from "express";
 import cors from 'cors';
 //rutas
-import testRoute from './routes/test.route.js'
+import testRoute from './routes/test.route.js';
+import loginRoute from './routes/login.route.js';
 
 const app = express();
 
@@ -13,6 +14,8 @@ app.use(cors({
 }));
 
 // Registrar rutas
-
 app.use(testRoute);
+app.use(loginRoute);
+
+
 export default app;
