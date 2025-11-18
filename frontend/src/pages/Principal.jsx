@@ -1,4 +1,5 @@
 /*Carpeta Pages
+Esta page deberia llamarse test pero ya me di cuenta tarde
     llamado por: App.js
     llama: hooks y a components
     Aqui es donde ocurre la magia, aqui se renderizara OJO RENDERIZARA nada mas

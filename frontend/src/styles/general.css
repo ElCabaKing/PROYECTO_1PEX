@@ -1,0 +1,72 @@
+@font-face {
+  font-family: "Nunito Sans";
+  src: url("./fonts/NunitoSans-VariableFont.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* variables.css */
+:root {
+  /* Colores principales */
+  --primary: #7C3AED;        /* Morado principal */
+  --primary-light: #A78BFA;
+  --primary-dark: #5B21B6;
+  --container-color: #FFFFFF;
+
+  /* Colores de acento */
+  --accent: #3B82F6;         /* Azul eléctrico */
+  --accent-pink: #EC4899;    /* Rosa neón */
+
+  /* Fondo */
+  --background: #0F0F1A;
+  --background-light: #1A1A2E;
+
+  /* Texto */
+  --text: #F5F5F7;
+  --text-secondary: #9CA3AF;
+
+  /* Fonts */
+  --font-family-primary: "Nunito Sans";
+
+  /* Sombras */
+  --shadow-1: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-2: 0 8px 25px rgba(0, 0, 0, 0.35);
+
+  /* Espacios */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+
+
+  --component-bg: var(--primary);
+  --component-bg-hover: #9757ff; /* ligero más claro que --primary */
+  --component-bg-active: #5b21b6; /* versión más oscura para estado activo */
+  --component-text: #FFFFFF; /* texto claro sobre componentes de color */
+  --component-border: rgba(0,0,0,0.12);
+
+  /* Variante de componentes secundarios (por ejemplo botones secundarios)
+     - puedes usar estas para distinguir acciones principales/secundarias */
+  --component-secondary-bg: #3B82F6;
+  --component-secondary-hover: #60A5FA;
+  --component-secondary-active: #1E40AF;
+  --component-secondary-text: #FFFFFF;
+}
+
+
+
+.container {
+    width: 320px;
+    padding: 20px;
+    background: var(--container-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-1);
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
