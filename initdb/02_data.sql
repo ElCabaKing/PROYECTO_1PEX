@@ -15,7 +15,7 @@ INSERT INTO
 VALUES ('Alice', 1, 'contra1'),
     ('Bob', 2, 'contra2');
 
---Menu details
+-- Menu details
 
 INSERT INTO
     menu_details (menu_label, menu_path)

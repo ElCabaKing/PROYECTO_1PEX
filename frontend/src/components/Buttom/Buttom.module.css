@@ -1,0 +1,16 @@
+@import url('../../styles/general.css');
+.Buttom_base{
+    width: 100%;
+    background-color: var(--primary);
+    color: var(--text);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.Buttom_base:hover{
+    background-color: var(--component-bg-hover);
+}
+
+.Buttom_base:active{
+    background-color: var(--component-bg-active);
+}

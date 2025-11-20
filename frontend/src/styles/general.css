@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Nunito Sans";
-  src: url("./fonts/NunitoSans-VariableFont.ttf") format("truetype");
+  src: url("./fonts/NunitoSans-VariableFont-subset.woff2") format("truetype");
   font-style: normal;
   font-display: swap;
 }
@@ -42,7 +42,7 @@
 
   --component-bg: var(--primary);
   --component-bg-hover: #9757ff; 
-  --component-bg-active: #5b21b6; 
+  --component-bg-active: #c0a7e7; 
   --component-text: #FFFFFF; 
   --component-border: rgba(0,0,0,0.12);
   --component-alert-color: #d11717;
@@ -53,6 +53,27 @@
   --component-secondary-hover: #60A5FA;
   --component-secondary-active: #1E40AF;
   --component-secondary-text: #FFFFFF;
+
+
+
+  /* Variantes para fondos*/
+
+  --rayas: repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.1),
+      rgba(255,255,255,0.1) 10px,
+      transparent 10px,
+      transparent 20px
+    ),
+    var(--primary);
+
+    --ondas: linear-gradient(
+      45deg,
+      var(--primary-light),
+      var(--primary),
+      var(--primary-dark)
+    )
+  
 }
 
 .container {

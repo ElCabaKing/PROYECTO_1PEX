@@ -1,9 +1,10 @@
 @import url('../../styles/general.css');
-img{
+
+img {
     width: 150px;
 }
 
-.imgContainer{
+.imgContainer {
     width: 300px;
     display: flex;
     align-items: center;
@@ -11,12 +12,39 @@ img{
     flex-direction: column;
 }
 
-.pDirect{
+.pDirect {
     cursor: pointer;
     color: var(--component-alert-color);
 }
 
 
-.content{
+.content {
     width: 300px;
+}
+
+.imgContainerBg {
+    width: 100%;
+    background: var(--rayas);
+    margin-right: -20px;
+    margin-block: -20px;
+    margin-left: 20px;
+    border-radius: 0px 10px 10px 0px;
+    text-align: center;
+    color: var(--text);
+}
+
+.loginContainer {
+    background: var(--ondas);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.message{
+    text-align: center;
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
