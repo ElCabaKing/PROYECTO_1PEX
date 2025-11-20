@@ -3,7 +3,7 @@ function Home(){
     const navigate = useNavigate();
     var codenumber = 0;
     return(
-        <div className="container">
+        <div className="container container--column">
             <p>Tienes un producto con nosotros?</p>
             <p>Ingresa su codigo aqui</p>
             <input value={codenumber} readOnly></input>

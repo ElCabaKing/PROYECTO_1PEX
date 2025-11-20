@@ -10,5 +10,5 @@
 }
 
 .cmpInput:focus{
-    background-color: var(--component-bg-active-soft);
+    background-color: var(--component-bg-active);
 }
