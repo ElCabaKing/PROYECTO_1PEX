@@ -12,13 +12,14 @@ function Login() {
 
     return (
         <div className={styles.loginContainer}>
-        <div className="container container--row container--big">
+        <div className="container container--row ">
             <div className={styles.content}>
                 <div className={styles.imgContainer}>
                     <p>Iniciar sesion</p>
                     <img alt="logo" src={logo}></img>
                 </div>
                 {hkbLogin && (<p className={styles.message}>{hkmLogin}</p>)}
+                <form onSubmit={(e) => {e.preventDefault();hkValidateLogin({ user_nombre: user_nombre, user_password: user_password })}}>
                 <Input
                     name="user_name"
                     type="text"
@@ -33,13 +34,16 @@ function Login() {
                     onChange={(e) => setUser_password(e.target.value)}
                     placeholder="Contrasena"
                 />
-                <p className="pDirect" onClick={() => hkRedirectRecovery()}>Has olvidado tu contrasena?</p>
+                <p className={styles.pDirect}>
+                     <span className={styles.span}onClick={() => hkRedirectRecovery()}>Has olvidado tu contraseña?</span>
+                </p>
                 <Buttom
-                    action={() => hkValidateLogin({ user_nombre: user_nombre, user_password: user_password })}
+                    type="submit"
                     label="Iniciar Sesion"
                 />
+                </form>
             </div>
-            <div className={`${styles.imgContainer} ${styles.imgContainerBg}`}>
+            <div className={`${styles.imgContainer} ${styles.imgContainerBg} ${styles.hideScreen}`}>
                 <img alt="icon" src={icon}></img>
                 <p>Reparamos rápido <br/> cuidamos tu confianza</p>
             </div>

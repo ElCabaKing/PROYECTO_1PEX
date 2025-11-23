@@ -1,16 +1,10 @@
-import Card from "../components/Card/Card";
-import { useState, useEffect } from "react";
-import { io } from "socket.io-client";
-
+import Card from "../../components/Card/Card";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../context/AppContext"
 function MainMenu() {
-   useEffect(() => {
-    const socket = io("http://localhost:5000");
-    socket.on("repairStatusChanged", (data) => {
-        console.log("Cambio detectado:", data);
-        // Aquí haces tu alerta, notificación o refresco de tabla
-    });
-   }, [])
-   
+    const { user } = useContext(UserContext);
+  
+
     const [menuItem, setMenuItem] = useState([])
     useEffect(() => {
         const data = JSON.parse(atob(localStorage.getItem("menuList")));
@@ -20,6 +14,8 @@ function MainMenu() {
     return (
         <div>
             {menuItem.map((item) => (<Card key={item.menu_label} menu_label={item.menu_label} menu_path={item.menu_path} />))}
+            <button onClick={() => console.log(user)}>UserContext</button>
+            {user.map((item) => (<p>{item.menu_label}</p>))}
         </div>
     )
 }

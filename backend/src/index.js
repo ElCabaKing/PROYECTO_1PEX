@@ -1,4 +1,4 @@
-import app from "./app.js";
+import server from "./app.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -6,5 +6,5 @@ dotenv.config();
 const PORT = process.env.PORT ;
 
 
-app.listen(PORT);
+server.listen(PORT);
 console.log('encendido en',PORT)

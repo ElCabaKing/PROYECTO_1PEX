@@ -14,6 +14,7 @@ export function initSocket(server) {
   });
 }
 
-export function emitRepairStatusChange(data) {
+
+export function emitLogin(data) {
   if (io) io.emit("repairStatusChanged", data);
 }

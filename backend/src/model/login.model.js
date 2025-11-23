@@ -19,7 +19,18 @@ export const mdUserDateLog = async (user_id) => {
     return rows;
 }
 
+export const mdUserRolesData = async(user_id) => {
+    const [rows] = await pool.query(
+        `SELECT rl.rol_nombre FROM roles as rl 
+		INNER JOIN users u ON u.rol_id  = rl.id 
+		WHERE  u.id  = ?`,
+        [user_id]
+    );
+    return rows;
+}
+
 export default {
     mdLogin,
-    mdUserDateLog
+    mdUserDateLog,
+    mdUserRolesData
 }
