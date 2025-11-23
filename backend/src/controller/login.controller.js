@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import modelLogin from "../model/login.model.js";
 import bcrypt from 'bcrypt';
-
+import { emitLogin } from "../socket.js";
 export const ctLogin = async (req, res) => {
     const saltRounds = 10;
     try {
@@ -20,7 +20,7 @@ export const ctLogin = async (req, res) => {
                 path: "/"
             });
             const permisos = await modelLogin.mdUserDateLog(user_id_password.id);
-            emitLogin(permisos);
+            emitLogin(req.body.user_nombre)
             return res.json({ login: true, permisos: permisos });
 
         }
