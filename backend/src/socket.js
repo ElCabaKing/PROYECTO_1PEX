@@ -15,6 +15,8 @@ export function initSocket(server) {
 }
 
 
-export function emitLogin(data) {
-  if (io) io.emit("repairStatusChanged", data);
+export function emitLoginToAdmins(data) {
+  if (io) {
+    io.emit("statusLogin", data);
+  }
 }

@@ -7,7 +7,9 @@ function Alert({children}) {
     const [show, setShow] = useState(false)
     useEffect(() => {
         const socket1 = io("http://localhost:5000");
-        socket1.on("repairStatusChanged", (data) => {
+
+
+        socket1.on("statusLogin", (data) => {
             setAlert(`El usuario ${data} acaba de iniciar sesion`);
             setShow(true);
             console.log("datos",data)
