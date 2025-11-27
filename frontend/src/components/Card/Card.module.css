@@ -3,7 +3,6 @@
   width: 160px;
   height: 50px;
   padding: 1rem;
-  border-radius: 12px;
   background: var(--primary);
   box-shadow: var(--shadow-1);
   display: flex;
@@ -26,7 +25,6 @@
   font-weight: 600;
 }
 
-/* Pantallas medianas — tablets */
 @media (max-width: 768px) {
   .card {
     width: 220px;
@@ -34,7 +32,6 @@
   }
 }
 
-/* Pantallas pequeñas — móviles */
 @media (max-width: 480px) {
   .card {
     width: 160px;

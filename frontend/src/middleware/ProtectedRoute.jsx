@@ -6,20 +6,35 @@ function ProtectedRoute({ children }) {
     const navigate = useNavigate();
     const [allow, setAllow] = useState(null)
     async function Validate() {
-        console.log("ap")
         const res = await api.get("/authUserV", { headers: { credential: "include" } });
         console.log(res);
         if (res.validation) {
             setAllow(true)
         }
+        else {
+            setAllow(false)
+        }
     }
+    useEffect(() =>{
+        Validate();
+    },[]);
 
     useEffect(() => {
-        Validate();
-        setInterval(() => {
+        const valInterval = setInterval(() => {
             Validate()
-        }, 5 * 60 * 1000);
+        }, 10 * 60 * 1000);
+
+        return () => {
+            clearInterval(valInterval)
+        }
     }, [])
+    
+    useEffect(() => {
+        if (allow === false) {
+            navigate("/login");
+        }
+    }, [allow]);
+
 
     if (allow === true) {
         return children;
@@ -28,10 +43,7 @@ function ProtectedRoute({ children }) {
     if (allow === null) {
         return <div>Cargando</div>
     }
-
-    if (allow === false) {
-        navigate('/error');
-    }
+    return null;
 }
 
 export default ProtectedRoute;

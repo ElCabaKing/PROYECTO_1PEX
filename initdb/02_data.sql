@@ -12,8 +12,16 @@ INSERT INTO
         rol_id,
         user_password
     )
-VALUES ('Alice', 1, '$2a$10$rEyOrH.yPYsxsfl/tUfAIev1cp0b3a5CbdlEOPEfB2bG8JuWCpTb6'),
-    ('Bob', 2, '$2a$10$Teh0X8jg1IObwISgTN8m6OKJS8VIQOppIP.nJAaHPqS6HILXEcZra');
+VALUES ('Bob', 2, '$2a$10$Teh0X8jg1IObwISgTN8m6OKJS8VIQOppIP.nJAaHPqS6HILXEcZra');
+
+INSERT INTO
+    users (
+        user_nombre,
+        rol_id,
+        user_password,
+        security_code
+    )
+VALUES ('Alice', 1, '$2a$10$rEyOrH.yPYsxsfl/tUfAIev1cp0b3a5CbdlEOPEfB2bG8JuWCpTb6','kiminose');
 
 -- Menu details
 

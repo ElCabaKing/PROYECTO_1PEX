@@ -9,7 +9,7 @@ function Home() {
             <p>Tienes un producto con nosotros?</p>
             <p>Ingresa su codigo aqui</p>
             <form onSubmit={(e) => {
-                e.preventDefault(); // evita reload
+                e.preventDefault(); 
                 hkSearchCode();
             }}>
                 <Input name="codeNumber"

@@ -1,0 +1,51 @@
+@import url('../../styles/general.css');
+.menuContainer{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: fit-content;
+    background-color: var(--primary-light);
+    align-items: center;
+}
+
+.last{
+    margin-top: auto;
+}
+
+.showButton{
+    display: none;
+}
+
+.pageContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.menuContainerExtra{
+    display: flex !important;
+    z-index: 9999; 
+    position: fixed; 
+    inset: 0;     
+}
+
+@media (max-width: 700px) {
+    .menuContainer{
+        display: none;
+    }
+    .showButton{
+        display: flex;
+        height: 50px;
+    }
+    .pageContainer{
+        flex-direction: column !important;
+    }
+
+}
+
+@media (min-width: 700px) {
+    .menuContainerExtra{
+        position:static !important;
+    }
+    
+}

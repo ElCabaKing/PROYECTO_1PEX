@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { jwtDecode } from "jwt-decode"
 export const tokenRoleAuthNx = (roles = []) => {
     return (req, res, next) => {
         const token = req.cookies.auth_token;
@@ -7,8 +6,7 @@ export const tokenRoleAuthNx = (roles = []) => {
             return res.status(401).json({ message: "No hay o no se envió token" });
         }
         try {
-            jwt.verify(token, process.env.JWT_SECRET);
-            const decodedToken = jwtDecode(token);
+            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
             const tieneRol = roles.some(role => decodedToken.roles.includes(role));
             if (!tieneRol) {
                 return res.status(403).json({ message: "No tienes permiso para acceder" });
@@ -22,24 +20,37 @@ export const tokenRoleAuthNx = (roles = []) => {
 };
 
 export const tokenRoleAuth = (roles = []) => {
-    return (req, res, next) => {
+    return (req, res) => {
         const token = req.cookies.auth_token;
-        if (!token) {
-            return res.status(401).json({ message: "No hay o no se envió token" });
+        const refresh_token = req.cookies.refresh_token;
+        if (!token && !refresh_token) {
+            return res.json({ validation: false });
+        }
+        if (!token && refresh_token) {
+            try {
+                const decode = jwt.verify(refresh_token, process.env.JWT_SECRET);
+                const tieneRol = roles.some(role => decode.roles.includes(role));
+                console.log("tiene", tieneRol)
+                if (!tieneRol) {
+                    return res.json({ validation: false });
+                }
+                return res.json({ validation: true });
+            }
+            catch (error) {
+                return res.json({ validation: false });
+            }
         }
         try {
-            jwt.verify(token, process.env.JWT_SECRET);
-            const decodedToken = jwtDecode(token);
-            const userRoles = (decodedToken.roles).map(r => r.rol_nombre);
-            const tieneRol = roles.some(role => decodedToken.roles.includes(role));
+            const decode = jwt.verify(token, process.env.JWT_SECRET);
+            const tieneRol = roles.some(role => decode.roles.includes(role));
             console.log("tiene", tieneRol)
             if (!tieneRol) {
-                return res.status(403).json({ message: "No tienes permiso para acceder" });
+                return res.json({ validation: false });
             }
             return res.json({ validation: true });
         }
         catch (error) {
-            return res.status(402).json({ message: "Token no válido" });
+            return res.json({ validation: false });
         }
     };
 };
