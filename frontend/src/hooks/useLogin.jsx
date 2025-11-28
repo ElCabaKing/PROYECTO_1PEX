@@ -8,8 +8,8 @@ export default function useLogin() {
     const [hkmLogin, setHkmLogin] = useState(''); //mensaje resultante del login
     const [hkbLogin, setHkbLogin] = useState(false); //bandera que muestra el mensaje
     const [hkmodalShow, setHkmodalShow] = useState(false) //bandera que muestra el modal
-    async function hkValidateLogin(params) {
-        const res = await appstLogin(params);
+    async function hkValidateLogin({user_nombre, user_password }) {
+        const res = await appstLogin({user_nombre, user_password });
         console.log("login",res)
         console.log("boleans",res.first_time,res.login)
         if(res.login && res.first_time){

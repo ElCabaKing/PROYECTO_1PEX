@@ -1,4 +1,5 @@
-import { api } from "../utils/api";
+import axios from "axios";
+import { API_URL } from "../utils/api";
 import { useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
 
@@ -6,9 +7,13 @@ function ProtectedRoute({ children }) {
     const navigate = useNavigate();
     const [allow, setAllow] = useState(null)
     async function Validate() {
-        const res = await api.get("/authUserV", { headers: { credential: "include" } });
+        const res = await axios.get(`${API_URL}/authUserV`,
+            {
+                withCredentials: true
+            }
+        );
         console.log(res);
-        if (res.validation) {
+        if (res.data.validation) {
             setAllow(true)
         }
         else {
@@ -33,7 +38,7 @@ function ProtectedRoute({ children }) {
         if (allow === false) {
             navigate("/login");
         }
-    }, [allow]);
+    }, [allow,navigate]);
 
 
     if (allow === true) {

@@ -21,6 +21,7 @@ export const tokenRoleAuthNx = (roles = []) => {
 
 export const tokenRoleAuth = (roles = []) => {
     return (req, res) => {
+        console.log(req.cookies)
         const token = req.cookies.auth_token;
         const refresh_token = req.cookies.refresh_token;
         if (!token && !refresh_token) {

@@ -17,14 +17,18 @@ export default function useModalAns() {
         }
         setUserAnsWord(result)
     }
-    async function saveAll(params) {
-        if(userFirstPass === userSecondPass){
-        await appSaveAns(params);
-        setHkmodalShow(false)
-        navigate('/main');
-        }
-        else{
+    async function saveAll({ ans, user_password, user_name }) {
+        if (userFirstPass !== userSecondPass) {
             setPassError(true);
+            return;
+        }
+        try {
+            await appSaveAns({ ans, user_password, user_name });
+            setHkmodalShow(false)
+            navigate('/main');
+        }
+        catch (error) {
+            console.log(error);
         }
     }
 

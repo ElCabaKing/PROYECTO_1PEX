@@ -4,15 +4,16 @@ import { emitLoginToAdmins } from "../socket.js";
 import bcrypt from 'bcrypt';
 export const ctLogin = async (req, res) => {
     try {
-        const user_id_password = await modelLogin.mdLogin(req.body.user_nombre);
+        const {user_nombre, user_password} = req.body;
+        const user_id_password = await modelLogin.mdLogin(user_nombre);
         console.log(user_id_password);
         console.log("security_code:", user_id_password.security_code);
         if (!user_id_password) { return res.json({ login: false }) }
-        const valid = await bcrypt.compare(req.body.user_password, user_id_password.user_password);
+        const valid = await bcrypt.compare(user_password, user_id_password.user_password);
         if (valid) {
             const roles = await modelLogin.mdUserRolesData(user_id_password.id)
             const userRoles = roles.map(r => r.rol_nombre);
-            const payload = { id: user_id_password.id, user_nombre: req.body.user_nombre, roles: userRoles }
+            const payload = { id: user_id_password.id, user_nombre: user_nombre, roles: userRoles }
             const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
             const refreshToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "4h" });
             res.cookie("auth_token", token, {
@@ -30,7 +31,7 @@ export const ctLogin = async (req, res) => {
                 maxAge: 4 * 60 * 60 * 1000
             })
             const permisos = await modelLogin.mdUserDateLog(user_id_password.id);
-            emitLoginToAdmins(req.body.user_nombre)
+            emitLoginToAdmins(user_nombre)
             return res.json({ login: true, permisos: permisos,first_time: user_id_password.security_code ? false : true });
 
         }
