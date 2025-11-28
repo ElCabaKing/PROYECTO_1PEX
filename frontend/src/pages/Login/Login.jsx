@@ -5,8 +5,9 @@ import logo from "../../media/Logo.avif"
 import styles from "../Login/Login.module.css"
 import Input from "../../components/Input/Input";
 import Buttom from "../../components/Buttom/Buttom";
+import ModalAns from "../../components/ModalAns/ModalAns";
 function Login() {
-    const { hkValidateLogin, hkmLogin, hkbLogin, hkRedirectRecovery } = useLogin()
+    const { hkValidateLogin, hkmLogin, hkbLogin, hkRedirectRecovery,hkmodalShow,setHkmodalShow} = useLogin()
     const [user_nombre, setUser_nombre] = useState('');
     const [user_password, setUser_password] = useState('');
 
@@ -47,6 +48,7 @@ function Login() {
                 <img alt="icon" src={icon}></img>
                 <p>Reparamos rápido <br/> cuidamos tu confianza</p>
             </div>
+            {hkmodalShow && (<ModalAns user_name={user_nombre}/>)}
         </div>
         </div>
     )

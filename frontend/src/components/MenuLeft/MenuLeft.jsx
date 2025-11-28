@@ -14,8 +14,10 @@ function MenuLeft({ children }) {
         <div className={styles.pageContainer}>
             <button className={styles.showButton} onClick={() => setShowMenu(true)}>Tre rayta</button>
             <div className={`${styles.menuContainer} ${showMenu ? styles.menuContainerExtra : ""}`}>
-                <div>
-                    <img src={img}></img>
+                <div className={styles.menuUp}>
+                    <div className={styles.logoContainer}>
+                    <img className={styles.logo} src={img}></img>
+                    </div>
                     <button className={styles.showButton} onClick={() => setShowMenu(false)}>X</button>
                 </div>
                 <Card menu_label="Home" menu_path="/main"></Card>

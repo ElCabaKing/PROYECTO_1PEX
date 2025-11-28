@@ -1,7 +1,5 @@
 import { api } from "../utils/api";
 
-
-
 export async function appstLogin(params) {
     const res = await api.post("/login",params);
     console.log(res);
@@ -13,4 +11,5 @@ export async function appstLogOut() {
     console.log(res);
     return res;
 }
+
 

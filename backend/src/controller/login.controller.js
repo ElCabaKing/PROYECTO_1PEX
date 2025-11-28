@@ -1,9 +1,8 @@
 import jwt from 'jsonwebtoken';
 import modelLogin from "../model/login.model.js";
-import bcrypt from 'bcrypt';
 import { emitLoginToAdmins } from "../socket.js";
+import bcrypt from 'bcrypt';
 export const ctLogin = async (req, res) => {
-    const saltRounds = 10;
     try {
         const user_id_password = await modelLogin.mdLogin(req.body.user_nombre);
         console.log(user_id_password);
@@ -32,7 +31,7 @@ export const ctLogin = async (req, res) => {
             })
             const permisos = await modelLogin.mdUserDateLog(user_id_password.id);
             emitLoginToAdmins(req.body.user_nombre)
-            return res.json({ login: true, permisos: permisos,firs_time: user_id_password.security_code ? false : true });
+            return res.json({ login: true, permisos: permisos,first_time: user_id_password.security_code ? false : true });
 
         }
         else {

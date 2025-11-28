@@ -1,18 +1,7 @@
--- Datos de ejemplo para la base
-
-INSERT INTO test (nombre) VALUES ('testo'), ('testo 2');
-
 -- Roles
 INSERT INTO roles (rol_nombre) VALUES ('admin'), ('user');
 
 -- Users (asumiendo que roles.id comienzan en 1)
-INSERT INTO
-    users (
-        user_nombre,
-        rol_id,
-        user_password
-    )
-VALUES ('Bob', 2, '$2a$10$Teh0X8jg1IObwISgTN8m6OKJS8VIQOppIP.nJAaHPqS6HILXEcZra');
 
 INSERT INTO
     users (
@@ -21,21 +10,43 @@ INSERT INTO
         user_password,
         security_code
     )
-VALUES ('Alice', 1, '$2a$10$rEyOrH.yPYsxsfl/tUfAIev1cp0b3a5CbdlEOPEfB2bG8JuWCpTb6','kiminose');
+VALUES (
+        'Alice',
+        1,
+        '$2a$10$rEyOrH.yPYsxsfl/tUfAIev1cp0b3a5CbdlEOPEfB2bG8JuWCpTb6',
+        '$2a$10$um/dgbMx2COr/EDWO0uAy.v4CjD/WgCppKwV1mFKmPMapG2x9kyW6'
+    );
+
+INSERT INTO
+    users (
+        user_nombre,
+        rol_id,
+        user_password
+    )
+VALUES (
+        'Bob',
+        2,
+        '$2a$10$Teh0X8jg1IObwISgTN8m6OKJS8VIQOppIP.nJAaHPqS6HILXEcZra'
+    );
 
 -- Menu details
 
 INSERT INTO
     menu_details (menu_label, menu_path)
-VALUES ('Dashboard', '/dashboard'),
+VALUES ('Mis Tareas', '/jobs'),
     ('Users', '/users'),
-    ('Profile', '/profile');
+    ('Profile', '/profile'),
+    ('Registro', '/register');
 
 -- Menu items vinculados a roles
+-- 1: admin  2: user
+-- 1:jobs f2:users  3:profile f4:registro
+
 INSERT INTO
     menu_items (rol_id, details_id)
 VALUES (1, 1),
     (1, 2),
     (1, 3),
+    (1, 4),
     (2, 1),
     (2, 3);

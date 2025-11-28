@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 // rutas
 import loginRoute from './routes/login.route.js';
 import authRoute from './routes/auth.route.js'
+import userRoute from './routes/user.route.js'
 // socket
 import { initSocket } from "./socket.js";
 
@@ -24,5 +25,6 @@ app.use(cors({
 // Registrar rutas
 app.use(loginRoute);
 app.use(authRoute);
+app.use(userRoute);
 
 export default server;

@@ -10,9 +10,9 @@ const Card = (props) => {
     navigate("/login")}
   }
   return (
-    <div className={styles.card} onClick={() => props.menu_path ? navigate(props.menu_path) : closeSession()}>
+    <button className={styles.card} onClick={() => props.menu_path ? navigate(props.menu_path) : closeSession()}>
       <h1 className={styles.title} >{props.menu_label}</h1>
-    </div>
+    </button>
   )
 }
 

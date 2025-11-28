@@ -6,6 +6,7 @@ import MainMenu from "./pages/MainMenu/MainMenu";
 import ProtectedRoute from "./middleware/ProtectedRoute";
 import Alert from "./components/Alert/Alert";
 import MenuLeft from "./components/MenuLeft/MenuLeft";
+import ModalAns from "./components/ModalAns/ModalAns";
 function App() {
   return (
     <BrowserRouter>
@@ -14,7 +15,7 @@ function App() {
 
         <Route path="/main" element={<ProtectedRoute><Alert><MenuLeft><MainMenu/></MenuLeft></Alert></ProtectedRoute>}/>
         <Route path="/" element={<Home/>}/>
-        <Route path="*" element={<ProtectedRoute><MenuLeft><Alert><h1>LOST</h1></Alert></MenuLeft></ProtectedRoute>}/>
+        <Route path="*" element={<ProtectedRoute><MenuLeft><Alert> </Alert></MenuLeft></ProtectedRoute>}/>
         <Route path="/component" />
       </Routes>
     </BrowserRouter>

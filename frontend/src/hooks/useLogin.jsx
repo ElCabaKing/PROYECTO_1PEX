@@ -5,10 +5,18 @@ import {UserContext} from "../context/AppContext"
 export default function useLogin() {
     const {aleerta,setUser} = useContext(UserContext);
     const navigate = useNavigate();
-    const [hkmLogin, setHkmLogin] = useState('');
-    const [hkbLogin, setHkbLogin] = useState(false);
+    const [hkmLogin, setHkmLogin] = useState(''); //mensaje resultante del login
+    const [hkbLogin, setHkbLogin] = useState(false); //bandera que muestra el mensaje
+    const [hkmodalShow, setHkmodalShow] = useState(false) //bandera que muestra el modal
     async function hkValidateLogin(params) {
         const res = await appstLogin(params);
+        console.log("login",res)
+        console.log("boleans",res.first_time,res.login)
+        if(res.login && res.first_time){
+            console.log("entro")
+            setHkmodalShow(true);
+            return
+        }
         if (res.login) {
             localStorage.setItem(
                 "menuList",
@@ -34,6 +42,8 @@ export default function useLogin() {
         hkValidateLogin,
         hkmLogin,
         hkbLogin,
-        hkRedirectRecovery
+        hkRedirectRecovery,
+        hkmodalShow,
+        setHkmodalShow
     }
 }
