@@ -6,13 +6,16 @@ import img from "../../media/Logo.avif"
 function MenuLeft({ children }) {
     const [showMenu, setShowMenu] = useState(false)
     const [menuItem, setMenuItem] = useState([])
+    const sidebar = "<"
     useEffect(() => {
         const data = JSON.parse(atob(localStorage.getItem("menuList")));
         setMenuItem(data)
     }, [])
     return (
         <div className={styles.pageContainer}>
-            <button className={styles.showButton} onClick={() => setShowMenu(true)}>Tre rayta</button>
+            <div className={styles.buttonContainer}>
+            <button className={styles.showButton} onClick={() => setShowMenu(true)}>{sidebar}</button>
+            </div>
             <div className={`${styles.menuContainer} ${showMenu ? styles.menuContainerExtra : ""}`}>
                 <div className={styles.menuUp}>
                     <div className={styles.logoContainer}>
@@ -20,10 +23,10 @@ function MenuLeft({ children }) {
                     </div>
                     <button className={styles.showButton} onClick={() => setShowMenu(false)}>X</button>
                 </div>
-                <Card menu_label="Home" menu_path="/main"></Card>
-                {menuItem.map((item) => (<Card key={item.menu_label} menu_label={item.menu_label} menu_path={item.menu_path} />))}
+                <Card closefun={setShowMenu} menu_label="Home" menu_path="/main"></Card>
+                {menuItem.map((item) => (<Card closefun={setShowMenu} key={item.menu_label} menu_label={item.menu_label} menu_path={item.menu_path} />))}
                 <div className={styles.last}>
-                    <Card menu_label="LogOut" />
+                    <Card closefun={setShowMenu} menu_label="LogOut" />
                 </div>
             </div>
             <div>

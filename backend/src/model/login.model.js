@@ -2,7 +2,7 @@ import { pool } from "../config/db.js";
 
 export const mdLogin = async (user_nombre) => {
     const [rows] = await pool.query(
-        `SELECT user_password,id,security_code FROM users WHERE user_nombre = ? LIMIT 1`,
+        `SELECT user_password,id,security_code,estado FROM users WHERE user_nombre = ? LIMIT 1`,
         [user_nombre]
     );
     return rows[0];

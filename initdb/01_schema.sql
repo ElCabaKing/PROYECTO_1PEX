@@ -6,9 +6,12 @@ CREATE TABLE roles (
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
     rol_id INT,
     security_code VARCHAR(255),
     user_password VARCHAR(255),
+    estado BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (rol_id) REFERENCES roles(id)
 );
 
@@ -31,7 +34,9 @@ CREATE TABLE repair_header (
     modelo VARCHAR(255) NOT NULL,
     repair_status VARCHAR(255) NOT NULL DEFAULT 'DISPONIBLE',
     fecha_inicio DATE DEFAULT (CURRENT_DATE),
-    repair_problem VARCHAR(255) NOT NULL
+    repair_problem VARCHAR(255) NOT NULL,
+    id_reparador INT,
+    FOREIGN KEY (id_reparador) REFERENCES users(id)
 );
 
 CREATE TABLE repair_details (

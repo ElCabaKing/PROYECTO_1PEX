@@ -6,9 +6,8 @@ export const ctLogin = async (req, res) => {
     try {
         const {user_nombre, user_password} = req.body;
         const user_id_password = await modelLogin.mdLogin(user_nombre);
-        console.log(user_id_password);
-        console.log("security_code:", user_id_password.security_code);
-        if (!user_id_password) { return res.json({ login: false }) }
+        console.log(user_nombre)
+        if (!user_id_password || user_id_password.estado !=1) { return res.json({ login: false }) }
         const valid = await bcrypt.compare(user_password, user_id_password.user_password);
         if (valid) {
             const roles = await modelLogin.mdUserRolesData(user_id_password.id)
@@ -32,8 +31,10 @@ export const ctLogin = async (req, res) => {
             })
             const permisos = await modelLogin.mdUserDateLog(user_id_password.id);
             emitLoginToAdmins(user_nombre)
-            return res.json({ login: true, permisos: permisos,first_time: user_id_password.security_code ? false : true });
-
+            return res.json({ login: true, 
+                permisos: permisos,
+                first_time: user_id_password.security_code ? false : true,
+                user_name: user_nombre});
         }
         else {
             return res.json({ login: false })

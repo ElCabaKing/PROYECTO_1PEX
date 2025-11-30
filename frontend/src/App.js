@@ -6,16 +6,17 @@ import MainMenu from "./pages/MainMenu/MainMenu";
 import ProtectedRoute from "./middleware/ProtectedRoute";
 import Alert from "./components/Alert/Alert";
 import MenuLeft from "./components/MenuLeft/MenuLeft";
-import ModalAns from "./components/ModalAns/ModalAns";
+import Users from "./pages/Users/Users";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login/>}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
 
-        <Route path="/main" element={<ProtectedRoute><Alert><MenuLeft><MainMenu/></MenuLeft></Alert></ProtectedRoute>}/>
-        <Route path="/" element={<Home/>}/>
-        <Route path="*" element={<ProtectedRoute><MenuLeft><Alert> </Alert></MenuLeft></ProtectedRoute>}/>
+        <Route path="/main" element={<ProtectedRoute><Alert><MenuLeft><MainMenu /></MenuLeft></Alert></ProtectedRoute>} />
+        <Route path="*" element={<ProtectedRoute><MenuLeft><Alert> </Alert></MenuLeft></ProtectedRoute>} />
+        <Route path="users" element={<ProtectedRoute><MenuLeft><Alert><Users /></Alert></MenuLeft></ProtectedRoute>} />
         <Route path="/component" />
       </Routes>
     </BrowserRouter>

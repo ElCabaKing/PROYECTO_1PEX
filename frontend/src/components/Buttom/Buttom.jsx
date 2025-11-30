@@ -1,7 +1,10 @@
 import styles from "./Buttom.module.css"
 function Buttom(props) {
   return (
-    <button type={props.type} className={styles.Buttom_base} onClick={props.action}>{props.label}</button>
+    <button 
+    type={props.type} 
+    className={styles.Buttom_base} 
+    onClick={props.action}>{props.label}</button>
   )
 }
 

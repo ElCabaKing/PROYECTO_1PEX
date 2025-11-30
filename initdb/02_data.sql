@@ -6,11 +6,15 @@ INSERT INTO roles (rol_nombre) VALUES ('admin'), ('user');
 INSERT INTO
     users (
         user_nombre,
+        apellido,
+        nombre,
         rol_id,
         user_password,
         security_code
     )
 VALUES (
+        'aliceP',
+        'Padilla',
         'Alice',
         1,
         '$2a$10$rEyOrH.yPYsxsfl/tUfAIev1cp0b3a5CbdlEOPEfB2bG8JuWCpTb6',
@@ -20,10 +24,14 @@ VALUES (
 INSERT INTO
     users (
         user_nombre,
+        apellido,
+        nombre,
         rol_id,
         user_password
     )
 VALUES (
+        'bobN',
+        'Naranjo',
         'Bob',
         2,
         '$2a$10$Teh0X8jg1IObwISgTN8m6OKJS8VIQOppIP.nJAaHPqS6HILXEcZra'
@@ -35,19 +43,14 @@ INSERT INTO
     menu_details (menu_label, menu_path)
 VALUES ('Mis Tareas', '/jobs'),
     ('Users', '/users'),
-    ('Profile', '/profile'),
-    ('Registro', '/register');
+    ('Profile', '/profile');
 
--- Menu items vinculados a roles
--- 1: admin  2: user
--- 1:jobs f2:users  3:profile f4:registro
 
 INSERT INTO
     menu_items (rol_id, details_id)
-VALUES (1, 1),
+    VALUES (1, 1),
     (1, 2),
     (1, 3),
-    (1, 4),
     (2, 1),
     (2, 3);
 

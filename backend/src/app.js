@@ -25,6 +25,6 @@ app.use(cors({
 // Registrar rutas
 app.use(loginRoute);
 app.use(authRoute);
-app.use(userRoute);
+app.use("/user",userRoute);
 
 export default server;
