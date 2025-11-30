@@ -5,7 +5,8 @@ img {
 }
 
 .imgContainer {
-    width: 300px;
+    max-width: 300px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,8 +14,12 @@ img {
 }
 
 .pDirect {
-    cursor: pointer;
     color: var(--component-alert-color);
+    box-sizing: border-box;
+}
+
+.span {
+    cursor: pointer;
 }
 
 
@@ -23,7 +28,7 @@ img {
 }
 
 .imgContainerBg {
-    width: 100%;
+    flex: 1;
     background: var(--rayas);
     margin-right: -20px;
     margin-block: -20px;
@@ -40,11 +45,25 @@ img {
     align-items: center;
     justify-content: center;
 }
-.message{
+
+
+.message {
     text-align: center;
 }
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+
+.hideScreen{
+
+}
+
+@media screen and (max-width: 900px) {
+    .hideScreen{
+        display: none;
+    }
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
 }

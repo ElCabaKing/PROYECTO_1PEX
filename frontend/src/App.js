@@ -1,17 +1,22 @@
 //Aqui haremos las rutas, aqui solo llaman a las pages junto con su URL
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
-import Home from "./pages/Home"
-import MainMenu from "./pages/MainMenu";
-
+import Home from "./pages/Home/Home"
+import MainMenu from "./pages/MainMenu/MainMenu";
+import ProtectedRoute from "./middleware/ProtectedRoute";
+import Alert from "./components/Alert/Alert";
+import MenuLeft from "./components/MenuLeft/MenuLeft";
+import Users from "./pages/Users/Users";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/main" element={<MainMenu/>}/>
-        <Route path="/" element={<Home/>}/>
-        <Route path="*" element={<h1>LOST</h1>}/>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+
+        <Route path="/main" element={<ProtectedRoute><Alert><MenuLeft><MainMenu /></MenuLeft></Alert></ProtectedRoute>} />
+        <Route path="*" element={<ProtectedRoute><MenuLeft><Alert> </Alert></MenuLeft></ProtectedRoute>} />
+        <Route path="users" element={<ProtectedRoute><MenuLeft><Alert><Users /></Alert></MenuLeft></ProtectedRoute>} />
         <Route path="/component" />
       </Routes>
     </BrowserRouter>

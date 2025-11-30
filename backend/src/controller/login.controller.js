@@ -1,36 +1,65 @@
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 import modelLogin from "../model/login.model.js";
-import bcrypt from 'bcrypt'
-
+import { emitLoginToAdmins } from "../socket.js";
+import bcrypt from 'bcrypt';
 export const ctLogin = async (req, res) => {
-    const saltRounds = 10;
     try {
-        const user_id_password = await modelLogin.mdLogin(req.body.user_nombre);
-        if (!user_id_password) { return res.json({ login: false }) }
-        const valid = await bcrypt.compare(req.body.user_password , user_id_password.user_password);
+        const {user_nombre, user_password} = req.body;
+        const user_id_password = await modelLogin.mdLogin(user_nombre);
+        console.log(user_nombre)
+        if (!user_id_password || user_id_password.estado !=1) { return res.json({ login: false }) }
+        const valid = await bcrypt.compare(user_password, user_id_password.user_password);
         if (valid) {
-            const payload = { id: user_id_password.id, user_nombre: req.body.user_nombre, isLoged: true }
-            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+            const roles = await modelLogin.mdUserRolesData(user_id_password.id)
+            const userRoles = roles.map(r => r.rol_nombre);
+            const payload = { id: user_id_password.id, user_nombre: user_nombre, roles: userRoles }
+            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
+            const refreshToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "4h" });
             res.cookie("auth_token", token, {
                 httpOnly: true,
                 secure: true,
-                sameSite: "strict",
-                maxAge: 3600000,
-                path: "/"
+                sameSite: "none",
+                path: "/",
+                maxAge: 15 * 60 * 1000
             });
+            res.cookie("refresh_token", refreshToken, {
+                httpOnly: true,
+                secure: true,
+                sameSite: "none",
+                path: "/",
+                maxAge: 4 * 60 * 60 * 1000
+            })
             const permisos = await modelLogin.mdUserDateLog(user_id_password.id);
-            return res.json({ login: true, permisos: permisos });
-
+            emitLoginToAdmins(user_nombre)
+            return res.json({ login: true, 
+                permisos: permisos,
+                first_time: user_id_password.security_code ? false : true,
+                user_name: user_nombre});
         }
         else {
-           return res.json({ login: false })
+            return res.json({ login: false })
         }
     }
     catch (error) {
         res.status(505).json({ message: "Error al obtener los datos", error: error.message });
     }
 }
-
+export const ctLogOut = async (req, res) => {
+    res.clearCookie("auth_token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        path: "/",
+    })
+    res.clearCookie("refresh_token", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        path: "/",
+    })
+    res.json({logout: true})
+}
 export default {
-    ctLogin
+    ctLogin,
+    ctLogOut
 }
