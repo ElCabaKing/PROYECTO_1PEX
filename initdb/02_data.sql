@@ -29,10 +29,6 @@ INSERT INTO
         rol_id,
         user_password
     )
-<<<<<<< HEAD
-VALUES ('Alice', 1, '$2a$10$rEyOrH.yPYsxsfl/tUfAIev1cp0b3a5CbdlEOPEfB2bG8JuWCpTb6'),
-    ('Bob', 2, '$2a$10$Teh0X8jg1IObwISgTN8m6OKJS8VIQOppIP.nJAaHPqS6HILXEcZra');
-=======
 VALUES (
         'bobN',
         'Naranjo',
@@ -40,7 +36,6 @@ VALUES (
         2,
         '$2a$10$Teh0X8jg1IObwISgTN8m6OKJS8VIQOppIP.nJAaHPqS6HILXEcZra'
     );
->>>>>>> ft/MainMenu
 
 -- Menu details
 
