@@ -23,6 +23,12 @@ export const mdUpdateHeader = async (user_id, new_status, repair_id) => {
         SET repair_status= ?, id_reparador= ?
         WHERE id=?; `,
         [new_status, user_id, repair_id]);
+    await pool.query(
+        `INSERT INTO repair_details
+    (detalle, valor, repair_headerId)
+    VALUES('SE ACEPTO EL TRABAJO', 0, ?);`,
+    [repair_id]
+    )
     return;
 };
 
@@ -57,7 +63,7 @@ export const mdGetRepairDetailsById = async (repair_id) => {
         WHERE rh.id =?`,
         [repair_id]
     )
-    return [repair_data,repair_header];
+    return [repair_header,repair_data];
 };
 
 export const mdGetRepairById = async (repair_id) => {

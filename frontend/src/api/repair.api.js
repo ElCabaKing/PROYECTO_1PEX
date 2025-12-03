@@ -56,10 +56,31 @@ export async function appGetUserRepairList() {
 
 export async function appGetRepairByIdclient(id_repair) {
     try{
-        const rapir= await axios.get(`${API_URL}/repair`)
+        const repair= await axios.get(`${API_URL}/repair`,
+            {
+                params: {
+                    id_repair
+                }
+            }
+        )
     }
     catch(error){
+        return alert(error.response.data.response)
+    };
+} ;
 
+export async function appGetRepairHead_Details(repair_id) {
+    try{
+        const repair_data = await axios.get(`${API_URL}/repair/getRepairData`,
+            {
+                params: {
+                    repair_id
+                }
+            }
+        )
+        return repair_data.data
     }
-    
-} 
+    catch(error){
+        return alert(error.response.data.response)
+    };  
+};
