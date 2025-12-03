@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import useRepair from "../../hooks/useRepair"
 import styles from "../MyJobs/MyJobs.module.css"
+import { useNavigate } from "react-router-dom";
 function MyJobs() {
   const { hkGetUserRepairList, userRepairList } = useRepair();
-
+  const navigate = useNavigate();
   useEffect(() => {
     hkGetUserRepairList()
 
@@ -26,7 +27,7 @@ function MyJobs() {
                 <td>{repair.repair_problem}</td>
                 <td>
                   <div className={styles.tools}>
-                    <button className={styles.toolsButton}></button>
+                    <button onClick={() => navigate(`/repair/${repair.id}`)} className={styles.toolsButton}></button>
                     <button className={styles.toolsButton}></button>
                   </div>
                 </td>

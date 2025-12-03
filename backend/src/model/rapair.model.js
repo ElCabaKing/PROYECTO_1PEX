@@ -45,11 +45,39 @@ export const mdGetRepairCountById = async (user_id) => {
     return reapir_count;
 };
 
+export const mdGetRepairDetailsById = async (repair_id) => {
+    const [repair_data] = await pool.query(
+        `SELECT * FROM repair_details rd 
+        WHERE rd.repair_headerId  = ?`,
+        [repair_id]);
+    const [repair_header] = await pool.query(
+        `SELECT ts.status_label ,rh.repair_problem , rh.modelo, rh.id , SUM(rd.valor) as total  FROM repair_header rh
+        INNER JOIN repair_details rd ON rd.repair_headerId =rh.id 
+        INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
+        WHERE rh.id =?`,
+        [repair_id]
+    )
+    return [repair_data,repair_header];
+};
+
+export const mdGetRepairById = async (repair_id) => {
+    const [repair_data] = await pool.query(
+        `SELECT ts.status_label ,rh.repair_problem , rh.modelo, rh.id , SUM(rd.valor) as total  FROM repair_header rh
+        INNER JOIN repair_details rd ON rd.repair_headerId =rh.id 
+        INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
+        WHERE rh.id =?`,
+        [repair_id]
+    )
+    return [repair_data];
+};
+
 
 export default {
     mdSaveReapir,
     mdGetRepairF,
     mdUpdateHeader,
     mdGetUsersRepair,
-    mdGetRepairCountById
+    mdGetRepairCountById,
+    mdGetRepairDetailsById,
+    mdGetRepairById
 }

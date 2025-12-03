@@ -66,10 +66,37 @@ export const ctGetUsersRepair = async (req, res) => {
     catch (error) {
         return res.status(500).json({ error: error.message });
     };
-}
+};
+
+export const ctGetRepairData= async (req,res) => {
+    try{
+        const {repair_id} = req.query;
+        if(!repair_id){return res.status(405).json({response: "No se envio el id"})}
+        const repair_data = await modelRepair.mdGetRepairDetailsById(repair_id);
+        return res.json(repair_data);
+    }
+    catch(error){
+        return res.status(500).json({error: error.message});
+        };
+};
+
+export const ctGetRepairDataClient= async (req,res) => {
+    try{
+        const {repair_id} = req.query;
+        if(!repair_id){return res.status(405).json({response: "No se envio el id"})}
+        const repair_data = await modelRepair.mdGetRepairById(repair_id);
+        return res.json(repair_data);
+    }
+    catch(error){
+        return res.status(500).json({error: error.message});
+        };
+};
+
 export default {
     ctSaveRepair,
     ctGetRepairsF,
     ctUpdateHead,
     ctGetUsersRepair,
+    ctGetRepairData,
+    ctGetRepairDataClient
 }

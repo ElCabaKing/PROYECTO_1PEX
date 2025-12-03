@@ -6,6 +6,7 @@ import MainMenu from "./pages/MainMenu/MainMenu";
 import Users from "./pages/Users/Users";
 import MasterLayout from "./middleware/MasterLayout";
 import MyJobs from "./pages/MyJobs/MyJobs";
+import RepairJob from "./pages/RepairJob/RepairJob";
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
         <Route path="*" element={<MasterLayout></MasterLayout>} />
         <Route path="/users" element={<MasterLayout><Users /></MasterLayout>} />
         <Route path="/jobs" element={<MasterLayout><MyJobs/></MasterLayout>} />
+        <Route path="/repair/:id" element={<MasterLayout><RepairJob/></MasterLayout>} />
         <Route path="/component" />
       </Routes>
     </BrowserRouter>

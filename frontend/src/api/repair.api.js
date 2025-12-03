@@ -53,3 +53,13 @@ export async function appGetUserRepairList() {
     }
     
 }
+
+export async function appGetRepairByIdclient(id_repair) {
+    try{
+        const rapir= await axios.get(`${API_URL}/repair`)
+    }
+    catch(error){
+
+    }
+    
+} 

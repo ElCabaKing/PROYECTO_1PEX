@@ -4,7 +4,7 @@ export default function useHome(){
     const navigate = useNavigate()
     const [codeNumber, setCodeNumber] = useState("")
     async function hkSearchCode(params) {
-
+        
     }
     return {
         setCodeNumber,

@@ -8,6 +8,8 @@ router.post("/saveRepair",tokenAuthNx,tokenRoleAuthNx(["admin"]), RepairControll
 router.get("/getRepairList",RepairController.ctGetRepairsF);
 router.patch("/updateHead",RepairController.ctUpdateHead);
 router.get("/getUsersRepair",RepairController.ctGetUsersRepair);
+router.get("/getRepairData",RepairController.ctGetRepairData);
+router.get("/getRepairDataClient",RepairController.ctGetRepairDataClient);
 
 
 export default router;
