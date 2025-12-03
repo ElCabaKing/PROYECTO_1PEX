@@ -19,9 +19,9 @@ export async function appValidateAns({ user_name, user_ans }) {
     return res.data;
 }
 
-export async function appGetUsers({ user_name,index_number_s }) {
+export async function appGetUsers({ user_name, index_number_s }) {
     console.log(index_number_s)
-    const index_number = (index_number_s*10)-10
+    const index_number = (index_number_s * 10) - 10
     console.log()
     const res = await axios.get(`${API_URL}/user/getList`,
         {
@@ -55,15 +55,21 @@ export async function appAlterStatus({ ID, estado }) {
 }
 
 
-export async function appSaveUser({ nombre, apellido, user_name,user_role }) {
-    console.log(nombre,apellido,user_name,user_role)
-    const res = await axios.post(`${API_URL}/user/saveUser`,
-        {
-            nombre,
-            apellido,
-            user_name,
-            user_role
+export async function appSaveUser({ nombre, apellido, user_name, user_role }) {
+    console.log(nombre, apellido, user_name, user_role)
+    try {
+        const res = await axios.post(`${API_URL}/user/saveUser`,
+            {
+                nombre,
+                apellido,
+                user_name,
+                user_role
 
-        });
-    return res.data.response;
+            });
+        return res.data.response;
+    }
+    catch (err) {
+        return err.response.data.response;
+    }
+
 }

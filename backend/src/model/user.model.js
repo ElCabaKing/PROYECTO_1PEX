@@ -23,7 +23,8 @@ export const mdSaveUser = async (user_name, apellido, nombre, user_rol, firstPas
         (user_nombre,apellido,nombre, rol_id, user_password)
         VALUES(?, ?, ?, ?, ?);`,
         [user_name, apellido, nombre, user_rol, firstPass]
-    )
+    );
+    return;
 }
 
 export const mdGetIndex = async () => {

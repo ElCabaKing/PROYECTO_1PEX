@@ -1,0 +1,32 @@
+.container {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: var(--container-color);
+    border-color: black;
+    border-style:solid;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+
+.rowContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.textarea {
+    min-height: 80px; 
+    resize: vertical;   
+    border-radius: 5px;
+}
+
+.textareaContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}

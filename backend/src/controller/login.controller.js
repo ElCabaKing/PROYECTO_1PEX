@@ -43,7 +43,7 @@ export const ctLogin = async (req, res) => {
     catch (error) {
         res.status(505).json({ message: "Error al obtener los datos", error: error.message });
     }
-}
+};
 export const ctLogOut = async (req, res) => {
     res.clearCookie("auth_token", {
         httpOnly: true,
@@ -58,8 +58,8 @@ export const ctLogOut = async (req, res) => {
         path: "/",
     })
     res.json({logout: true})
-}
+};
 export default {
     ctLogin,
     ctLogOut
-}
+};

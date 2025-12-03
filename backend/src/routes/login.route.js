@@ -1,5 +1,5 @@
 import { Router } from "express";
-import LoginController, { ctLogOut } from "../controller/login.controller.js";
+import LoginController from "../controller/login.controller.js";
 import AuthToken from "../middleware/token.auth.js";
 import AuthTokenRol from "../middleware/role.auth.js"
 

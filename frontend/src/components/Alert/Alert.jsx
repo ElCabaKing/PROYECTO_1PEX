@@ -9,10 +9,10 @@ function Alert({ children }) {
     const [show, setShow] = useState(false);
     const [blur, setBlur] = useState(false);
     useEffect(() => {
-        const socket1 = io("http://localhost:5000", { withCredentials: true });
+        const socket = io("http://localhost:5000", { withCredentials: true });
 
 
-        socket1.on("statusLogin", (data) => {
+        socket.on("statusLogin", (data) => {
             setAlert(`El usuario ${data} acaba de iniciar sesion`);
             setBlur(false);
             setShow(true);
@@ -23,11 +23,22 @@ function Alert({ children }) {
             setTimeout(() => { setBlur(true) }, 2000);
             setTimeout(() => { setShow(false) }, 3000);
         });
+
+        socket.on("alertRepair", (data) => {
+            setAlert(`El usuario ${data.nombre_user} aceptó el pedido ${data.id}`);
+            setBlur(false);
+            setShow(true);
+            audioRef.current?.play();
+            setTimeout(() => setBlur(true), 2000);
+            setTimeout(() => setShow(false), 3000);
+        });
         return () => {
-            socket1.off("statusLogin");
-            socket1.disconnect();
+            socket.off("statusLogin");
+            socket.off("alertRepair");
+            socket.disconnect();
         };
     }, [])
+
     return (
         <>
             <audio ref={audioRef} src={audioAlert} preload="auto" />

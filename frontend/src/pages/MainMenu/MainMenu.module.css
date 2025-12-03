@@ -3,6 +3,14 @@
     display: flex;
     flex-direction: row;
     width: 100vw;
+    flex-wrap: wrap; 
+}
+
+.mainContainer{
     height: 100vh;
 }
 
+.buttomContainer{
+    width: 100px;
+    padding: 10px;
+}

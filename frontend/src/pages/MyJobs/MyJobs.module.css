@@ -1,0 +1,49 @@
+.tabla{
+    border-collapse:collapse;
+    table-layout: fixed;
+    width: 70%;
+    border-radius: 10px;
+}
+
+.tabla th{
+    background-color: var(--primary-dark);
+    color: var(--text);
+}
+.tabla th{
+    border-radius: 10px 10px 0px 0px;
+}
+
+.fila td{ 
+    padding : 10px;
+}
+
+.fila:last-child td:first-child{
+    border-radius: 0px 0px 0px 10px;
+}
+
+.fila:last-child td:last-child{
+    border-radius: 0px 0px 10px 0px;
+}
+
+.fila:nth-child(even) td {
+    background-color: var(--primary-light); /* alternado */
+}
+
+.tableContainer {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+}
+
+.tools{
+    display: none;
+}
+
+.fila:hover .tools{
+        display: flex;
+        flex-direction: row;
+}

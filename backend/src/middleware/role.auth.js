@@ -9,7 +9,7 @@ export const tokenRoleAuthNx = (roles = []) => {
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
             const tieneRol = roles.some(role => decodedToken.roles.includes(role));
             if (!tieneRol) {
-                return res.status(403).json({ message: "No tienes permiso para acceder" });
+                return res.status(403).json({ message: "No tienes permiso hacer eso" });
             }
             next();
         }

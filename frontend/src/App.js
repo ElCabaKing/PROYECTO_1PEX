@@ -3,10 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login/Login";
 import Home from "./pages/Home/Home"
 import MainMenu from "./pages/MainMenu/MainMenu";
-import ProtectedRoute from "./middleware/ProtectedRoute";
-import Alert from "./components/Alert/Alert";
-import MenuLeft from "./components/MenuLeft/MenuLeft";
 import Users from "./pages/Users/Users";
+import MasterLayout from "./middleware/MasterLayout";
+import MyJobs from "./pages/MyJobs/MyJobs";
 function App() {
   return (
     <BrowserRouter>
@@ -14,9 +13,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
 
-        <Route path="/main" element={<ProtectedRoute><Alert><MenuLeft><MainMenu /></MenuLeft></Alert></ProtectedRoute>} />
-        <Route path="*" element={<ProtectedRoute><MenuLeft><Alert> </Alert></MenuLeft></ProtectedRoute>} />
-        <Route path="users" element={<ProtectedRoute><MenuLeft><Alert><Users /></Alert></MenuLeft></ProtectedRoute>} />
+        <Route path="/main" element={<MasterLayout><MainMenu /></MasterLayout>} />
+        <Route path="*" element={<MasterLayout></MasterLayout>} />
+        <Route path="/users" element={<MasterLayout><Users /></MasterLayout>} />
+        <Route path="/jobs" element={<MasterLayout><MyJobs/></MasterLayout>} />
         <Route path="/component" />
       </Routes>
     </BrowserRouter>

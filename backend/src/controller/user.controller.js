@@ -42,7 +42,7 @@ export const ctSaveUser = async (req,res) => {
         return res.json({response: "Usuario guardado correctamente"});
     }
     catch(error){
-        return res.status(500).json({response: error.message})
+        return res.status(500).json({response: "Algo salio mal, el usuario ya esta registrado con el mismo username"})
     };
 };
 

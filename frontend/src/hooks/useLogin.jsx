@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { appstLogin } from "../api/login.api";
 import { UserContext } from "../context/AppContext"
 export default function useLogin() {
-    const { aleerta, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const [hkmLogin, setHkmLogin] = useState(''); //mensaje resultante del login
     const [hkbLogin, setHkbLogin] = useState(false); //bandera que muestra el mensaje
@@ -22,9 +22,6 @@ export default function useLogin() {
         if (res.login) {
             localStorage.setItem("user_name", btoa(JSON.stringify(res.user_name)));
             localStorage.setItem("menuList", btoa(JSON.stringify(res.permisos)));
-            console.log(res.permisos)
-            aleerta(res.permisos);
-            setUser(res.permisos)
             navigate('/main')
         }
         else {

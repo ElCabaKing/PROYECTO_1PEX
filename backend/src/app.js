@@ -5,8 +5,9 @@ import http from 'http';
 import cookieParser from "cookie-parser";
 // rutas
 import loginRoute from './routes/login.route.js';
-import authRoute from './routes/auth.route.js'
-import userRoute from './routes/user.route.js'
+import authRoute from './routes/auth.route.js';
+import userRoute from './routes/user.route.js';
+import rapairRoute from './routes/rapair.route.js';
 // socket
 import { initSocket } from "./socket.js";
 
@@ -26,5 +27,6 @@ app.use(cors({
 app.use(loginRoute);
 app.use(authRoute);
 app.use("/user",userRoute);
+app.use("/repair",rapairRoute);
 
 export default server;
