@@ -16,10 +16,8 @@ export function initSocket(server) {
 
   io.use((socket, next) => {
     const rawCookie = socket.handshake.headers.cookie;
+    if(!rawCookie){return next(new Error("No token"));}
     const tokenCookie = rawCookie.split("; ").find(c => c.startsWith("auth_token="));
-    if (!tokenCookie) {
-        return next(new Error("No autorizado"));
-    }
     const token = tokenCookie.split("=")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const hasAdmin= decoded.roles.includes('admin');

@@ -7,7 +7,7 @@ function ProtectedRoute({ children }) {
     const navigate = useNavigate();
     const [allow, setAllow] = useState(null)
     async function Validate() {
-        const res = await axios.get(`${API_URL}/authUserV`,
+        try{const res = await axios.get(`${API_URL}/authUserV`,
             {
                 withCredentials: true
             }
@@ -19,7 +19,11 @@ function ProtectedRoute({ children }) {
         else {
             setAllow(false)
         }
-    }
+    }catch(error){
+        console.log(error)
+        alert(error)
+    }}
+    
     useEffect(() =>{
         Validate();
     },[]);

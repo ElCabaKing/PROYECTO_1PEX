@@ -9,17 +9,19 @@ export default function UseUser(){
     const [showAlert, setShowAlert] = useState(false);  
     const [showNewUserFrom, setShowNewUserFrom] = useState(false)
     async function hkgetUser() {
-        const user_nombre = JSON.parse(atob(localStorage.getItem("user_name")));
+        const raw_user = localStorage.getItem("user_name")
+        if(raw_user){
+        const user_nombre = JSON.parse(atob(raw_user));
         const user_list = await appGetUsers({user_name: user_nombre, index_number_s: indexNum});
 
         setindexMaxList(indexList(user_list.maxIndex))
         setUserList(user_list.listData[0]);
         setRoles_list(user_list.listData[1]);
-        console.log(user_list)
+        console.log(user_list)}
     }
     async function hkalerStatus({ID,estado}) {
         console.log(estado)
-        if(estado==0){
+        if(estado===0){
             setMessage(await appAlterStatus({ID:ID, estado: true}))
         }
         else{

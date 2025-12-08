@@ -81,6 +81,31 @@ export const mdGetRepairDetailsById = async (repair_id) => {
 };
 
 
+export const mdGetRepairClient = async (repair_id) => {
+    const [exist] = await pool.query(
+        "SELECT id FROM repair_header WHERE id = ?",
+        [repair_id]
+    );
+
+    if (exist.length === 0) {
+        throw new Error("Registro no encontrado");
+    }
+
+    const [header] = await pool.query(`
+        SELECT 
+            rh.id,
+            rh.modelo,
+            rh.repair_problem,
+            ts.status_label,
+            SUM(rd.valor) AS total
+        FROM repair_header rh
+        LEFT JOIN repair_details rd ON rd.repair_headerId = rh.id
+        INNER JOIN tb_status ts ON ts.status_id = rh.repair_status
+        WHERE rh.id = ?
+    `, [repair_id]);
+    return [header[0]]; 
+};
+
 
 export const mdGetRepairById = async (repair_id) => {
     const [repair_data] = await pool.query(
@@ -110,6 +135,17 @@ export const mdSaveRepairDetail = async (repair_id,detalle,valor) => {
     return;
 }
 
+export const mdGetRepairHeader = async (repair_id) => {
+    const [repair_header] = await pool.query (
+        `SELECT rh.id, rh.cedula_cliente , rh.fecha_inicio, rh.modelo, ts.status_label, rh.repair_problem, sum(rd.valor ) as Total FROM repair_header rh 
+        INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
+        LEFT JOIN repair_details rd ON rd.repair_headerId = rh.id 
+        WHERE rh.id = ?`,
+[repair_id]
+    );
+    return repair_header[0];
+}
+
 export default {
     mdSaveReapir,
     mdGetRepairF,
@@ -119,5 +155,7 @@ export default {
     mdGetRepairDetailsById,
     mdGetRepairById,
     mdGetRepairUserId,
-    mdSaveRepairDetail
+    mdSaveRepairDetail,
+    mdGetRepairClient,
+    mdGetRepairHeader
 }

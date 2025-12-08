@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import loginRoute from './routes/login.route.js';
 import authRoute from './routes/auth.route.js';
 import userRoute from './routes/user.route.js';
-import rapairRoute from './routes/rapair.route.js';
+import rapairRoute from './routes/repair.route.js';
 // socket
 import { initSocket } from "./socket.js";
 

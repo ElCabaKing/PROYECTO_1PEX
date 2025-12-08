@@ -9,8 +9,9 @@ router.get("/getRepairList",RepairController.ctGetRepairsF);
 router.patch("/updateHead",RepairController.ctUpdateHead);
 router.get("/getUsersRepair",tokenAuthNx,RepairController.ctGetUsersRepair);
 router.get("/getRepairData",RepairController.ctGetRepairData);
-router.get("/getRepairDataClient",RepairController.ctGetRepairDataClient);
+router.get("/getRepairDataClient",RepairController.ctGetRepairDataUser);
 router.post("/saveRepairDetail",RepairController.ctSaveRepairDetail);
+router.get("/getHeaderClient",RepairController.ctGetRepairDataClient);
 
 
 export default router;

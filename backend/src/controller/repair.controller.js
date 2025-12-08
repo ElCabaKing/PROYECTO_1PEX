@@ -1,4 +1,4 @@
-import modelRepair from "../model/rapair.model.js";
+import modelRepair from "../model/repair.model.js";
 import jwt from 'jsonwebtoken'
 import { emitNewRepair, emitAlertRepair } from "../socket.js";
 export const ctSaveRepair = async (req, res) => {
@@ -97,7 +97,7 @@ export const ctGetRepairData = async (req, res) => {
     };
 };
 
-export const ctGetRepairDataClient = async (req, res) => {
+export const ctGetRepairDataUser = async (req, res) => {
     try {
         const { repair_id } = req.query;
         if (!repair_id) { return res.status(405).json({ response: "No se envio el id" }) }
@@ -122,12 +122,27 @@ export const ctSaveRepairDetail = async (req,res) => {
     }
 }
 
+export const ctGetRepairDataClient = async (req,res) => {
+    try{const {repair_id} = req.query;
+    console.log(repair_id);
+    const repair_data = await modelRepair.mdGetRepairHeader(repair_id);
+    if(!repair_data){return res.status(404).json({response: "Pedido no encontrado"})}
+    else{
+        return res.status(200).json({repair_data});
+    }}
+    catch(error){
+        return res.status(500).json({error: error.message});
+    }
+
+}
+
 export default {
     ctSaveRepair,
     ctGetRepairsF,
     ctUpdateHead,
     ctGetUsersRepair,
     ctGetRepairData,
-    ctGetRepairDataClient,
-    ctSaveRepairDetail
+    ctGetRepairDataUser,
+    ctSaveRepairDetail,
+    ctGetRepairDataClient
 }

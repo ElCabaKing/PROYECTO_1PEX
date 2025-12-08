@@ -7,16 +7,20 @@ import Input from "../../components/Input/Input";
 import Buttom from "../../components/Buttom/Buttom";
 import ModalAns from "../../components/ModalAns/ModalAns";
 import ModalPassword from "../../components/ModalPassword/ModalPassword";
+import {  useNavigate } from "react-router-dom";
 function Login() {
     const { hkValidateLogin, hkmLogin, hkbLogin, hkRecoveryModal, sethkRecoveryModal,hkmodalShow} = useLogin()
     const [user_nombre, setUser_nombre] = useState('');
     const [user_password, setUser_password] = useState('');
+    const navigate = useNavigate()
 
     return (
         <div className={styles.loginContainer}>
         <div className="container container--row ">
+            <Buttom action={() => navigate('/')} label="<-" extraClass={styles.backButtom}/>
             <div className={styles.content}>
                 <div className={styles.imgContainer}>
+
                     <p>Iniciar sesion</p>
                     <img alt="logo" src={logo}></img>
                 </div>

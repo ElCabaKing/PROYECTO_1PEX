@@ -51,12 +51,20 @@ img {
     text-align: center;
 }
 
-.hideScreen{
-
+.backButtom {
+    position: absolute; 
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
+.hideScreen {}
+
 @media screen and (max-width: 900px) {
-    .hideScreen{
+    .hideScreen {
         display: none;
     }
 }

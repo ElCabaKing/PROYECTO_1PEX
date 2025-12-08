@@ -1,0 +1,16 @@
+.homeContainer {
+    background: var(--ondas);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formContainer{
+    width: 400px !important;
+}
+
+.repared{
+    background-color: var(--primary);
+    color: var(--text);
+}
