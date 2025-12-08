@@ -1,16 +1,38 @@
 @import url('../../styles/general.css');
-.Buttom_base{
+
+.Buttom_base {
     width: 100%;
     background-color: var(--primary);
     color: var(--text);
     padding: 10px;
     border-radius: 5px;
+    border-style: none;
 }
 
-.Buttom_base:hover{
+.Buttom_base:hover {
     background-color: var(--component-bg-hover);
+    cursor: pointer;
 }
 
-.Buttom_base:active{
+.Buttom_base:active {
     background-color: var(--component-bg-active);
+}
+
+.Buttom_negative {
+    width: 100%;
+    background-color: var(--component-negative);
+    color: var(--text-negative);
+    padding: 10px;
+    border-radius: 5px;
+    border-style: none;
+}
+
+.Buttom_negative:hover{
+    cursor: pointer;
+}
+
+.Buttom_disable {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }

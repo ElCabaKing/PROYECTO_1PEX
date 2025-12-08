@@ -6,11 +6,11 @@ export default function useRepair() {
     const [cedula_cliente, setCedula_cliente] = useState("");
     const [modelo, setModelo] = useState("");
     const [repair_problem, setRepair_problem] = useState("");
-    const [userRepairList, setUserRepairList] = useState([])
+    const [userRepairList, setUserRepairList] = useState([]);
+
 
     async function hkGetList() {
         const list = await appGetRapairList();
-        console.log(list)
         setRepairList(list);
     }
 
@@ -27,7 +27,7 @@ export default function useRepair() {
 
     async function hkGetUserRepairList() {
         const list = await appGetUserRepairList();
-        setUserRepairList(list); 
+        setUserRepairList(list);
     }
 
 

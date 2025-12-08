@@ -1,11 +1,27 @@
 import styles from "./Buttom.module.css"
-function Buttom(props) {
+
+function Buttom({
+  type = "button",
+  estilo = "base",
+  label,
+  action,
+  disable,
+  extraClass = ""
+}) {
+  
+  const baseClass =
+    estilo === "base" ? styles.Buttom_base : styles.Buttom_negative;
+
   return (
-    <button 
-    type={props.type} 
-    className={styles.Buttom_base} 
-    onClick={props.action}>{props.label}</button>
-  )
+    <button
+      type={type}
+      className={`${baseClass} ${extraClass}`}
+      disabled={disable}
+      onClick={action}
+    >
+      {label}
+    </button>
+  );
 }
 
-export default Buttom
+export default Buttom;

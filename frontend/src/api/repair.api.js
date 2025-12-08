@@ -5,42 +5,46 @@ export async function appGetRapairList() {
     return res.data;
 }
 
-export async function appUpdateHead(repair_id,new_status) {
-    try{await axios.patch(`${API_URL}/repair/updateHead`,
-        {
-            new_status,
-            repair_id
-        },
-        {
-            withCredentials: true
-        }
-    )
-    return;}
-    catch(error){
+export async function appUpdateHead(repair_id, new_status) {
+    try {
+        const res = await axios.patch(`${API_URL}/repair/updateHead`,
+            {
+                new_status,
+                repair_id
+            },
+            {
+                withCredentials: true
+            }
+        )
+        return res.data;
+    }
+    catch (error) {
         return alert(error.response.data.response)
     }
 };
 
-export async function appSaveRepair(cedula_cliente,modelo,repair_problem) {
-   try{ await axios.post(`${API_URL}/repair/saveRepair`,
-        {
-            cedula_cliente,
-            modelo,
-            repair_problem
-        },
-        {
-            withCredentials: true
-        }
-    )
-    return;}
-    catch(error){
+export async function appSaveRepair(cedula_cliente, modelo, repair_problem) {
+    try {
+        await axios.post(`${API_URL}/repair/saveRepair`,
+            {
+                cedula_cliente,
+                modelo,
+                repair_problem
+            },
+            {
+                withCredentials: true
+            }
+        )
+        return;
+    }
+    catch (error) {
         return alert(error.response.data.message)
     }
 };
 
 
 export async function appGetUserRepairList() {
-    try{
+    try {
         const list = await axios.get(`${API_URL}/repair/getUsersRepair`,
             {
                 withCredentials: true
@@ -48,15 +52,15 @@ export async function appGetUserRepairList() {
         );
         return list.data;
     }
-    catch(error){
+    catch (error) {
         return alert(error.response.data.message)
     }
-    
+
 }
 
 export async function appGetRepairByIdclient(id_repair) {
-    try{
-        const repair= await axios.get(`${API_URL}/repair`,
+    try {
+        const repair = await axios.get(`${API_URL}/repair`,
             {
                 params: {
                     id_repair
@@ -64,23 +68,27 @@ export async function appGetRepairByIdclient(id_repair) {
             }
         )
     }
-    catch(error){
+    catch (error) {
         return alert(error.response.data.response)
     };
-} ;
+};
 
 export async function appGetRepairHead_Details(repair_id) {
-    try{
+    try {
         const repair_data = await axios.get(`${API_URL}/repair/getRepairData`,
             {
                 params: {
                     repair_id
-                }
+                },
+                withCredentials: true
             }
         )
         return repair_data.data
     }
-    catch(error){
+    catch (error) {
+        if (error.response.status === 404) {
+            return { Nonexistent: true };
+        }
         return alert(error.response.data.response)
-    };  
+    };
 };

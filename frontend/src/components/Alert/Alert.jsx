@@ -25,7 +25,7 @@ function Alert({ children }) {
         });
 
         socket.on("alertRepair", (data) => {
-            setAlert(`El usuario ${data.nombre_user} aceptó el pedido ${data.id}`);
+            setAlert(data);
             setBlur(false);
             setShow(true);
             audioRef.current?.play();

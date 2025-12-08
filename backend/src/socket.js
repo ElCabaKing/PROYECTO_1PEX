@@ -17,15 +17,15 @@ export function initSocket(server) {
   io.use((socket, next) => {
     const rawCookie = socket.handshake.headers.cookie;
     const tokenCookie = rawCookie.split("; ").find(c => c.startsWith("auth_token="));
-    if(tokenCookie){next()}
+    if (!tokenCookie) {
+        return next(new Error("No autorizado"));
+    }
     const token = tokenCookie.split("=")[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const hasAdmin= decoded.roles.includes('admin');
     if(hasAdmin){
        socket.join("admins");
-       console.log("Usuario añadido a room admins:", decoded.id);
     }
-    console.log("Cookie", decoded.roles);
     next();
   })
 }
@@ -43,9 +43,9 @@ export function emitNewRepair(){
   }
 }
 
-export function emitAlertRepair(id,nombre_user){
+export function emitAlertRepair(message){
   if(io){
-    io.emit("alertRepair",{id: id, nombre_user: nombre_user});
+    io.emit("alertRepair",message);
     io.emit("refreschRepair");
   }
 }

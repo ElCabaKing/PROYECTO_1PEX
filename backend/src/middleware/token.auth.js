@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 export const tokenAuthNx = (req, res, next) => {
     const token = req.cookies.auth_token;
     const refresh_token = req.cookies.refresh_token;
-    console.log("token",token)
     if (!token && !refresh_token) {
         return res.json({ validation: false });
     }

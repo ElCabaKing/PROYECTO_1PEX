@@ -33,6 +33,7 @@ export const ctLogin = async (req, res) => {
             emitLoginToAdmins(user_nombre)
             return res.json({ login: true, 
                 permisos: permisos,
+                rol: userRoles,
                 first_time: user_id_password.security_code ? false : true,
                 user_name: user_nombre});
         }

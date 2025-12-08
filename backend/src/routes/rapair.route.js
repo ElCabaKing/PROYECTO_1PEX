@@ -7,9 +7,10 @@ const router = Router();
 router.post("/saveRepair",tokenAuthNx,tokenRoleAuthNx(["admin"]), RepairController.ctSaveRepair);
 router.get("/getRepairList",RepairController.ctGetRepairsF);
 router.patch("/updateHead",RepairController.ctUpdateHead);
-router.get("/getUsersRepair",RepairController.ctGetUsersRepair);
+router.get("/getUsersRepair",tokenAuthNx,RepairController.ctGetUsersRepair);
 router.get("/getRepairData",RepairController.ctGetRepairData);
 router.get("/getRepairDataClient",RepairController.ctGetRepairDataClient);
+router.post("/saveRepairDetail",RepairController.ctSaveRepairDetail);
 
 
 export default router;

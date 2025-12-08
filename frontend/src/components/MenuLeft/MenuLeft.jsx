@@ -8,8 +8,10 @@ function MenuLeft({ children }) {
     const [menuItem, setMenuItem] = useState([])
     const sidebar = "<"
     useEffect(() => {
-        const data = JSON.parse(atob(localStorage.getItem("menuList")));
-        setMenuItem(data)
+        const stored = localStorage.getItem("menuList")
+        if(stored){
+        const data = JSON.parse(atob(stored));
+        setMenuItem(data);}
     }, [])
     return (
         <div className={styles.pageContainer}>

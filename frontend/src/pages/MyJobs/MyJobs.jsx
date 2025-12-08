@@ -1,12 +1,15 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useRepair from "../../hooks/useRepair"
 import styles from "../MyJobs/MyJobs.module.css"
 import { useNavigate } from "react-router-dom";
+import shIncon from "../../media/shIcon.avif"
+import Buttom from "../../components/Buttom/Buttom";
+
 function MyJobs() {
   const { hkGetUserRepairList, userRepairList } = useRepair();
   const navigate = useNavigate();
   useEffect(() => {
-    hkGetUserRepairList()
+    hkGetUserRepairList();
 
   }, [])
 
@@ -16,7 +19,10 @@ function MyJobs() {
         <table className={styles.tabla}>
           <thead>
             <tr>
-              <th>Trabajos</th>
+              <th>Id</th>
+              <th>Modelo</th>
+              <th>Problema</th>
+              <th>Editar</th>
             </tr>
           </thead>
           <tbody>
@@ -27,8 +33,7 @@ function MyJobs() {
                 <td>{repair.repair_problem}</td>
                 <td>
                   <div className={styles.tools}>
-                    <button onClick={() => navigate(`/repair/${repair.id}`)} className={styles.toolsButton}></button>
-                    <button className={styles.toolsButton}></button>
+                    <Buttom action={() => navigate(`/repair/${repair.id}`)} extraClass={styles.buttonMinus} label={<img className={styles.Iconimg} src={shIncon}/>}/>
                   </div>
                 </td>
               </tr>)}

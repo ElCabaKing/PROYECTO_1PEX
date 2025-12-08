@@ -2,13 +2,14 @@
 import ProtectedRoute from './ProtectedRoute'
 import Alert from '../components/Alert/Alert'
 import MenuLeft from '../components/MenuLeft/MenuLeft'
+import { Outlet } from 'react-router-dom'
 
-function MasterLayout({children}) {
+function MasterLayout() {
     return (
         <ProtectedRoute>
             <Alert>
                 <MenuLeft>
-                    {children}
+                    <Outlet />
                 </MenuLeft>
             </Alert>
         </ProtectedRoute>

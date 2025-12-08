@@ -14,12 +14,14 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
 
-        <Route path="/main" element={<MasterLayout><MainMenu /></MasterLayout>} />
-        <Route path="*" element={<MasterLayout></MasterLayout>} />
-        <Route path="/users" element={<MasterLayout><Users /></MasterLayout>} />
-        <Route path="/jobs" element={<MasterLayout><MyJobs/></MasterLayout>} />
-        <Route path="/repair/:id" element={<MasterLayout><RepairJob/></MasterLayout>} />
+      <Route element={<MasterLayout/>}>
+        <Route path="/main" element={<MainMenu />} />
+        <Route path="*" />
+        <Route path="/users" element={<Users />} />
+        <Route path="/jobs" element={<MyJobs/>} />
+        <Route path="/repair/:id" element={<RepairJob/>} />
         <Route path="/component" />
+      </Route>
       </Routes>
     </BrowserRouter>
   );

@@ -24,6 +24,7 @@ function ProtectedRoute({ children }) {
         Validate();
     },[]);
 
+    
     useEffect(() => {
         const valInterval = setInterval(() => {
             Validate()
@@ -38,17 +39,13 @@ function ProtectedRoute({ children }) {
         if (allow === false) {
             navigate("/login");
         }
-    }, [allow,navigate]);
+    }, [allow]);
 
-
-    if (allow === true) {
-        return children;
-    }
 
     if (allow === null) {
         return <div>Cargando</div>
     }
-    return null;
+    return children;
 }
 
 export default ProtectedRoute;

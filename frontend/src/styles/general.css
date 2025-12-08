@@ -32,12 +32,10 @@ body {
   --component-bg-active: #c0a7e7;
   --component-text: #FFFFFF;
   --component-border: rgba(0,0,0,0.12);
-  --component-alert-color: #d11717;
 
-  --component-secondary-bg: #3B82F6;
-  --component-secondary-hover: #60A5FA;
-  --component-secondary-active: #1E40AF;
-  --component-secondary-text: #FFFFFF;
+  --component-negative: #f1e0f5;
+  --text-negative: #483b4b;
+
 
   --rayas: repeating-linear-gradient(
       45deg,

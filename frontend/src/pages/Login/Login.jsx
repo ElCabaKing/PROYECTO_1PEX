@@ -6,8 +6,9 @@ import styles from "../Login/Login.module.css"
 import Input from "../../components/Input/Input";
 import Buttom from "../../components/Buttom/Buttom";
 import ModalAns from "../../components/ModalAns/ModalAns";
+import ModalPassword from "../../components/ModalPassword/ModalPassword";
 function Login() {
-    const { hkValidateLogin, hkmLogin, hkbLogin, hkRedirectRecovery,hkmodalShow,setHkmodalShow} = useLogin()
+    const { hkValidateLogin, hkmLogin, hkbLogin, hkRecoveryModal, sethkRecoveryModal,hkmodalShow} = useLogin()
     const [user_nombre, setUser_nombre] = useState('');
     const [user_password, setUser_password] = useState('');
 
@@ -36,11 +37,12 @@ function Login() {
                     placeholder="Contrasena"
                 />
                 <p className={styles.pDirect}>
-                     <span className={styles.span}onClick={() => hkRedirectRecovery()}>Has olvidado tu contraseña?</span>
+                     <span className={styles.span}onClick={() => sethkRecoveryModal(true)}>Has olvidado tu contraseña?</span>
                 </p>
                 <Buttom
                     type="submit"
                     label="Iniciar Sesion"
+                    estilo="base"
                 />
                 </form>
             </div>
@@ -49,6 +51,7 @@ function Login() {
                 <p>Reparamos rápido <br/> cuidamos tu confianza</p>
             </div>
             {hkmodalShow && (<ModalAns user_name={user_nombre}/>)}
+            {hkRecoveryModal && (<ModalPassword cancel={sethkRecoveryModal}/>)}
         </div>
         </div>
     )

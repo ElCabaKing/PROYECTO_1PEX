@@ -30,7 +30,7 @@ export const ctUpdateHead = async (req, res) => {
 
         const { new_status, repair_id } = req.body;
 
-        const reg = await modelRepair.mdGetRepairCountById(decodedToken.id);
+        if(new_status===2){const reg = await modelRepair.mdGetRepairCountById(decodedToken.id);
 
         if (reg[0].total >= 5) {
             return res.status(403).json({
@@ -41,25 +41,38 @@ export const ctUpdateHead = async (req, res) => {
         await modelRepair.mdUpdateHeader(
             decodedToken.id,
             new_status,
-            repair_id
+            repair_id,
+            "SE COMENZO LA REPARACION"
         );
 
-        emitAlertRepair(repair_id, decodedToken.user_nombre);
+        emitAlertRepair(`El usuario ${decodedToken.user_nombre} ha aceptado el pedido ${repair_id}`);
 
 
         return res.status(200).json({
             response: "Reparación aceptada correctamente"
-        });
+        });}
+        else{
+            await modelRepair.mdUpdateHeader(
+                decodedToken.id,
+                new_status,
+                repair_id,
+                "LA REPARACION CONCLUYO"
+            );
+            emitAlertRepair(`El usuario ${decodedToken.user_nombre} ha terminado el pedido ${repair_id}`);
+            res.status(200).json({response: "Repracion concluida"})
+        }
 
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ error: error.message });
     }
 };
 
 export const ctGetUsersRepair = async (req, res) => {
     try {
-        const token = req.cookies.auth_token;
-        const decodenToken = jwt.decode(token);
+        let token = req.cookies.auth_token;
+        if (!token) { token = req.cookies.refresh_token }
+        const decodenToken = jwt.verify(token, process.env.JWT_SECRET);
         const repair_list = await modelRepair.mdGetUsersRepair(decodenToken.id);
         return res.json(repair_list);
     }
@@ -68,29 +81,46 @@ export const ctGetUsersRepair = async (req, res) => {
     };
 };
 
-export const ctGetRepairData= async (req,res) => {
-    try{
-        const {repair_id} = req.query;
-        if(!repair_id){return res.status(405).json({response: "No se envio el id"})}
+export const ctGetRepairData = async (req, res) => {
+    try {
+        let token = req.cookies.auth_token;
+        if (!token) { token = req.cookies.refresh_token }
+        const decodedToken= jwt.verify(token, process.env.JWT_SECRET);
+        const { repair_id } = req.query;
+        if (!repair_id) { return res.status(405).json({ response: "ctGetRepairData No se envio el id" }) }
+        const repair_user_id = await modelRepair.mdGetRepairUserId(repair_id);
         const repair_data = await modelRepair.mdGetRepairDetailsById(repair_id);
-        return res.json(repair_data);
+        return res.json([repair_data,{isUser: repair_user_id.id_reparador === decodedToken.id}]);
     }
-    catch(error){
-        return res.status(500).json({error: error.message});
-        };
+    catch (error) {
+        return res.status(404).json({ error: error.message });
+    };
 };
 
-export const ctGetRepairDataClient= async (req,res) => {
-    try{
-        const {repair_id} = req.query;
-        if(!repair_id){return res.status(405).json({response: "No se envio el id"})}
+export const ctGetRepairDataClient = async (req, res) => {
+    try {
+        const { repair_id } = req.query;
+        if (!repair_id) { return res.status(405).json({ response: "No se envio el id" }) }
         const repair_data = await modelRepair.mdGetRepairById(repair_id);
         return res.json(repair_data);
     }
-    catch(error){
-        return res.status(500).json({error: error.message});
-        };
+    catch (error) {
+        return res.status(500).json({ error: error.message });
+    };
 };
+
+
+export const ctSaveRepairDetail = async (req,res) => {
+    try{
+        const {repair_id,detalle,valor} = req.body;
+        console.log(repair_id,detalle,valor)
+        await modelRepair.mdSaveRepairDetail(repair_id,detalle,valor);
+        return res.sendStatus(201)
+    }
+    catch(error){
+        return res.status(500).json({error: error.message})
+    }
+}
 
 export default {
     ctSaveRepair,
@@ -98,5 +128,6 @@ export default {
     ctUpdateHead,
     ctGetUsersRepair,
     ctGetRepairData,
-    ctGetRepairDataClient
+    ctGetRepairDataClient,
+    ctSaveRepairDetail
 }

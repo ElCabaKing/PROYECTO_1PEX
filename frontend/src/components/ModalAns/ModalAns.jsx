@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import useModalAns from "../../hooks/useModalAns";
 import { useNavigate } from "react-router-dom";
 import styles from "../ModalAns/ModalAns.module.css"
+import ModalBase from "../ModalBase/ModalBase";
 function ModalAns(props) {
     const { userAnsWord,
         userFirstPass,
@@ -19,8 +20,7 @@ function ModalAns(props) {
     }, [])
 
     return (
-        <div className={styles.backdrop}>
-            <div className={styles.modalAns}>
+        <ModalBase>
                 <h1>Este es tu codigo de seguridad</h1>
                 <h3>Guardalo bien es unico</h3>
                 {userAnsWord}
@@ -49,8 +49,7 @@ function ModalAns(props) {
                         label="Terminado"
                     />
                 </form>
-            </div>
-        </div>
+            </ModalBase>
     )
 }
 

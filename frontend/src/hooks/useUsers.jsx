@@ -8,7 +8,7 @@ export default function UseUser(){
     const [message, setMessage] = useState("")
     const [showAlert, setShowAlert] = useState(false);  
     const [showNewUserFrom, setShowNewUserFrom] = useState(false)
-    async function hkgetUser(number_index) {
+    async function hkgetUser() {
         const user_nombre = JSON.parse(atob(localStorage.getItem("user_name")));
         const user_list = await appGetUsers({user_name: user_nombre, index_number_s: indexNum});
 

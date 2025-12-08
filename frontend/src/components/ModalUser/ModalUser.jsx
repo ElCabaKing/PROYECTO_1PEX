@@ -2,6 +2,7 @@ import Input from '../Input/Input'
 import Button from '../Buttom/Buttom'
 import { useState } from 'react';
 import styles from '../ModalUser/ModalUser.module.css'
+import ModalBase from '../ModalBase/ModalBase';
 
 function ModalUser({ rol_list,closeModal,saveUser}) {
 
@@ -23,7 +24,7 @@ function ModalUser({ rol_list,closeModal,saveUser}) {
     }
 
     return (
-        <div className={styles.modalUserContainer}>
+        <ModalBase>
             <Input
                 onChange={(e) => {
                     const value = e.target.value;
@@ -54,7 +55,7 @@ function ModalUser({ rol_list,closeModal,saveUser}) {
                 <Button action={() => saveUser({nombre: nombre,apellido: apellido, user_name: username,user_role:idRol })} label="Registrar" />
                 <Button action={()=> closeModal(false)} label="Cancelar" />
             </div>
-        </div>
+        </ModalBase>
     );
 }
 
