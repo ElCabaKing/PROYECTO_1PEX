@@ -31,7 +31,7 @@ function MenuLeft({ children }) {
                     <Card closefun={setShowMenu} menu_label="LogOut" />
                 </div>
             </div>
-            <div>
+            <div className={styles.pageSon}>
                 {children}
             </div>
         </div>

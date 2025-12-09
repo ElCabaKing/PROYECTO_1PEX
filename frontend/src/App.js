@@ -7,6 +7,7 @@ import Users from "./pages/Users/Users";
 import MasterLayout from "./middleware/MasterLayout";
 import MyJobs from "./pages/MyJobs/MyJobs";
 import RepairJob from "./pages/RepairJob/RepairJob";
+import History from "./pages/History/History";
 function App() {
   return (
     <BrowserRouter>
@@ -20,7 +21,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/jobs" element={<MyJobs/>} />
         <Route path="/repair/:id" element={<RepairJob/>} />
-        <Route path="/component" />
+        <Route path="/historial" element={<History/>}/>
       </Route>
       </Routes>
     </BrowserRouter>

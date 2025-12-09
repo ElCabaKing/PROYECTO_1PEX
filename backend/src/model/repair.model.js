@@ -146,6 +146,26 @@ export const mdGetRepairHeader = async (repair_id) => {
     return repair_header[0];
 }
 
+export const mdGetHistoryList = async (search_number) => {
+    const [historyList] = await pool.query(
+        `SELECT rh.id , rh.cedula_cliente, rh.fecha_inicio , ts.status_label , u.user_nombre, sum(rd.valor ) as Total  FROM repair_header rh 
+INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
+LEFT JOIN users u ON u.id = rh.id_reparador 
+LEFT JOIN repair_details rd ON rd.repair_headerId = rh.id 
+GROUP BY rh.id
+	ORDER BY rh.id DESC
+	LIMIT ?,10`,
+    [search_number]
+    );
+    const [number] = await pool.query(
+        `SELECT count(*) as Total FROM repair_header rh `
+    )
+    console.log(number)
+    const number_pages = Math.ceil(number[0].Total/10);
+    return [historyList,number_pages]
+
+}
+
 export default {
     mdSaveReapir,
     mdGetRepairF,
@@ -157,5 +177,6 @@ export default {
     mdGetRepairUserId,
     mdSaveRepairDetail,
     mdGetRepairClient,
-    mdGetRepairHeader
+    mdGetRepairHeader,
+    mdGetHistoryList,
 }

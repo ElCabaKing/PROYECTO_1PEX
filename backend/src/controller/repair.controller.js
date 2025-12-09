@@ -136,6 +136,19 @@ export const ctGetRepairDataClient = async (req,res) => {
 
 }
 
+export const ctGetHistoryList = async (req,res) => {
+    try{
+        const {index_num} = req.query;
+        const search_number = (index_num-1)*10
+        const historyList = await modelRepair.mdGetHistoryList(search_number);
+        if(!historyList){return res.status(404).json({response: "No hay registros"})};
+        return res.status(200).json(historyList);
+    }
+    catch(error){
+        return res.status(500).json({error: error.message})
+    }
+}
+
 export default {
     ctSaveRepair,
     ctGetRepairsF,
@@ -144,5 +157,6 @@ export default {
     ctGetRepairData,
     ctGetRepairDataUser,
     ctSaveRepairDetail,
-    ctGetRepairDataClient
+    ctGetRepairDataClient,
+    ctGetHistoryList
 }

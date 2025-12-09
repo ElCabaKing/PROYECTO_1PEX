@@ -12,6 +12,7 @@ router.get("/getRepairData",RepairController.ctGetRepairData);
 router.get("/getRepairDataClient",RepairController.ctGetRepairDataUser);
 router.post("/saveRepairDetail",RepairController.ctSaveRepairDetail);
 router.get("/getHeaderClient",RepairController.ctGetRepairDataClient);
+router.get("/getHistoryList",RepairController.ctGetHistoryList);
 
 
 export default router;

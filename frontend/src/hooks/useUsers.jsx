@@ -1,5 +1,6 @@
 import { appGetUsers,appChangeRole,appAlterStatus,appSaveUser} from "../api/user.api";
 import { useState } from "react";
+import { indexList } from "../utils/utilFunc";
 export default function UseUser(){
     const [roles_list, setRoles_list] = useState([]);
     const [userList, setUserList] = useState([]);
@@ -57,11 +58,6 @@ export default function UseUser(){
         miticMsg();
     }
 
-    function indexList(b){
-        const range = (b) =>
-        Array.from({ length: Math.abs(b - 1) + 1 }, (_, i) => Math.min(1, b) + i);
-        return range(b)
-    }
     return {
         hkgetUser,
         userList,

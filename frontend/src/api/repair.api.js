@@ -92,3 +92,21 @@ export async function appGetRepairHead_Details(repair_id) {
         return alert(error.response.data.response)
     };
 };
+
+export async function appGetHistoryList(index_num) {
+    try{
+        const historyList = await axios.get(`${API_URL}/repair/getHistoryList`,
+            {
+                params: {
+                    index_num
+                }
+            }
+        )
+        return historyList.data
+    }
+    catch(error){
+        if(error.response.status === 404){return {Nonexistent: true}}
+        return alert(error.response.data.response)
+    }
+    
+}

@@ -1,12 +1,10 @@
 @import url('../../styles/general.css');
 
 .Buttom_base {
-    width: 100%;
     background-color: var(--primary);
     color: var(--text);
-    padding: 10px;
-    border-radius: 5px;
     border-style: none;
+    cursor: pointer;
 }
 
 .Buttom_base:hover {
@@ -19,20 +17,19 @@
 }
 
 .Buttom_negative {
-    width: 100%;
     background-color: var(--component-negative);
     color: var(--text-negative);
-    padding: 10px;
-    border-radius: 5px;
     border-style: none;
+    cursor: pointer;
+
 }
 
-.Buttom_negative:hover{
+.Buttom_negative:hover {
     cursor: pointer;
 }
 
 .Buttom_disable {
-  background-color: #ccc;
-  cursor: not-allowed;
-  opacity: 0.6;
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
 }

@@ -42,7 +42,7 @@ CREATE TABLE repair_header (
     modelo VARCHAR(255) NOT NULL,
     repair_status INT DEFAULT 1,
     FOREIGN KEY (repair_status) REFERENCES tb_status(status_id),
-    fecha_inicio DATE DEFAULT (CURRENT_DATE),
+    fecha_inicio DATETIME DEFAULT CURRENT_TIMESTAMP,
     repair_problem VARCHAR(255) NOT NULL,
     id_reparador INT,
     FOREIGN KEY (id_reparador) REFERENCES users(id)
