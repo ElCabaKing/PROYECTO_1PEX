@@ -43,8 +43,7 @@ INSERT INTO
     menu_details (menu_label, menu_path)
 VALUES ('Mis Tareas', '/jobs'),
     ('Users', '/users'),
-    ('Historial', '/historial'),
-    ('Perfil', '/profile');
+    ('Historial', '/historial');
     
 
 
@@ -53,9 +52,7 @@ INSERT INTO
     VALUES (1, 1),
     (1, 2),
     (1, 3),
-    (1, 4),
     (2, 1),
-    (2, 3),
-    (2, 4);
+    (2, 3);
 
 
