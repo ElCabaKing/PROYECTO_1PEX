@@ -5,7 +5,7 @@ import ModalBase from "../../components/ModalBase/ModalBase"
 import Buttom from "../../components/Buttom/Buttom";
 import styles from "../Home/Home.module.css"
 function Home() {
-    const { codeNumber, setCodeNumber, hkSearchCode,showModal,setShowModal,repairModalData } = useHome();
+    const { codeNumber, setCodeNumber, message,showError,hkSearchCode,showModal,setShowModal,repairModalData } = useHome();
     const navigate = useNavigate();
     return (
         <div className={styles.homeContainer}>
@@ -13,6 +13,7 @@ function Home() {
             <p>Tienes un producto con nosotros? <br/>
                 Ingresa su codigo aqui
             </p>
+            {showError && (<p>{message}</p>)}
             <form onSubmit={(e) => {
                 e.preventDefault(); 
                 hkSearchCode(codeNumber);

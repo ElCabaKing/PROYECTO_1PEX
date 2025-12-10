@@ -126,7 +126,8 @@ export const ctGetRepairDataClient = async (req,res) => {
     try{const {repair_id} = req.query;
     console.log(repair_id);
     const repair_data = await modelRepair.mdGetRepairHeader(repair_id);
-    if(!repair_data){return res.status(404).json({response: "Pedido no encontrado"})}
+    console.log(repair_data)
+    if(!repair_data.id){return res.status(404).json({response: "Pedido no encontrado"})}
     else{
         return res.status(200).json({repair_data});
     }}
