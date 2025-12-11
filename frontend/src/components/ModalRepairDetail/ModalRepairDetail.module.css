@@ -1,12 +1,16 @@
-.buttonContainer{
+.ButtonContainer{
     display: flex;
     justify-content: flex-end;
     margin-top: 5px;
 }
 
-.button{
+.ButtonContainer :last-child{
+    margin-left: 5px;
+}
+
+.Button{
     padding: 5px;
-    width: 120px;
+    width: 100px;
     height: 30px;
     border-radius: 5px;
 }

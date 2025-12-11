@@ -11,6 +11,12 @@
 }
 
 .buttomContainer{
-    width: 100px;
+    width: 200px;
     padding: 10px;
+}
+
+.mainButton{
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
 }

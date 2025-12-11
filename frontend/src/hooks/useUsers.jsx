@@ -20,8 +20,7 @@ export default function UseUser(){
         setRoles_list(user_list.listData[1]);
         console.log(user_list)}
     }
-    async function hkalerStatus({ID,estado}) {
-        console.log(estado)
+    async function hkalerStatus(ID,estado) {
         if(estado===0){
             setMessage(await appAlterStatus({ID:ID, estado: true}))
         }

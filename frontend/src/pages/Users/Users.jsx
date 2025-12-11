@@ -14,11 +14,13 @@ function Users() {
   return (
     <>
       <div className={styles.buttomContainer}>
-        <h1>Usuarios</h1>
-
-        <Buttom action={setShowNewUserFrom} label="Nuevo usuario" />
+        <h2 style={{margin: "10px"}}>Usuarios</h2>
+        <div>
+        <Buttom extraClass={styles.MainButton} action={setShowNewUserFrom} label="Nuevo usuario" />
+        </div>
         {showAlert && (<div>{message}</div>)}
       </div>
+      <div className={styles.mainContainer}>
       <div className={styles.tableContainer}>
         <table className={styles.tabla}>
           <thead>
@@ -38,19 +40,21 @@ function Users() {
               <td>{user.apellido}</td>
               <td>{user.user_nombre}</td>
               <td>
-                <select defaultValue={user.rol_id}
+                <select className={styles.select} defaultValue={user.rol_id}
                   onChange={(e) => hkchangeRole({ ID: user.ID, rol_id: e.target.value })}>
                   {roles_list.map((rol) => (<option key={rol.id} value={rol.id}>{rol.rol_nombre}</option>))}
                 </select>
               </td>
-              <td><button value={user.estado} onClick={(e) => hkalerStatus({ ID: user.ID, estado: e.target.value })} >{user.estado ? "Activo" : "Inactivo"}</button></td>
+              <td><Buttom extraClass={styles.statusButton} value={user.estado} action={(e) => {hkalerStatus(user.ID,user.estado )}} label={user.estado ? "Activo" : "Inactivo"}/></td>
             </tr>))}
           </tbody>
         </table>
-        <select onChange={(e) => {setIndexNum(e.target.value)}}>
+        
+      </div>
+      <select onChange={(e) => {setIndexNum(e.target.value)}}>
               {indexMaxList.map((num) => (<option value={num} key={num}>{num}</option>))}
         </select>
-      </div>
+        </div>
       {showNewUserFrom && (<ModalUser saveUser={hksaveUser} closeModal={setShowNewUserFrom} rol_list={roles_list} />)}
     </>
   )

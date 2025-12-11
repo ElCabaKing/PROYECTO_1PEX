@@ -9,6 +9,7 @@ function ModalRepair({hideModal}) {
   return (
 
     <ModalBase>
+      <h3>Ingresar Nueva Reparacion</h3>
     <form onSubmit={(e) => {e.preventDefault();hkSaveRepair();hideModal(false)}}> 
       <div className={styles.rowContainer}>
         <Input maxLength="10" value={cedula_cliente} onChange={(e) => setCedula_cliente(e.target.value)} placeholder="Cedula del cliente"></Input>
@@ -18,8 +19,8 @@ function ModalRepair({hideModal}) {
         <textarea className={styles.textarea} value={repair_problem} onChange={(e) => {setRepair_problem(e.target.value)}} placeholder="Problema"></textarea>
       </div>
         <div className={styles.rowContainer}>
-        <Buttom label="Registrar" type="submit"></Buttom>
-        <Buttom action={() => hideModal(false)} type="button" label="Cancelar"></Buttom>
+        <Buttom extraClass={styles.Button} label="Registrar" type="submit"></Buttom>
+        <Buttom extraClass={styles.Button}  estilo="negativo" action={() => hideModal(false)} type="button" label="Cancelar"></Buttom>
         </div>
     </form>
     </ModalBase>

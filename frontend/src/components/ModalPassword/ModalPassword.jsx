@@ -26,9 +26,9 @@ function ModalPassword({ cancel, }) {
         <form onSubmit={(e) => { e.preventDefault(); validateWord() }}>
           <Input placeholder="Nombre de Usuario" value={user_name} onChange={(e) => { setUser_name(e.target.value) }} />
           <Input placeholder="Codigo de seguridad" value={securityCode} onChange={(e) => { setSecurityCode(e.target.value) }} />
-          <div style={{ display: "flex", flexDirection: "row", marginTop: "15px" }}>
-            <Buttom label="Vereficar" type="submit" />
-            <Buttom label="Cancelar" estilo="negativo" action={() => cancel(false)} />
+          <div className={styles.buttonContainer}>
+            <Buttom extraClass={styles.formButtom} label="Vereficar" type="submit" />
+            <Buttom extraClass={styles.formButtom} label="Cancelar" estilo="negativo" action={() => cancel(false)} />
           </div>
         </form>
 
@@ -52,8 +52,10 @@ function ModalPassword({ cancel, }) {
             value={userSecondPass}
             onChange={(e) => setUserSecondPass(e.target.value)}
           ></Input>
-          <Buttom label="Cambiar" type="submit"/>
-          <Buttom label="Cancelar" estilo="negativo"/>
+          <div className={styles.buttonContainer}>
+          <Buttom extraClass={styles.formButtom} label="Cambiar" type="submit"/>
+          <Buttom extraClass={styles.formButtom} action={() => cancel(false)} label="Cancelar" estilo="negativo"/>
+          </div>
           </form>
         </ModalBase>
       )}

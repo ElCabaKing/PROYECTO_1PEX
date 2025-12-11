@@ -15,7 +15,8 @@
 }
 
 .tabla th:last-child {
-    width: 50px;
+    border-radius: 0px 10px 0px 0px;
+    width: 100px;
 }
 
 .fila td {
@@ -46,9 +47,26 @@
     align-items: center;
     justify-content: center;
 }
+.mainButton{
+    border-radius: 10px;
+}
+
+.addButton{
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
 
 @media (max-width: 600px) {
     .headerContainer{
         grid-template-columns: repeat(2, 1fr);
     }
+    .tabla{
+        width: 100%;
+    }
+    .mainButton{
+        grid-column: span 2;
+        height: 50px;
+    }
 }
+

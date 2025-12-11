@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styles from '../ModalUser/ModalUser.module.css'
 import ModalBase from '../ModalBase/ModalBase';
 
-function ModalUser({ rol_list,closeModal,saveUser}) {
+function ModalUser({ rol_list, closeModal, saveUser }) {
 
     const [username, setUsername] = useState("");
     const [nombre, setNombre] = useState("");
@@ -13,7 +13,7 @@ function ModalUser({ rol_list,closeModal,saveUser}) {
 
     function generateUsername(first, last) {
         const clean = (t) => t.toLowerCase().replace(/[^a-z0-9]/g, "");
-        const num = Math.floor(Math.random() * 100); 
+        const num = Math.floor(Math.random() * 100);
         return `${clean(first)}_${clean(last)}${num}`;
     }
 
@@ -25,36 +25,38 @@ function ModalUser({ rol_list,closeModal,saveUser}) {
 
     return (
         <ModalBase>
-            <Input
-                onChange={(e) => {
-                    const value = e.target.value;
-                    setNombre(value);
-                    updateUsername(value, apellido);
-                }}
-                placeholder="Nombre"
-            />
+            <form onSubmit={(e) => {e.preventDefault(); saveUser({ nombre: nombre, apellido: apellido, user_name: username, user_role: idRol })}}>
+                <Input
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        setNombre(value);
+                        updateUsername(value, apellido);
+                    }}
+                    placeholder="Nombre"
+                />
 
-            <Input
-                onChange={(e) => {
-                    const value = e.target.value;
-                    setApellido(value);
-                    updateUsername(nombre, value);
-                }}
-                placeholder="Apellido"
-            />
+                <Input
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        setApellido(value);
+                        updateUsername(nombre, value);
+                    }}
+                    placeholder="Apellido"
+                />
 
-            <p>Nombre de usuario:</p>
-            <p> {username}</p>
+                <p>Nombre de usuario:</p>
+                <p> {username}</p>
 
-            <select onChange={(e) => setIdRol(e.target.value)}>
-                {rol_list.map((rol) => (
-                    <option key={rol.id} value={rol.id}>{rol.rol_nombre}</option>
-                ))}
-            </select>
-            <div className={styles.modalButtonContainer}>
-                <Button action={() => saveUser({nombre: nombre,apellido: apellido, user_name: username,user_role:idRol })} label="Registrar" />
-                <Button action={()=> closeModal(false)} label="Cancelar" />
-            </div>
+                <select className={styles.select} onChange={(e) => setIdRol(e.target.value)}>
+                    {rol_list.map((rol) => (
+                        <option key={rol.id} value={rol.id}>{rol.rol_nombre}</option>
+                    ))}
+                </select>
+                <div className={styles.modalButtonContainer}>
+                    <Button extraClass={styles.button} type='submit' label="Registrar" />
+                    <Button extraClass={styles.button} estilo='negativo' action={() => closeModal(false)} label="Cancelar" />
+                </div>
+            </form>
         </ModalBase>
     );
 }

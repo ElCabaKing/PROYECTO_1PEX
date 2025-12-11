@@ -44,10 +44,13 @@ function ModalAns(props) {
                         value={userSecondPass}
                         onChange={(e) => setUserSecondPass(e.target.value)}
                     ></Input>
+                    <div className={styles.buttonContainer}>
                     <Buttom
+                        extraClass={styles.button}
                         type="submit"
                         label="Terminado"
                     />
+                    </div>
                 </form>
             </ModalBase>
     )

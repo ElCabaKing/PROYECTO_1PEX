@@ -25,10 +25,10 @@ function Home() {
                     pattern="\d+"
                     title="Solo numeros"
                     placeholder="Codigo" />
-                <Buttom label="Buscar" type="submit" />
+                <Buttom label="Buscar" type="submit" extraClass={styles.ButtomExtra} />
             </form>
-            <p>Eres un empleado ingresa aqui</p>
-           <Buttom label="Ir al login" action={() => navigate('/login')}/>
+            <p>Eres un empleado? Ingresa aqui</p>
+           <Buttom extraClass={styles.ButtomExtra} label="Ir al login" action={() => navigate('/login')}/>
             {showModal && (
                 <ModalBase>
                     <p>Id: {`${repairModalData.repair_data.id}`}</p>
@@ -37,7 +37,7 @@ function Home() {
                     <p className={repairModalData.repair_data.status_label==="REPARADO"? styles.repared : ""}>
                         Estado: {`${repairModalData.repair_data.status_label}`}</p>
                     <p>Total: ${repairModalData.repair_data.Total? repairModalData.repair_data.Total: "0"}</p>
-                    <Buttom label="Listo" action={() => {setCodeNumber("");setShowModal(false)}}/>
+                    <Buttom  extraClass={styles.ButtomExtra} label="Listo" action={() => {setCodeNumber("");setShowModal(false)}}/>
                 </ModalBase>
             )}
 

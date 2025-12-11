@@ -32,7 +32,6 @@
 
 .fila:nth-child(even) td {
     background-color: var(--primary-light);
-    /* alternado */
 }
 
 @media (max-width:700px) {
@@ -43,12 +42,13 @@
 }
 
 .tableContainer {
-    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    justify-content: flex-start;
     width: 100%;
+        height: 470px;
 
 }
 
@@ -58,8 +58,43 @@
     height: 50px;
     align-items: center;
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .buttomContainer button {
     width: 100px;
+}
+
+.mainContainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.MainButton{
+    padding: 10px;
+    border-radius: 5px;
+}
+.select {
+    width: 100%;
+    border: 2px solid var(--primary);
+    border-radius: 6px;
+    background-color: white;
+    outline: none;
+}
+
+.statusButton{
+    width: 100px;
+    height: 20px;
+    border-radius: 5px;
+}
+@media (max-width: 500px) {
+    .mainContainer{
+        flex-direction: column-reverse;
+    }
+    .tableContainer{
+        height: 100%;
+    }
 }

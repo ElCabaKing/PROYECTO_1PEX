@@ -47,6 +47,7 @@ function Login() {
                     type="submit"
                     label="Iniciar Sesion"
                     estilo="base"
+                    extraClass={styles.logInButtom}
                 />
                 </form>
             </div>

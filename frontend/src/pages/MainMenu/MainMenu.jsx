@@ -39,9 +39,9 @@ function MainMenu() {
       <> 
       <div className={styles.mainContainer}>
         <div className={styles.buttomContainer}>
-      {newButton && (<Buttom action={() => setShowModalRepair(true)} label="Nueva tarea"/>)}
+      {newButton && (<Buttom extraClass={styles.mainButton} action={() => setShowModalRepair(true)} label="Nueva tarea"/>)}
         </div>
-        Tareas Disponibles
+        <h2 style={{marginLeft: "10px"}}>Tareas Disponibles</h2>
       <div className={styles.container}>
             {repairList.map((repair) => <RepairCard key={repair.id} id={repair.id} 
             action={hkUpdateHead}

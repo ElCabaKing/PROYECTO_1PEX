@@ -15,6 +15,7 @@ function MyJobs() {
 
   return (
     <div className={styles.grandContainer}>
+      <h2 style={{marginLeft: "10px"}}>Mis Tareas</h2>
       <div className={styles.tableContainer} >
         <table className={styles.tabla}>
           <thead>

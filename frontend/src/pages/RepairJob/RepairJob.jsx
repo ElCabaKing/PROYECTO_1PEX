@@ -31,7 +31,7 @@ function RepairJob() {
         <p>Problema: {header.repair_problem}</p>
         <p>Estado: {header.status_label}</p>
         <p>Total: ${header.total}</p>
-        <Buttom disable={inMaintance || !isUser} estilo={inMaintance || !isUser? "negativo" : "base"} action={async () => {await hkFinishRepair(id); navigate('/jobs'); }} label="Terminar" />
+        <Buttom extraClass={styles.mainButton} disable={inMaintance || !isUser} estilo={inMaintance || !isUser? "negativo" : "base"} action={async () => {await hkFinishRepair(id); navigate('/jobs'); }} label="Terminar" />
       </div>
       <div className={styles.tablaContainer}>
         <table className={styles.tabla}>
@@ -40,7 +40,7 @@ function RepairJob() {
               <th>Detalle</th>
               <th>Fecha</th>
               <th>Valor</th>
-              <th><Buttom estilo={(noData || !isUser || inMaintance ? "negativo" : "base")} disable={noData || !isUser || inMaintance} action={() => setShowModalDetail(true)} label="+" /></th>
+              <th><Buttom extraClass={styles.addButton} estilo={(noData || !isUser || inMaintance ? "negativo" : "base")} disable={noData || !isUser || inMaintance} action={() => setShowModalDetail(true)} label="+" /></th>
             </tr>
           </thead>
           <tbody>
