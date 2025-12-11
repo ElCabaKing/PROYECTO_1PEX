@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_URL } from "../utils/api";
-export async function appstLogin({ user_nombre, user_password }) {
+export async function Login({ user_nombre, user_password }) {
     const res = await axios.post(`${API_URL}/login`,
         {
             user_nombre,
@@ -9,11 +9,12 @@ export async function appstLogin({ user_nombre, user_password }) {
         {
             withCredentials: true
         }
-    )
+    );
+    console.log(res);
     return res.data;
 }
 
-export async function appstLogOut() {
+export async function LogOut() {
     const res = await axios.get(`${API_URL}/logout`,
         {
             withCredentials: true

@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 export const tokenRoleAuthNx = (roles = []) => {
     return (req, res, next) => {
+        console.log("ola")
         const token = req.cookies.auth_token;
         if (!token) {
             return res.status(401).json({ message: "No hay o no se envió token" });
@@ -21,37 +22,35 @@ export const tokenRoleAuthNx = (roles = []) => {
 
 export const tokenRoleAuth = (roles = []) => {
     return (req, res) => {
-        console.log(req.cookies)
         const token = req.cookies.auth_token;
         const refresh_token = req.cookies.refresh_token;
         if (!token && !refresh_token) {
-            return res.json({ validation: false });
+            return res.status(401).json({ validation: false });
         }
         if (!token && refresh_token) {
             try {
                 const decode = jwt.verify(refresh_token, process.env.JWT_SECRET);
-                const tieneRol = roles.some(role => decode.roles.includes(role));
-                console.log("tiene", tieneRol)
+                console.log(decode, roles)
+                const tieneRol = roles.includes(decode.rol);
                 if (!tieneRol) {
-                    return res.json({ validation: false });
+                    return res.status(401).json({ validation: false, message: "No tienes permisos" });
                 }
-                return res.json({ validation: true });
+                return res.status(200).json({ validation: true, message: "Verificacion Exitosa" });
             }
             catch (error) {
-                return res.json({ validation: false });
+                return res.status(401).json({ validation: false, message: "Token invalido" });
             }
         }
         try {
             const decode = jwt.verify(token, process.env.JWT_SECRET);
-            const tieneRol = roles.some(role => decode.roles.includes(role));
-            console.log("tiene", tieneRol)
+            const tieneRol = roles.includes(decode.rol);
             if (!tieneRol) {
-                return res.json({ validation: false });
+                return res.status(401).json({ validation: false, message: "No tienes permisos" });
             }
-            return res.json({ validation: true });
+            return res.status(200).json({ validation: true, message: "Verificacion Exitosa" });
         }
         catch (error) {
-            return res.json({ validation: false });
+            return res.status(401).json({ validation: false, message: "Token invalido" });
         }
     };
 };

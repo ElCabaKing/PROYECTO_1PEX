@@ -1,66 +1,104 @@
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import modelLogin from "../model/login.model.js";
 import { emitLoginToAdmins } from "../socket.js";
-import bcrypt from 'bcrypt';
-export const ctLogin = async (req, res) => {
-    try {
-        const {user_nombre, user_password} = req.body;
-        const user_id_password = await modelLogin.mdLogin(user_nombre);
-        console.log(user_nombre)
-        if (!user_id_password || user_id_password.estado !=1) { return res.json({ login: false }) }
-        const valid = await bcrypt.compare(user_password, user_id_password.user_password);
-        if (valid) {
-            const roles = await modelLogin.mdUserRolesData(user_id_password.id)
-            const userRoles = roles.map(r => r.rol_nombre);
-            const payload = { id: user_id_password.id, user_nombre: user_nombre, roles: userRoles }
-            const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
-            const refreshToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "4h" });
-            res.cookie("auth_token", token, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                path: "/",
-                maxAge: 15 * 60 * 1000
-            });
-            res.cookie("refresh_token", refreshToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                path: "/",
-                maxAge: 4 * 60 * 60 * 1000
-            })
-            const permisos = await modelLogin.mdUserDateLog(user_id_password.id);
-            emitLoginToAdmins(user_nombre)
-            return res.json({ login: true, 
-                permisos: permisos,
-                rol: userRoles,
-                first_time: user_id_password.security_code ? false : true,
-                user_name: user_nombre});
-        }
-        else {
-            return res.json({ login: false })
-        }
-    }
-    catch (error) {
-        res.status(505).json({ message: "Error al obtener los datos", error: error.message });
-    }
+
+
+const createToken = (payload, expiresIn) =>
+  jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
+
+const setCookie = (res, name, value, maxAge) => {
+  res.cookie(name, value, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+    maxAge,
+  });
 };
-export const ctLogOut = async (req, res) => {
-    res.clearCookie("auth_token", {
+
+
+export const Login = async (req, res) => {
+  try {
+    const { user_nombre, user_password } = req.body;
+
+    if (!user_nombre || !user_password) {
+      return res.status(400).json({
+        login: false,
+        message: "Usuario y contraseña son requeridos",
+      });
+    }
+
+    const user = await modelLogin.findUserByUsername(user_nombre);
+
+    if (!user || user.estado !== 1) {
+      return res.status(401).json({ login: false, message: "Credenciales inválidas" });
+    }
+
+    const validPassword = await bcrypt.compare(user_password, user.user_password);
+    if (!validPassword) {
+      return res.status(401).json({ login: false, message: "Credenciales inválidas" });
+    }
+
+    const userPermissions = await modelLogin.getUserPermissions(user.id);
+
+    const rol = await modelLogin.getUserRoles(user.id);
+    console.log(rol);
+    const payload = {
+      id: user.id,
+      user_nombre,
+      rol: rol.rol_nombre,
+    };
+
+
+    const accessToken = createToken(payload, "15m");
+    const refreshToken = createToken(payload, "4h");
+
+    setCookie(res, "auth_token", accessToken, 15 * 60 * 1000);
+    setCookie(res, "refresh_token", refreshToken, 4 * 60 * 60 * 1000);
+
+
+    emitLoginToAdmins(user_nombre);
+
+    return res.status(200).json({
+      login: true,
+      userPermissions,
+      rol: rol.rol_nombre,
+      first_time: !user.security_code,
+      user_name: user_nombre,
+    });
+
+  } catch (error) {
+    console.error("Login error:", error);
+    return res.status(500).json({
+      login: false,
+      message: "Error interno del servidor",
+      error: error.message,
+    });
+  }
+};
+
+export const LogOut = (req, res) => {
+  try {
+    const cookiesToClear = ["auth_token", "refresh_token"];
+
+    cookiesToClear.forEach((cookieName) =>
+      res.clearCookie(cookieName, {
         httpOnly: true,
         secure: true,
         sameSite: "none",
         path: "/",
-    })
-    res.clearCookie("refresh_token", {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        path: "/",
-    })
-    res.json({logout: true})
+      })
+    );
+
+    return res.status(200).json({ logout: true });
+
+  } catch (error) {
+    return res.status(500).json({
+      logout: false,
+      message: "Error al cerrar sesión",
+    });
+  }
 };
-export default {
-    ctLogin,
-    ctLogOut
-};
+
+export default { Login, LogOut };

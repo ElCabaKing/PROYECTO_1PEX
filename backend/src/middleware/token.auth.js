@@ -1,45 +1,46 @@
 import jwt from "jsonwebtoken";
 
+const createToken = (payload, expiresIn) =>
+  jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
+
+const setCookie = (res, name, value, maxAge) => {
+  res.cookie(name, value, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    path: "/",
+    maxAge,
+  });
+};
 
 export const tokenAuthNx = (req, res, next) => {
     const token = req.cookies.auth_token;
     const refresh_token = req.cookies.refresh_token;
+
     if (!token && !refresh_token) {
-        return res.json({ validation: false });
+        return res.status(401).json({ validation: false,message: "No autenticado" });
     }
+
     if (!token && refresh_token) {
         try {
-            const epico = jwt.verify(refresh_token, process.env.JWT_SECRET);
-            const payload = { id: epico.id, user_nombre: epico.user_nombre, roles: epico.roles }
-            const newToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "15m" });
-            const newRefreshToken = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "4h" });
-            res.cookie("auth_token", newToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                path: "/",
-                maxAge: 15 * 60 * 1000
-
-            });
-            res.cookie("refresh_token", newRefreshToken, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                path: "/",
-                maxAge: 4 * 60 * 60 * 1000
-            })
+            const decode = jwt.verify(refresh_token, process.env.JWT_SECRET);
+            const payload = { id: decode.id, user_nombre: decode.user_nombre, rol: decode.rol }
+            const newToken = createToken(payload,"15m")
+            const newRefreshToken = createToken(payload,"4h");
+            setCookie(res,"auth_token",newToken,15 * 60 * 1000)
+            setCookie(res,"refresh_token",newRefreshToken, 4 * 60 * 60 * 1000);
             return next();
         }
         catch (error) {
-            return res.json({ validation: false })
+            return res.status(401).json({ validation: false, message: "Token no valido"})
         }
     }
     try {
-        jwt.verify(token, process.env.JWT_SECRET);
+        const decode = jwt.verify(token, process.env.JWT_SECRET);
         return next();
     }
     catch (error) {
-        return res.json({ validation: false})
+        return res.status(401).json({ validation: false, message: "Token expirado o invalido"})
     }
 }
 

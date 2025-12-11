@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Card.module.css";
-import { appstLogOut } from "../../api/login.api";
+import { LogOut } from "../../api/login.api";
 const Card = (props) => {
   const navigate = useNavigate()
   async function closeSession() {
-    const res = await appstLogOut();
+    const res = await LogOut();
     console.log(res)
     if(res.logout){
     localStorage.clear();

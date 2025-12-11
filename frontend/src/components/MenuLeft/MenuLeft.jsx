@@ -6,7 +6,6 @@ import img from "../../media/Logo.avif"
 function MenuLeft({ children }) {
     const [showMenu, setShowMenu] = useState(false)
     const [menuItem, setMenuItem] = useState([])
-    const sidebar = "<"
     useEffect(() => {
         const stored = localStorage.getItem("menuList")
         if(stored){
@@ -16,7 +15,7 @@ function MenuLeft({ children }) {
     return (
         <div className={styles.pageContainer}>
             <div className={styles.buttonContainer}>
-            <button className={styles.showButton} onClick={() => setShowMenu(true)}>{sidebar}</button>
+            <button className={styles.showButton} onClick={() => setShowMenu(true)}>{`<`}</button>
             </div>
             <div className={`${styles.menuContainer} ${showMenu ? styles.menuContainerExtra : ""}`}>
                 <div className={styles.menuUp}>
