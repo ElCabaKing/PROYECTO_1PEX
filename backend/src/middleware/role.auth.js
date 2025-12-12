@@ -4,11 +4,11 @@ export const tokenRoleAuthNx = (roles = []) => {
         console.log("ola")
         const token = req.cookies.auth_token;
         if (!token) {
-            return res.status(401).json({ message: "No hay o no se envió token" });
+            return res.status(401).json({ message: "No hay o no se envió token, Recarga la pagina" });
         }
         try {
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-            const tieneRol = roles.some(role => decodedToken.roles.includes(role));
+            const tieneRol = roles.includes(decodedToken.rol)
             if (!tieneRol) {
                 return res.status(403).json({ message: "No tienes permiso hacer eso" });
             }

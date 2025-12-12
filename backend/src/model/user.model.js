@@ -1,80 +1,123 @@
 import { pool } from "../config/db.js";
 
-export const mdSaveSkAns = async (user_name, user_sk_ans, user_password) => {
-    await pool.query(
-        `UPDATE users
+export const updateSecurityCode = async ({ user_name, user_sk_ans, user_password }) => {
+    try {
+        await pool.query(
+            `UPDATE users
         SET security_code = ?,user_password = ?
         WHERE user_nombre = ?`,
-        [user_sk_ans, user_password, user_name])
-    return;
+            [user_sk_ans, user_password, user_name]);
+        return {created: true};
+    }
+    catch (error) {
+        console.log("DATABASE ERROR: SaveSecurityCode: ", error);
+        throw new Error("DATABASE_ERROR");
+    }
 }
 
-export const mdGetAns = async (user_name) => {
-    const [rows] = await pool.query(
-        `SELECT security_code FROM users
+export const getSecurityCode = async ({ user_name }) => {
+    try {
+        const [rows] = await pool.query(
+            `SELECT security_code FROM users
         WHERE user_nombre = ?`,
-        [user_name])
-    return rows[0];
+            [user_name]);
+        return rows[0];
+    }
+    catch (error) {
+        console.log("DATABASE ERROR: GetSecurityCode: ", error);
+        throw new Error("DATABASE_ERROR");
+    }
 }
 
-export const mdSaveUser = async (user_name, apellido, nombre, user_rol, firstPass) => {
-    await pool.query(
-        `INSERT INTO users
+export const createNewUser = async ({ user_name, apellido, nombre, user_rol, firstPass }) => {
+    try {
+        await pool.query(
+            `INSERT INTO users
         (user_nombre,apellido,nombre, rol_id, user_password)
         VALUES(?, ?, ?, ?, ?);`,
-        [user_name, apellido, nombre, user_rol, firstPass]
-    );
-    return;
+            [user_name, apellido, nombre, user_rol, firstPass]
+        );
+        return {succes: true};
+    }
+    catch (error) {
+        console.log("DATABASE ERROR: SaveNewUser: ", error);
+        throw new Error("DATABASE_ERROR");
+    }
 }
 
-export const mdGetIndex = async () => {
-    const [number_user] = await pool.query(
-        `SELECT COUNT(*) AS total FROM users;`
-    )
-    const number_pages = Math.ceil(number_user[0].total/10);
-    return number_pages;
+export const getUserIndex = async () => {
+    try {
+        const [number_user] = await pool.query(
+            `SELECT COUNT(*) AS total FROM users;`
+        );
+        const number_pages = Math.ceil(number_user[0].total / 10);
+        return number_pages;
+    }
+    catch (error) {
+        console.log("DATABASE ERROR: GetUserIndex: ", error);
+        throw new Error("DATABASE_ERROR");
+    }
 }
 
-export const mdGetList = async (user_name,number_index) => {
-    const [lista_user] = await pool.query(
-        `SELECT u.ID,u.user_nombre,u.apellido,u.nombre,rl.rol_nombre,u.estado,u.rol_id
+export const getUserList = async ({ user_name, number_index }) => {
+    try {
+        const [lista_user] = await pool.query(
+            `SELECT u.ID,u.user_nombre,u.apellido,u.nombre,rl.rol_nombre,u.estado,u.rol_id
         FROM users as u
         INNER JOIN roles AS rl ON u.rol_id = rl.id
         WHERE u.user_nombre != ?
         ORDER BY u.ID
         LIMIT ?,10`,
-        [user_name,number_index]);
-    const [lista_roles] = await pool.query(
-        `SELECT * FROM roles`
-    )
-    return [lista_user, lista_roles];
+            [user_name, number_index]);
+        const [lista_roles] = await pool.query(
+            `SELECT * FROM roles`
+        )
+        return [lista_user, lista_roles];
+    }
+    catch (error) {
+        console.log("DATABASE ERROR: GetUserList: ", error);
+        throw new Error("DATABASE_ERROR");
+    }
 }
 
-export const mdChangeRol = async (ID, rol_id) => {
-    await pool.query(
-        `UPDATE users
+export const updateUserRol = async ({ID, rol_id}) => {
+    try {
+        await pool.query(
+            `UPDATE users
         SET  rol_id=?
         WHERE id=?;`,
-        [rol_id, ID]
-    );
-    return;
+            [rol_id, ID]
+        );
+        return {updated: true};
+    }
+    catch (error) {
+        console.log("DATABASE ERROR: UpdateUserRol: ", error);
+        throw new Error("DATABASE_ERROR");
+    }
 }
 
-export const mdChangeStatus = async (ID, estatus) => {
-    await pool.query(
-        `UPDATE users
+export const updateUserStatus = async ({ID, estatus}) => {
+    try {
+        await pool.query(
+            `UPDATE users
         SET  estado=?
         WHERE id=?;`,
-        [estatus, ID]
-    );
+            [estatus, ID]
+        );
+        return {updated: true}
+    }
+    catch (error) {
+        console.log("DATABASE ERROR: UpdateUserStatus: ", error);
+        throw new Error("DATABASE_ERROR");
+    }
 }
 
 export default {
-    mdSaveSkAns,
-    mdGetAns,
-    mdSaveUser,
-    mdGetList,
-    mdChangeRol,
-    mdChangeStatus,
-    mdGetIndex
+    updateSecurityCode,
+    getSecurityCode,
+    createNewUser,
+    getUserList,
+    updateUserRol,
+    updateUserStatus,
+    getUserIndex
 }

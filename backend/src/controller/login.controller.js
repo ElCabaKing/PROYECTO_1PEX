@@ -5,7 +5,7 @@ import { emitLoginToAdmins } from "../socket.js";
 
 
 const createToken = (payload, expiresIn) =>
-  jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
+jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
 
 const setCookie = (res, name, value, maxAge) => {
   res.cookie(name, value, {
@@ -18,7 +18,7 @@ const setCookie = (res, name, value, maxAge) => {
 };
 
 
-export const Login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { user_nombre, user_password } = req.body;
 
@@ -29,7 +29,7 @@ export const Login = async (req, res) => {
       });
     }
 
-    const user = await modelLogin.findUserByUsername(user_nombre);
+    const user = await modelLogin.getUserByUsername(user_nombre);
 
     if (!user || user.estado !== 1) {
       return res.status(401).json({ login: false, message: "Credenciales inválidas" });
@@ -78,7 +78,7 @@ export const Login = async (req, res) => {
   }
 };
 
-export const LogOut = (req, res) => {
+export const logOut = (req, res) => {
   try {
     const cookiesToClear = ["auth_token", "refresh_token"];
 
@@ -101,4 +101,4 @@ export const LogOut = (req, res) => {
   }
 };
 
-export default { Login, LogOut };
+export default { login, logOut };

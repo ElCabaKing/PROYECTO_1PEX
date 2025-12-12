@@ -1,6 +1,6 @@
 import { pool } from "../config/db.js";
 
-export const findUserByUsername = async (username) => {
+export const getUserByUsername = async (username) => {
   try {
     const [rows] = await pool.query(
       `SELECT user_password, id, security_code, estado
@@ -54,7 +54,7 @@ export const getUserRoles = async (user_id) => {
 };
 
 export default {
-  findUserByUsername,
+  getUserByUsername,
   getUserPermissions,
   getUserRoles,
 };
