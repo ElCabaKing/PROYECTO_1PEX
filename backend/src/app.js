@@ -4,13 +4,15 @@ import cors from 'cors';
 import http from 'http';
 import cookieParser from "cookie-parser";
 // rutas
-import loginRoute from './routes/login.route.js';
-import authRoute from './routes/auth.route.js';
-import userRoute from './routes/user.route.js';
-import repairRoute from './routes/repair.route.js';
-import recoveryRoute from './routes/recovery.route.js';
+import loginRoute from './modules/login/login.route.js';
+import authRoute from './modules/auth/auth.route.js';
+import userRoute from './modules/user/user.route.js';
+import repairRoute from './modules/repair/repair.route.js';
+import recoveryRoute from './modules/recovery/recovery.route.js';
 // socket
 import { initSocket } from "./socket.js";
+//middleware
+import errorHandler from './utils/ErrorHandler.js'
 
 const app = express();
 const server = http.createServer(app);
@@ -24,11 +26,16 @@ app.use(cors({
   credentials: true,
 }));
 
+
+
 // Registrar rutas
 app.use(loginRoute);
 app.use(authRoute);
 app.use("/user",userRoute);
 app.use("/repair",repairRoute);
 app.use("/recovery",recoveryRoute);
+
+//middleware global
+app.use(errorHandler);
 
 export default server;

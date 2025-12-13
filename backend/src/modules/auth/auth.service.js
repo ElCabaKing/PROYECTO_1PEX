@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'
 import {AppError} from '../../utils/AppError.js'
+import JwtGenerator from '../../utils/JwtGenerator.js';
 export const authService = {
 
     validateAccessToken({accessToken}){
@@ -33,6 +34,14 @@ export const authService = {
             id: refreshData.id,
             user_nombre: refreshData.user_nombre,
             rol: refreshData.rol
+        };
+
+        const newAccessToken = JwtGenerator(payload,"15m");
+        const newRefreshToken = JwtGenerator(payload,"4h");
+
+        return{
+           newAccessToken: newAccessToken,
+           newRefreshtToken: newRefreshToken
         }
     }
 }

@@ -1,6 +1,6 @@
-import modelRepair from "../model/repair.model.js";
+import modelRepair from "./repair.model.js";
 import jwt from 'jsonwebtoken'
-import { emitNewRepair, emitAlertRepair } from "../socket.js";
+import { emitNewRepair, emitAlertRepair } from "../../socket.js";
 export const ctSaveRepair = async (req, res) => {
     try {
         const { cedula_cliente, modelo, repair_problem } = req.body;

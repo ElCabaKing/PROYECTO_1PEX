@@ -1,5 +1,4 @@
-import { pool } from "../config/db.js";
-
+import { pool } from "../../config/db.js";
 
 export const getSecurityCode = async (userName) => {
     const [security_code] = await pool.query(`

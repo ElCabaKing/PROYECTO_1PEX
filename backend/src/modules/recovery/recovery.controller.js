@@ -1,11 +1,11 @@
+import modelRecovery from "./recovery.model.js";
+import bcrypt from "bcrypt";
 
-import recoveryModel from "../model/recovery.model.js";
-import bcrypt from "bcrypt"
 const saltRounds = 10;
 export const getSecurityCode = async (req, res) => {
     try {
         const { userName, securityCode } = req.body;
-        const userSecurityCoded = await recoveryModel.getSecurityCode(userName);
+        const userSecurityCoded = await modelRecovery.getSecurityCode(userName);
         if (!userSecurityCoded) { return res.status(404).json({ response: "Usuario no encontrado o nunca a iniciado sesion" }) }
         if (!(await bcrypt.compare(securityCode, userSecurityCoded.security_code))) { return res.status(401).json({ response: "Codigo o Usario erroneo" }) };
         return res.status(200).json({ isCorrect: true });
@@ -19,7 +19,7 @@ export const updateUserPassword = async (req, res) => {
     try {
         const { userName, newPassword } = req.body;
         const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
-        await recoveryModel.updateUserPassword(userName, newPasswordHash);
+        await modelRecovery.updateUserPassword(userName, newPasswordHash);
         return res.status(200).json({ response: "Cambio exitoso" });
     }
     catch (error) {

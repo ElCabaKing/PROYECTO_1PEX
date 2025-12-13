@@ -1,6 +1,6 @@
-import { pool } from "../config/db.js";
+import { pool } from "../../config/db.js";
 
-export const getUserByUsername = async (username) => {
+export const getUserByUsername = async ({username}) => {
   try {
     const [rows] = await pool.query(
       `SELECT user_password, id, security_code, estado
@@ -18,7 +18,7 @@ export const getUserByUsername = async (username) => {
 };
 
 
-export const getUserPermissions = async (user_id) => {
+export const getUserPermissions = async ({user_id}) => {
   try {
     const [rows] = await pool.query(
       `SELECT md.menu_label, md.menu_path
@@ -36,7 +36,7 @@ export const getUserPermissions = async (user_id) => {
   }
 };
 
-export const getUserRoles = async (user_id) => {
+export const getUserRoles = async ({user_id}) => {
   try {
     const [rows] = await pool.query(
       `SELECT rl.rol_nombre

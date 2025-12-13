@@ -1,5 +1,6 @@
+import modelUser from "./user.model.js"
 import bcrypt from 'bcrypt';
-import modelUser from "../model/user.model.js"
+
 const saltRounds = 10;
 export const createSecurityCode = async (req, res) => {
     try {

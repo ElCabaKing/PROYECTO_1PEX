@@ -1,5 +1,5 @@
 import { Router } from "express";
-import RecoveryController from "../controller/recovery.controller.js";
+import RecoveryController from "./recovery.controller.js";
 const router = Router();
 
 router.post('/SecurityCode',RecoveryController.getSecurityCode);

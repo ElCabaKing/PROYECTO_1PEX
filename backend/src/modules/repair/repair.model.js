@@ -1,4 +1,5 @@
-import { pool } from "../config/db.js";
+import { pool } from "../../config/db.js";
+
 export const mdSaveReapir = async (cedula_cliente, modelo, repair_problem) => {
     await pool.query(
         `INSERT INTO repair_header

@@ -1,4 +1,4 @@
-import { pool } from "../config/db.js";
+import { pool } from "../../config/db.js";
 
 export const updateSecurityCode = async ({ user_name, user_sk_ans, user_password }) => {
     try {
