@@ -1,6 +1,6 @@
 import { pool } from "../../config/db.js";
 
-export const mdSaveReapir = async (cedula_cliente, modelo, repair_problem) => {
+export const createNewRepair = async ({cedula_cliente, modelo, repair_problem}) => {
     await pool.query(
         `INSERT INTO repair_header
             (cedula_cliente, modelo, repair_problem)
@@ -9,7 +9,7 @@ export const mdSaveReapir = async (cedula_cliente, modelo, repair_problem) => {
     return;
 };
 
-export const mdGetRepairF = async () => {
+export const getRepairOnWork = async () => {
     const [rows] = await pool.query(
         `SELECT rh.id, rh.modelo, ts.status_label, rh.repair_status , rh.fecha_inicio, rh.repair_problem
         FROM repair_header as rh 
@@ -18,7 +18,7 @@ export const mdGetRepairF = async () => {
     return rows;
 };
 
-export const mdUpdateHeader = async (user_id, new_status, repair_id,message) => {
+export const updateRepairHeader = async ({user_id, new_status, repair_id,message}) => {
     await pool.query(
         `UPDATE repair_header
         SET repair_status= ?, id_reparador= ?
@@ -33,7 +33,7 @@ export const mdUpdateHeader = async (user_id, new_status, repair_id,message) => 
     return;
 };
 
-export const mdGetUsersRepair = async (user_id) => {
+export const getUsersRepair = async ({user_id}) => {
     const [repair_list] = await pool.query(
         `SELECT rh.id, rh.modelo, ts.status_label, rh.fecha_inicio, rh.repair_problem
         FROM repair_header as rh 
@@ -43,16 +43,16 @@ export const mdGetUsersRepair = async (user_id) => {
     return repair_list;
 };
 
-export const mdGetRepairCountById = async (user_id) => {
-    const [reapir_count] = await pool.query(
+export const getRepairCountById = async ({user_id}) => {
+    const [repair_count] = await pool.query(
         `SELECT count(*) as total FROM repair_header rh 
         WHERE rh.id_reparador = ?
         AND rh.repair_status =2`,
         [user_id]);
-    return reapir_count;
+    return repair_count;
 };
 
-export const mdGetRepairDetailsById = async (repair_id) => {
+export const getRepairDetailsById = async ({repair_id}) => {
     const [exist] = await pool.query(
         "SELECT id FROM repair_header WHERE id = ?",
         [repair_id]
@@ -82,7 +82,7 @@ export const mdGetRepairDetailsById = async (repair_id) => {
 };
 
 
-export const mdGetRepairClient = async (repair_id) => {
+export const getRepairClient = async ({repair_id}) => {
     const [exist] = await pool.query(
         "SELECT id FROM repair_header WHERE id = ?",
         [repair_id]
@@ -108,7 +108,7 @@ export const mdGetRepairClient = async (repair_id) => {
 };
 
 
-export const mdGetRepairById = async (repair_id) => {
+export const getRepairById = async ({repair_id}) => {
     const [repair_data] = await pool.query(
         `SELECT ts.status_label ,rh.repair_problem , rh.modelo, rh.id , SUM(rd.valor) as total  FROM repair_header rh
         INNER JOIN repair_details rd ON rd.repair_headerId =rh.id 
@@ -119,15 +119,15 @@ export const mdGetRepairById = async (repair_id) => {
     return [repair_data];
 };
 
-export const mdGetRepairUserId = async (repair_id) => {
+export const getRepairUserId = async ({repair_id}) => {
     const [repair_user] = await pool.query(
         `SELECT rh.id_reparador  FROM repair_header rh 
         WHERE rh.id = ?`,[repair_id]
     );
-    return repair_user[0];
+    return repair_user[0].id_reparador;
 }
 
-export const mdSaveRepairDetail = async (repair_id,detalle,valor) => {
+export const createNewRepairDetail = async ({repair_id,detalle,valor}) => {
     await pool.query(
         `INSERT INTO repair_details
     (detalle, valor, repair_headerId)
@@ -136,7 +136,7 @@ export const mdSaveRepairDetail = async (repair_id,detalle,valor) => {
     return;
 }
 
-export const mdGetRepairHeader = async (repair_id) => {
+export const getRepairHeader = async ({repair_id}) => {
     const [repair_header] = await pool.query (
         `SELECT rh.id, rh.cedula_cliente , rh.fecha_inicio, rh.modelo, ts.status_label, rh.repair_problem, sum(rd.valor ) as Total FROM repair_header rh 
         INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
@@ -147,7 +147,7 @@ export const mdGetRepairHeader = async (repair_id) => {
     return repair_header[0];
 }
 
-export const mdGetHistoryList = async (search_number) => {
+export const getHistoryList = async ({search_number}) => {
     const [historyList] = await pool.query(
         `SELECT rh.id , rh.cedula_cliente, rh.fecha_inicio , ts.status_label , u.user_nombre, sum(rd.valor ) as Total  FROM repair_header rh 
 INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
@@ -168,16 +168,16 @@ GROUP BY rh.id
 }
 
 export default {
-    mdSaveReapir,
-    mdGetRepairF,
-    mdUpdateHeader,
-    mdGetUsersRepair,
-    mdGetRepairCountById,
-    mdGetRepairDetailsById,
-    mdGetRepairById,
-    mdGetRepairUserId,
-    mdSaveRepairDetail,
-    mdGetRepairClient,
-    mdGetRepairHeader,
-    mdGetHistoryList,
+    createNewRepair,
+    getRepairOnWork,
+    updateRepairHeader,
+    getUsersRepair,
+    getRepairCountById,
+    getRepairDetailsById,
+    getRepairById,
+    getRepairUserId,
+    createNewRepairDetail,
+    getRepairClient,
+    getRepairHeader,
+    getHistoryList,
 }

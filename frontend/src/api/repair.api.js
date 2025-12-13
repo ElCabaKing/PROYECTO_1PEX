@@ -19,7 +19,7 @@ export async function appUpdateHead(repair_id, new_status) {
         return res.data;
     }
     catch (error) {
-        return alert(error.response.data.response)
+        return alert(error.response.data.error)
     }
 };
 

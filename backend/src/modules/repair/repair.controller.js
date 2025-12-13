@@ -1,99 +1,69 @@
 import modelRepair from "./repair.model.js";
 import jwt from 'jsonwebtoken'
 import { emitNewRepair, emitAlertRepair } from "../../socket.js";
-export const ctSaveRepair = async (req, res) => {
+import { repairService } from "./repair.service.js";
+export const createNewRepair = async (req, res, next) => {
     try {
         const { cedula_cliente, modelo, repair_problem } = req.body;
-        await modelRepair.mdSaveReapir(cedula_cliente, modelo, repair_problem);
+        const {message} = await repairService.createNewRepair({cedula_cliente, modelo, repair_problem})
         emitNewRepair();
-        return res.json({ message: "Guardado" })
+        return res.status(201).json(message)
     }
     catch (error) {
-        return res.status(500).json({ error: error.message })
+        next(error);
     }
 };
 
-export const ctGetRepairsF = async (req, res) => {
+export const getToWorkList = async (req, res) => {
     try {
-        const Torepair_list = await modelRepair.mdGetRepairF();
-        return res.json(Torepair_list)
+        const toWorkList = await repairService.getToWorkList();
+        return res.json(toWorkList)
     }
     catch (error) {
         return res.status(500).json({ error: error.message })
     }
 };
 
-export const ctUpdateHead = async (req, res) => {
+export const updateHead = async (req, res, next) => {
     try {
         const token = req.cookies.auth_token;
-        const decodedToken = jwt.decode(token);
 
         const { new_status, repair_id } = req.body;
 
-        if(new_status===2){const reg = await modelRepair.mdGetRepairCountById(decodedToken.id);
+        const {alert,response} = await repairService.updateHead({token,new_status,repair_id});
 
-        if (reg[0].total >= 5) {
-            return res.status(403).json({
-                response: "Hijo de la semilla, acaba un trabajo primero"
-            });
-        }
+       emitAlertRepair(alert);
 
-        await modelRepair.mdUpdateHeader(
-            decodedToken.id,
-            new_status,
-            repair_id,
-            "SE COMENZO LA REPARACION"
-        );
-
-        emitAlertRepair(`El usuario ${decodedToken.user_nombre} ha aceptado el pedido ${repair_id}`);
-
-
-        return res.status(200).json({
-            response: "Reparación aceptada correctamente"
-        });}
-        else{
-            await modelRepair.mdUpdateHeader(
-                decodedToken.id,
-                new_status,
-                repair_id,
-                "LA REPARACION CONCLUYO"
-            );
-            emitAlertRepair(`El usuario ${decodedToken.user_nombre} ha terminado el pedido ${repair_id}`);
-            res.status(200).json({response: "Repracion concluida"})
-        }
+       return res.status(201).json({response: response})
 
     } catch (error) {
-        console.log(error)
-        return res.status(500).json({ error: error.message });
+        next(error)
     }
 };
 
-export const ctGetUsersRepair = async (req, res) => {
+export const getUsersRepair = async (req, res, next) => {
     try {
-        let token = req.cookies.auth_token;
-        if (!token) { token = req.cookies.refresh_token }
-        const decodenToken = jwt.verify(token, process.env.JWT_SECRET);
-        const repair_list = await modelRepair.mdGetUsersRepair(decodenToken.id);
-        return res.json(repair_list);
+        const {refresh_token,auth_token} = req.cookies;
+        const {repair_list} = await repairService.getUsersRepair({refresh_token,auth_token});
+
+        return res.status(200).json(repair_list);
     }
     catch (error) {
-        return res.status(500).json({ error: error.message });
+        next(error)
     };
 };
 
-export const ctGetRepairData = async (req, res) => {
+export const getRepairData = async (req, res, next) => {
     try {
-        let token = req.cookies.auth_token;
-        if (!token) { token = req.cookies.refresh_token }
-        const decodedToken= jwt.verify(token, process.env.JWT_SECRET);
+        const {refresh_token,auth_token} = req.cookies;
         const { repair_id } = req.query;
-        if (!repair_id) { return res.status(405).json({ response: "ctGetRepairData No se envio el id" }) }
-        const repair_user_id = await modelRepair.mdGetRepairUserId(repair_id);
-        const repair_data = await modelRepair.mdGetRepairDetailsById(repair_id);
-        return res.json([repair_data,{isUser: repair_user_id.id_reparador === decodedToken.id}]);
+
+        const {repair_data, isUser }= await repairService.getRepairData({refresh_token,auth_token,repair_id});
+        
+        return res.status(200).json({repair_data,isUser})
     }
     catch (error) {
-        return res.status(404).json({ error: error.message });
+        next(error);
     };
 };
 
@@ -101,7 +71,7 @@ export const ctGetRepairDataUser = async (req, res) => {
     try {
         const { repair_id } = req.query;
         if (!repair_id) { return res.status(405).json({ response: "No se envio el id" }) }
-        const repair_data = await modelRepair.mdGetRepairById(repair_id);
+        const repair_data = await modelRepair.getRepairById(repair_id);
         return res.json(repair_data);
     }
     catch (error) {
@@ -114,7 +84,7 @@ export const ctSaveRepairDetail = async (req,res) => {
     try{
         const {repair_id,detalle,valor} = req.body;
         console.log(repair_id,detalle,valor)
-        await modelRepair.mdSaveRepairDetail(repair_id,detalle,valor);
+        await modelRepair.createNewRepairDetail(repair_id,detalle,valor);
         return res.sendStatus(201)
     }
     catch(error){
@@ -125,7 +95,7 @@ export const ctSaveRepairDetail = async (req,res) => {
 export const ctGetRepairDataClient = async (req,res) => {
     try{const {repair_id} = req.query;
     console.log(repair_id);
-    const repair_data = await modelRepair.mdGetRepairHeader(repair_id);
+    const repair_data = await modelRepair.getRepairHeader(repair_id);
     console.log(repair_data)
     if(!repair_data.id){return res.status(404).json({response: "Pedido no encontrado"})}
     else{
@@ -141,7 +111,7 @@ export const ctGetHistoryList = async (req,res) => {
     try{
         const {index_num} = req.query;
         const search_number = (index_num-1)*10
-        const historyList = await modelRepair.mdGetHistoryList(search_number);
+        const historyList = await modelRepair.getHistoryList(search_number);
         if(!historyList){return res.status(404).json({response: "No hay registros"})};
         return res.status(200).json(historyList);
     }
@@ -151,11 +121,11 @@ export const ctGetHistoryList = async (req,res) => {
 }
 
 export default {
-    ctSaveRepair,
-    ctGetRepairsF,
-    ctUpdateHead,
-    ctGetUsersRepair,
-    ctGetRepairData,
+    createNewRepair,
+    getToWorkList,
+    updateHead,
+    getUsersRepair,
+    getRepairData,
     ctGetRepairDataUser,
     ctSaveRepairDetail,
     ctGetRepairDataClient,

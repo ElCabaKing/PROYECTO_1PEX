@@ -8,8 +8,8 @@ export const login = async (req, res, next) => {
     const { accessToken, refreshToken, userPermissions, rol, user } =
       await loginService.login({ user_nombre, user_password });
 
-    CookieGenerator(res, "auth_token", accessToken, 15 * 60 * 1000);
-    CookieGenerator(res, "refresh_token", refreshToken, 4 * 60 * 60 * 1000);
+    await CookieGenerator(res, "auth_token", accessToken, 15 * 60 * 1000);
+    await CookieGenerator(res, "refresh_token", refreshToken, 4 * 60 * 60 * 1000);
 
     emitLoginToAdmins(user_nombre);
 

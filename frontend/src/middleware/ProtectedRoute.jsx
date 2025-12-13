@@ -12,7 +12,7 @@ function ProtectedRoute({ children }) {
                 withCredentials: true
             }
         );
-        console.log(res);
+        console.log(res.data);
         if (res.data.validation) {
             setAllow(true)
         }
@@ -41,6 +41,7 @@ function ProtectedRoute({ children }) {
     
     useEffect(() => {
         if (allow === false) {
+            console.log("wtf llego al false")
             navigate("/login");
         }
     }, [allow]);

@@ -16,6 +16,7 @@ export function initSocket(server) {
 
   io.use((socket, next) => {
     const rawCookie = socket.handshake.headers.cookie;
+    console.log(rawCookie)
     if(!rawCookie){return next(new Error("No token"));}
     let tokenCookie = rawCookie.split("; ").find(c => c.startsWith("auth_token="));
     if(!tokenCookie){tokenCookie = rawCookie.split("; ").find(c => c.startsWith("refresh_token="));}

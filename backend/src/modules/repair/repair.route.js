@@ -4,11 +4,11 @@ import { tokenAuthNx } from "../../middleware/token.auth.js";
 import { tokenRoleAuthNx } from "../../middleware/role.auth.js";
 const router = Router();
 
-router.post("/saveRepair",tokenAuthNx,tokenRoleAuthNx(["admin"]), RepairController.ctSaveRepair);
-router.get("/getRepairList",RepairController.ctGetRepairsF);
-router.patch("/updateHead",RepairController.ctUpdateHead);
-router.get("/getUsersRepair",tokenAuthNx,RepairController.ctGetUsersRepair);
-router.get("/getRepairData",RepairController.ctGetRepairData);
+router.post("/saveRepair",tokenAuthNx,tokenRoleAuthNx(["admin"]), RepairController.createNewRepair);
+router.get("/getRepairList",RepairController.getToWorkList);
+router.patch("/updateHead",RepairController.updateHead);
+router.get("/getUsersRepair",tokenAuthNx,RepairController.getUsersRepair);
+router.get("/getRepairData",RepairController.getRepairData);
 router.get("/getRepairDataClient",RepairController.ctGetRepairDataUser);
 router.post("/saveRepairDetail",RepairController.ctSaveRepairDetail);
 router.get("/getHeaderClient",RepairController.ctGetRepairDataClient);

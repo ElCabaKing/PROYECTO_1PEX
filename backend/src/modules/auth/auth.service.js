@@ -41,7 +41,7 @@ export const authService = {
 
         return{
            newAccessToken: newAccessToken,
-           newRefreshtToken: newRefreshToken
+           newRefreshToken: newRefreshToken
         }
     }
 }
