@@ -1,5 +1,4 @@
 import { AppError } from "../../utils/AppError.js";
-import { getRepairData } from "./repair.controller.js";
 import repairModel from "./repair.model.js";
 import jwt from 'jsonwebtoken';
 
@@ -86,15 +85,36 @@ export const repairService = {
         };
         let token = auth_token || refresh_token;
         const decodedToken = this.decodeToken(token);
-        const repair_user_id = await repairModel.getRepairUserId({repair_id});
-        const repair_data = await repairModel.getRepairDetailsById({repair_id});
-        console.log(repair_user_id);
+        const repair_user_id = await repairModel.getRepairUserId({ repair_id });
+        const repair_data = await repairModel.getRepairDetailsById({ repair_id });
 
         return {
             repair_data: repair_data,
-            isUser: repair_user_id===decodedToken.id,
+            isUser: repair_user_id === decodedToken.id,
         }
 
-    }
+    },
 
+    async createNewRepairDetail({ repair_id, detalle, valor }) {
+        if (!repair_id || !detalle || !valor) {
+            throw new AppError("No se proporciono los datos necesarios", 400)
+        };
+        await repairModel.createNewRepairDetail({repair_id, detalle, valor});
+        return { message: "Detalle creado correctamente" };
+    },
+
+    async getRepairDataClient({ repair_id }) {
+        if (!repair_id) { throw new AppError("No se proporciono los datos necesarios",400) }
+        const repair_data = await repairModel.getRepairHeader({repair_id});
+        if(!repair_data.id){throw new AppError("Registro no encontrado",404,"REGISTRO")}
+        return { repair_data: repair_data }
+    },
+
+    async getHistoryList({index_num}){
+        if(!index_num){throw new AppError("No se proporciono un index",400)}
+        const search_number = (index_num - 1) * 10
+        const historyList = await repairModel.getHistoryList({search_number});
+        if (!historyList) {throw new AppError("No se encontro registro",404,"REGISTRO")};
+        return {historyList: historyList};
+    }
 } 

@@ -18,12 +18,12 @@ export default function useJob() {
         const data_job = await appGetRepairHead_Details(repair_id);
         console.log(("data", data_job))
         if (data_job.Nonexistent) { navigate("/empty"); return }
-        setHeader(data_job[0][0]);
-        console.log(data_job[0][1].length)
-        console.log(data_job[0][1].length == 0);
-        if (data_job[0][1].length != 0) {
-            setJobBody(data_job[0][1]);
-            setisUser(data_job[1].isUser);
+        setHeader(data_job.repair_data[0]);
+        console.log(data_job.repair_data[1].length)
+        console.log(data_job.repair_data[1].length == 0);
+        if (data_job.repair_data[1].length != 0) {
+            setJobBody(data_job.repair_data[1]);
+            setisUser(data_job.isUser);
         }
         else {
             setNoData(true)

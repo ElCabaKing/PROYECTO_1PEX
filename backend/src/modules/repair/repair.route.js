@@ -4,15 +4,19 @@ import { tokenAuthNx } from "../../middleware/token.auth.js";
 import { tokenRoleAuthNx } from "../../middleware/role.auth.js";
 const router = Router();
 
+// POST routes
 router.post("/saveRepair",tokenAuthNx,tokenRoleAuthNx(["admin"]), RepairController.createNewRepair);
+router.post("/saveRepairDetail",RepairController.createNewRepairDetail);
+
+// GET routes
 router.get("/getRepairList",RepairController.getToWorkList);
-router.patch("/updateHead",RepairController.updateHead);
 router.get("/getUsersRepair",tokenAuthNx,RepairController.getUsersRepair);
 router.get("/getRepairData",RepairController.getRepairData);
-router.get("/getRepairDataClient",RepairController.ctGetRepairDataUser);
-router.post("/saveRepairDetail",RepairController.ctSaveRepairDetail);
-router.get("/getHeaderClient",RepairController.ctGetRepairDataClient);
-router.get("/getHistoryList",RepairController.ctGetHistoryList);
+router.get("/getHistoryList",RepairController.getHistoryList);
+
+router.get("/getHeaderClient",RepairController.getRepairDataClient); //Usado por los clientes
+// PATCH routes
+router.patch("/updateHead",RepairController.updateHead);
 
 
 export default router;

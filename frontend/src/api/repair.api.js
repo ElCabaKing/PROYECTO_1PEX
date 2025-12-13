@@ -86,15 +86,16 @@ export async function appGetRepairHead_Details(repair_id) {
         return repair_data.data
     }
     catch (error) {
+        console.log(error)
         if (error.response.status === 404) {
-            return { Nonexistent: true };
+            return {Nonexistent: error.response.data.Nonexistent};
         }
         return alert(error.response.data.response)
     };
 };
 
 export async function appGetHistoryList(index_num) {
-    try{
+    try {
         const historyList = await axios.get(`${API_URL}/repair/getHistoryList`,
             {
                 params: {
@@ -104,9 +105,10 @@ export async function appGetHistoryList(index_num) {
         )
         return historyList.data
     }
-    catch(error){
-        if(error.response.status === 404){return {Nonexistent: true}}
+    catch (error) {
+
+        if (error.response.status === 404) { return error.response.data }
         return alert(error.response.data.response)
     }
-    
-}
+
+} 

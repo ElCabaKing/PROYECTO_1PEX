@@ -9,7 +9,11 @@ export default function ErrorHandler(error, req, res, next) {
             break;
         
         case "REPAIR":
-            return res.status(error.status).json({response: error.message})
+            return res.status(error.status).json({response: error.message});
+            break;
+        case "REGISTRO":
+            return res.status(error.status).json({Nonexistent: true, message: error.message})
+            break;
         default:
             return res.status(error.status).json({ error: error.message });
             break;

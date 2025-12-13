@@ -5,7 +5,8 @@ import ModalBase from "../../components/ModalBase/ModalBase"
 import Buttom from "../../components/Buttom/Buttom";
 import styles from "../Home/Home.module.css"
 function Home() {
-    const { codeNumber, setCodeNumber, message,showError,hkSearchCode,showModal,setShowModal,repairModalData } = useHome();
+    const { codeNumber, setCodeNumber, message,showError,
+        hkSearchCode,showModal,setShowModal,repairModalData } = useHome();
     const navigate = useNavigate();
     return (
         <div className={styles.homeContainer}>
@@ -31,12 +32,12 @@ function Home() {
            <Buttom extraClass={styles.ButtomExtra} label="Ir al login" action={() => navigate('/login')}/>
             {showModal && (
                 <ModalBase>
-                    <p>Id: {`${repairModalData.repair_data.id}`}</p>
-                    <p>Cliente: {`${repairModalData.repair_data.cedula_cliente}`}</p>
-                    <p>Inicio: {`${new Date(repairModalData.repair_data.fecha_inicio).toLocaleString()}`}</p>
-                    <p className={repairModalData.repair_data.status_label==="REPARADO"? styles.repared : ""}>
-                        Estado: {`${repairModalData.repair_data.status_label}`}</p>
-                    <p>Total: ${repairModalData.repair_data.Total? repairModalData.repair_data.Total: "0"}</p>
+                    <p>Id: {`${repairModalData.id}`}</p>
+                    <p>Cliente: {`${repairModalData.cedula_cliente}`}</p>
+                    <p>Inicio: {`${new Date(repairModalData.fecha_inicio).toLocaleString()}`}</p>
+                    <p className={repairModalData.status_label==="REPARADO"? styles.repared : ""}>
+                        Estado: {`${repairModalData.status_label}`}</p>
+                    <p>Total: ${repairModalData.Total? repairModalData.Total: "0"}</p>
                     <Buttom  extraClass={styles.ButtomExtra} label="Listo" action={() => {setCodeNumber("");setShowModal(false)}}/>
                 </ModalBase>
             )}
