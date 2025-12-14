@@ -49,12 +49,6 @@ Un sistema de gestión de reparaciones full-stack que permite a usuarios y admin
 - `initdb/`: Scripts SQL para inicializar la base de datos
 - `docker-compose.yml`: Configuración de contenedores
 
-## Contribución
-
-1. Fork el repo.
-2. Crea una rama para tu feature.
-3. Commit y push.
-4. Abre un PR.
 
 ## Licencia
 
