@@ -1,12 +1,54 @@
-# Getting Started with Create React App
+# Frontend - PROYECTO_1PEX
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Interfaz de usuario para el sistema de gestión de reparaciones, construida con React.
 
-## Available Scripts
+## Tecnologías
 
-In the project directory, you can run:
+- React
+- Axios para API calls
+- CSS Modules para estilos
+- React Router para navegación
+- Context API para estado global
 
-### `npm start`
+## Instalación
+
+1. Navega al directorio frontend:
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+2. Ejecuta:
+   ```bash
+   npm start
+   ```
+
+## Estructura
+
+- `src/pages/`: Páginas principales (Login, Home, Users)
+- `src/components/`: Componentes reutilizables (Modal, Input, Button)
+- `src/hooks/`: Hooks personalizados para lógica (useLogin, useJob)
+- `src/api/`: Funciones para llamadas a la API
+- `src/context/`: Estado global (UserContext)
+
+## Funcionalidades
+
+- Autenticación y login
+- Gestión de usuarios y reparaciones
+- Modales para crear/editar
+- Navegación protegida
+
+## Desarrollo
+
+- Usa `npm start` para desarrollo local.
+- Build: `npm run build`.
+
+## Notas
+
+- Asegúrate de que el backend esté corriendo en `http://localhost:5000`.
+- Estilos modulares para evitar conflictos.
+
+## REACT DEFAULT MD
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
