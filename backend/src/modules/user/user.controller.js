@@ -1,91 +1,77 @@
-import modelUser from "./user.model.js"
-import bcrypt from 'bcrypt';
+import { userService } from "./user.service.js";
 
-const saltRounds = 10;
-export const createSecurityCode = async (req, res) => {
+//Create
+export const createSecurityCode = async (req, res, next) => {
     try {
         const { ans, user_password, user_name } = req.body;
-        const Sk_ans = await bcrypt.hash(ans, saltRounds);
-        const user_passwordhs = await bcrypt.hash(user_password, saltRounds);
-        await modelUser.updateSecurityCode({ user_name, Sk_ans, user_passwordhs });
-        return res.status(200).json({ updated: true });
+
+        const { update } = await userService.createSecurityCode({ ans, user_password, user_name });
+
+        return res.status(200).json(update)
     }
     catch (error) {
-        return res.status(500).json({ error: error.message });
+        next(error)
     }
-}
-
-export const validateSecurityCode = async (req, res) => {
-    try {
-        const { user_name, user_ans } = req.body;
-        if (!user_name || !user_ans) { return res.status(400).json({ validate: false, message: "No hay credenciales" }) };
-        const ans = await modelUser.getSecurityCode({ user_name });
-        const validated = await bcrypt.compare(user_ans, ans.security_code);
-        if (!validated) { return res.json({ validate: false, message: "Datos erroneos" }); };
-
-        return res.json({ validate: true, message: "Validacion completada correctamente" });
-    }
-    catch (error) {
-        return res.status(500).json({ validate: false, error: error.message });
-    };
 };
 
-export const createUser = async (req, res) => {
+export const createUser = async (req, res, next) => {
     try {
         const { user_name, user_role, apellido, nombre } = req.body;
-        if (!user_name || !user_role || !apellido || !nombre) { return res.status(400).json({ created: false, message: "Favor proporcionar todos los datos" }) };
-        const firstPass = await bcrypt.hash(user_name, saltRounds);
-        await modelUser.createNewUser({ user_name, apellido, nombre, user_role, firstPass });
-        return res.status(201).json({ response: "Usuario guardado correctamente" });
+
+        const { response } = await userService.createUser({ user_name, user_role, apellido, nombre });
+
+        return res.status(201).json(response);
     }
     catch (error) {
-        return res.status(500).json({ error: error.message, response: "Algo salio mal, revisar los datos" });
+        next(error)
     };
 };
-
-export const getUserList = async (req, res) => {
+//Get
+export const getUserList = async (req, res, next) => {
     try {
         const { user_name, index_number } = req.query;
-        if (!user_name || !index_number) { return res.status(400).json({ ok: false, message: "No se proporciono los datos requeridos" }) };
-        const maxIndex = await modelUser.getUserIndex();
-        const index_int = Number(index_number);
-        const user_list = await modelUser.getUserList({ user_name, index_int });
-        return res.status(200).json({ listData: user_list, maxIndex: maxIndex });
+
+        const { listData, maxIndex } = await userService.getUserList({ user_name, index_number });
+
+        return res.status(200).json({ listData: listData, maxIndex: maxIndex });
     }
     catch (error) {
-        return res.status(500).json({ error: error.message });
+        next(error);
     };
 };
-
-export const updateUserRol = async (req, res) => {
+//Update
+export const updateUserRol = async (req, res, next) => {
     try {
         const { ID, rol_id } = req.body;
-        if (!ID || !rol_id) { return res.status(400).json({ message: "No se proporciono los datos necesarios" }) };
-        await modelUser.updateUserRol({ ID, rol_id });
-        return res.json({ message: "Rol cambiado exitosamente" });
+
+        const { response } = await userService.updateUserRol({ ID, rol_id })
+
+        return res.json({ message: response });
     }
     catch (error) {
-        return res.status(500).json({ error: error.message });
+        next(error)
     };
 };
 
-export const updateUserStatus = async (req, res) => {
+export const updateUserStatus = async (req, res, next) => {
     try {
         const { ID, estado } = req.body;
-        if (!ID || !estado) { return res.status(400).json({ message: "No se proporciono los datos necesarios" }) };
-        await modelUser.mdChangeStatus({ ID, estado });
-        return res.json({ message: "Estado actualizado" });
+        
+        const {response} = await userService.updateUserStatus({ID, estado});
+
+        return res.status(200).json({message: response});
     }
     catch (error) {
-        return res.status(500).json({ error: error.message });
+        next(error);
     }
 };
+
+
 
 export default {
     createSecurityCode,
-    validateSecurityCode,
     createUser,
     getUserList,
     updateUserRol,
     updateUserStatus
-}
+};

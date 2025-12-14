@@ -29,7 +29,7 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
-    command: npm start
+    command: npm run dev
     depends_on:
       db:
         condition: service_healthy

@@ -35,7 +35,7 @@ app.use("/user",userRoute);
 app.use("/repair",repairRoute);
 app.use("/recovery",recoveryRoute);
 
-//middleware global
+//middleware global para manejo de errores
 app.use(errorHandler);
 
 export default server;

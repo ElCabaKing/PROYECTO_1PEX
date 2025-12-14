@@ -1,12 +1,12 @@
 import { pool } from "../../config/db.js";
 
-export const updateSecurityCode = async ({ user_name, user_sk_ans, user_password }) => {
+export const updateSecurityCode = async ({ user_name, SecurityCode, user_passwordhs }) => {
     try {
         await pool.query(
             `UPDATE users
         SET security_code = ?,user_password = ?
         WHERE user_nombre = ?`,
-            [user_sk_ans, user_password, user_name]);
+            [SecurityCode, user_passwordhs, user_name]);
         return {created: true};
     }
     catch (error) {
@@ -29,13 +29,13 @@ export const getSecurityCode = async ({ user_name }) => {
     }
 }
 
-export const createNewUser = async ({ user_name, apellido, nombre, user_rol, firstPass }) => {
+export const createNewUser = async ({ user_name, apellido, nombre, user_role, firstPass }) => {
     try {
         await pool.query(
             `INSERT INTO users
         (user_nombre,apellido,nombre, rol_id, user_password)
         VALUES(?, ?, ?, ?, ?);`,
-            [user_name, apellido, nombre, user_rol, firstPass]
+            [user_name, apellido, nombre, user_role, firstPass]
         );
         return {succes: true};
     }
@@ -96,13 +96,13 @@ export const updateUserRol = async ({ID, rol_id}) => {
     }
 }
 
-export const updateUserStatus = async ({ID, estatus}) => {
+export const updateUserStatus = async ({ID, estado}) => {
     try {
         await pool.query(
             `UPDATE users
         SET  estado=?
         WHERE id=?;`,
-            [estatus, ID]
+            [estado, ID]
         );
         return {updated: true}
     }

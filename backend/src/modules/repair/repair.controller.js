@@ -67,7 +67,6 @@ export const getRepairData = async (req, res, next) => {
     };
 };
 
-
 export const createNewRepairDetail = async (req, res, next) => {
     try {
         const { repair_id, detalle, valor } = req.body;
@@ -78,7 +77,7 @@ export const createNewRepairDetail = async (req, res, next) => {
     catch (error) {
         next(error)
     }
-}
+};
 
 export const getRepairDataClient = async (req, res, next) => {
     try {
@@ -91,7 +90,7 @@ export const getRepairDataClient = async (req, res, next) => {
         next(error);
     }
 
-}
+};
 
 export const getHistoryList = async (req, res, next) => {
     try {
@@ -104,7 +103,7 @@ export const getHistoryList = async (req, res, next) => {
     catch (error) {
         next(error)
     }
-}
+};
 
 export default {
     createNewRepair,
@@ -115,4 +114,4 @@ export default {
     createNewRepairDetail,
     getRepairDataClient,
     getHistoryList
-}
+};

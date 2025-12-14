@@ -2,7 +2,6 @@ import Input from "../Input/Input";
 import Buttom from "../Buttom/Buttom";
 import { useEffect } from "react";
 import useModalAns from "../../hooks/useModalAns";
-import { useNavigate } from "react-router-dom";
 import styles from "../ModalAns/ModalAns.module.css"
 import ModalBase from "../ModalBase/ModalBase";
 function ModalAns(props) {

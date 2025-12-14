@@ -33,8 +33,8 @@ export const loginService = {
         };
 
 
-        const accessToken = JwtGenerator(payload, "15m");
-        const refreshToken = JwtGenerator(payload, "4h");
+        const accessToken = JwtGenerator(payload, "15m","access");
+        const refreshToken = JwtGenerator(payload, "4h","refresh");
 
         return {
             accessToken: accessToken,

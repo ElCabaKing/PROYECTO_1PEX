@@ -13,7 +13,7 @@ export default function UseUser(){
         const raw_user = localStorage.getItem("user_name")
         if(raw_user){
         const user_nombre = JSON.parse(atob(raw_user));
-        const user_list = await appGetUsers({user_name: user_nombre, index_number_s: indexNum});
+        const user_list = await appGetUsers({user_name: user_nombre, index_number: indexNum});
 
         setindexMaxList(indexList(user_list.maxIndex))
         setUserList(user_list.listData[0]);
@@ -21,6 +21,7 @@ export default function UseUser(){
         console.log(user_list)}
     }
     async function hkalerStatus(ID,estado) {
+        console.log("estado",estado)
         if(estado===0){
             setMessage(await appAlterStatus({ID:ID, estado: true}))
         }

@@ -14,15 +14,11 @@ export async function getValidateWord(userName,securityCode) {
         return validate.data;
     }
     catch(error){
-        if(error.status === 404){
-            throw error.response.data.response;
+        if(error.status === 404 || error.status === 403){
+            throw error.response.data.error;
         }
-        if(error.status === 401){
-            throw error.response.data.response;
-        }
-        console.log(error)
-        alert(error.message);
-        throw error;
+
+        throw error.response.data.error;
         
     }
 } 

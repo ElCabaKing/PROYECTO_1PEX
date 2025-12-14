@@ -45,7 +45,7 @@ function Users() {
                   {roles_list.map((rol) => (<option key={rol.id} value={rol.id}>{rol.rol_nombre}</option>))}
                 </select>
               </td>
-              <td><Buttom extraClass={styles.statusButton} value={user.estado} action={(e) => {hkalerStatus(user.ID,user.estado )}} label={user.estado ? "Activo" : "Inactivo"}/></td>
+              <td><Buttom extraClass={styles.statusButton} value={user.estado} action={() => hkalerStatus(user.ID,user.estado)} label={user.estado ? "Activo" : "Inactivo"}/></td>
             </tr>))}
           </tbody>
         </table>

@@ -16,15 +16,14 @@ export function initSocket(server) {
 
   io.use((socket, next) => {
     const rawCookie = socket.handshake.headers.cookie;
-    console.log(rawCookie)
-    if(!rawCookie){return next(new Error("No token"));}
+    if (!rawCookie) { return next(new Error("No token")); }
     let tokenCookie = rawCookie.split("; ").find(c => c.startsWith("auth_token="));
-    if(!tokenCookie){tokenCookie = rawCookie.split("; ").find(c => c.startsWith("refresh_token="));}
+    let secret = process.env.JWT_SECRET
     const token = tokenCookie.split("=")[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const hasAdmin= decoded.rol.includes('admin');
-    if(hasAdmin){
-       socket.join("admins");
+    const decoded = jwt.verify(token, secret);
+    const hasAdmin = decoded.rol.includes('admin');
+    if (hasAdmin) {
+      socket.join("admins");
     }
     next();
   })
@@ -37,15 +36,15 @@ export function emitLoginToAdmins(data) {
   }
 }
 
-export function emitNewRepair(){
-  if(io){
+export function emitNewRepair() {
+  if (io) {
     io.emit("newRepair");
   }
 }
 
-export function emitAlertRepair(message){
-  if(io){
-    io.emit("alertRepair",message);
+export function emitAlertRepair(message) {
+  if (io) {
+    io.emit("alertRepair", message);
     io.emit("refreschRepair");
   }
 }

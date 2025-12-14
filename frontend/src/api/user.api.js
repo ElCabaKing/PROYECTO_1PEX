@@ -1,6 +1,9 @@
 import { API_URL } from "../utils/api";
-import axios from 'axios'
+import axios from 'axios';
+
+
 export async function appSaveAns({ ans, user_password, user_name }) {
+    console.log("daittotz",ans, user_password, user_name)
     const res = await axios.patch(`${API_URL}/user/saveSkAns`, {
         ans,
         user_password,
@@ -9,20 +12,7 @@ export async function appSaveAns({ ans, user_password, user_name }) {
     return res.data;
 }
 
-export async function appValidateAns({ user_name, user_ans }) {
-    const res = await axios.get(`${API_URL}/user/validateAns`, {
-        params: {
-            user_name,
-            user_ans
-        }
-    })
-    return res.data;
-}
-
-export async function appGetUsers({ user_name, index_number_s }) {
-    console.log(index_number_s)
-    const index_number = (index_number_s * 10) - 10
-    console.log()
+export async function appGetUsers({ user_name, index_number }) {
     const res = await axios.get(`${API_URL}/user/getList`,
         {
             params: {

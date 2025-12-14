@@ -4,7 +4,6 @@ import UserController from "./user.controller.js"
 const router = Router();
 
 router.patch("/saveSkAns",UserController.createSecurityCode);
-router.get("/validateAns",UserController.validateSecurityCode);
 router.post("/saveUser",UserController.createUser);
 router.get("/getList",UserController.getUserList);
 router.patch("/changeRol",UserController.updateUserRol);

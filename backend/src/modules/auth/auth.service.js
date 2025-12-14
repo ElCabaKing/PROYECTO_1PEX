@@ -14,7 +14,7 @@ export const authService = {
 
     validateRefreshToken({refreshToken}){
         try{
-            return jwt.verify(refreshToken,process.env.JWT_SECRET);
+            return jwt.verify(refreshToken,process.env.JWT_SECRET_REFRESH);
         }
         catch(error){
             return null;
@@ -36,8 +36,8 @@ export const authService = {
             rol: refreshData.rol
         };
 
-        const newAccessToken = JwtGenerator(payload,"15m");
-        const newRefreshToken = JwtGenerator(payload,"4h");
+        const newAccessToken = JwtGenerator(payload,"15m","access");
+        const newRefreshToken = JwtGenerator(payload,"4h","refresh");
 
         return{
            newAccessToken: newAccessToken,

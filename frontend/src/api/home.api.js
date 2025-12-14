@@ -14,10 +14,9 @@ export async function appGetRepairClient(repair_id) {
     return repairData.data;
     }
     catch(error){
-        console.log("epaaa")
         console.log(error)
         if(error.response.status === 404){
-            return {nonExistense: true,error: error.response.data.response};
+            return {nonExistense: true,error: error.response.data.message};
         }
         return alert(error.response.data.response);
     }

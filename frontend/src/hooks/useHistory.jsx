@@ -5,7 +5,8 @@ import { indexList } from "../utils/utilFunc";
 export default function useHistory() {
     const [historyList, setHistoryList] = useState([])
     const [maxIndex, setMaxIndex] = useState([]);
-    const [currentIndex, setCurrentIndex] = useState(1);
+    const [currentIndex, setCurrentIndex] = useState("1");
+
     async function getHistoryList() {
         const resHistoryList = await appGetHistoryList(currentIndex);
         setHistoryList(resHistoryList[0]);
@@ -13,7 +14,6 @@ export default function useHistory() {
         console.log(resHistoryList)
         return;
     }
-
 
 
     return {
