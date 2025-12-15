@@ -2,18 +2,18 @@
 import styles from "./Input.module.css"
 
 
-const Input = (props) => {
+const Input = ({name, type,pattern, title, value, onChange, placeholder, maxLength}) => {
   return (
     <input
-      name={props.name}
+      name={name}
       className={styles.cmpInput}
-      type={props.type}
-      pattern={props.pattern}
-      title={props.title}
-      value={props.value}
-      onChange={props.onChange}
-      placeholder={props.placeholder}
-      maxLength={props.maxLength}
+      type={type}
+      pattern={pattern}
+      title={title}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      maxLength={maxLength}
       required
     />
   )

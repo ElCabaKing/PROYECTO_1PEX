@@ -1,5 +1,5 @@
 import styles from '../RepairCard/RepairCard.module.css'
-function RepairCard({id,modelo,status_label,repair_problem,action,repair_status}) {
+function RepairCard({id,modelo,status_label,repair_problem,action}) {
   return (
     <>
     <button className={styles.cards} onClick={() => action(id,2)}>

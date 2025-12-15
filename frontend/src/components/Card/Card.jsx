@@ -1,18 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Card.module.css";
 import { LogOut } from "../../api/login.api";
-const Card = (props) => {
+const Card = ({menu_label, closefun, menu_path}) => {
   const navigate = useNavigate()
   async function closeSession() {
     const res = await LogOut();
-    console.log(res)
     if(res.logout){
     localStorage.clear();
     navigate("/login")}
   }
   return (
-    <button className={styles.card} onClick={() => {props.closefun();props.menu_path ? navigate(props.menu_path) : closeSession()}}>
-      <h2 className={styles.title} >{props.menu_label}</h2>
+    <button className={styles.card} onClick={() => {closefun();props.menu_path ? navigate(menu_path) : closeSession()}}>
+      <h2 className={styles.title} >{menu_label}</h2>
     </button>
   )
 }

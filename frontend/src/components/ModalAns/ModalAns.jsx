@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import useModalAns from "../../hooks/useModalAns";
 import styles from "../ModalAns/ModalAns.module.css"
 import ModalBase from "../ModalBase/ModalBase";
-function ModalAns(props) {
+function ModalAns({user_name}) {
     const { userAnsWord,
         userFirstPass,
         userSecondPass,
@@ -27,7 +27,7 @@ function ModalAns(props) {
                 {passError && (<p>Las claves deben coincidir</p>)}
                 <form onSubmit={(e) => {
                     e.preventDefault();
-                    saveAll({ ans: userAnsWord, user_password: userSecondPass, user_name: props.user_name })
+                    saveAll({ ans: userAnsWord, user_password: userSecondPass, user_name: user_name })
                 }}>
                     <Input
                         name="userNewPassword"
