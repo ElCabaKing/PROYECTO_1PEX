@@ -5,11 +5,12 @@ import styles from "../MainMenu/MainMenu.module.css";
 import RepairCard from "../../components/RepairCard/RepairCard"
 import ModalRepair from "../../components/ModalRepair/ModalRepair";
 import Buttom from "../../components/Buttom/Buttom";
+import { API_URL } from "../../utils/api";
 function MainMenu() {
     const [newButton, setNewButton] = useState(false)
     const {repairList, hkGetList, hkUpdateHead, showModalRepair,setShowModalRepair} = useRepair();
       useEffect(() => {
-        const socket = io("http://localhost:5000", { withCredentials: true });
+        const socket = io(API_URL, { withCredentials: true });
         socket.on("newRepair", () => {
             hkGetList();
         });
