@@ -2,6 +2,7 @@ import { io } from 'socket.io-client'
 import { useState, useEffect, useRef } from 'react'
 import styles from "../Alert/Alert.module.css"
 import audioAlert from "../../media/alert.mp3"
+import { API_URL } from '../../utils/api';
 
 function Alert({ children }) {
     const audioRef = useRef(null);
@@ -9,7 +10,7 @@ function Alert({ children }) {
     const [show, setShow] = useState(false);
     const [blur, setBlur] = useState(false);
     useEffect(() => {
-        const socket = io("http://localhost:5000", { withCredentials: true });
+        const socket = io(API_URL, { withCredentials: true });
 
 
         socket.on("statusLogin", (data) => {
