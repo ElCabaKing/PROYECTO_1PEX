@@ -1,0 +1,72 @@
+.mainContainer{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.tableContainer{
+    height: 550px;
+}
+
+.tabla {
+    border-collapse: collapse;
+    table-layout: fixed;
+    border-radius: 10px;
+}
+
+.tabla th {
+    background-color: var(--primary-dark);
+    color: var(--text);
+    padding: 10px;
+}
+
+.tabla th:first-child {
+    border-radius: 10px 0px 0px 0px;
+}
+
+.tabla th:last-child {
+    border-radius: 0px 10px 0px 0px;
+}
+
+.fila td {
+    padding: 10px;
+}
+
+.fila:last-child td:first-child {
+    border-radius: 0px 0px 0px 10px;
+}
+
+.fila:last-child td:last-child {
+    border-radius: 0px 0px 10px 0px;
+}
+
+.fila:nth-child(even) td {
+    background-color: var(--primary-light);
+}
+.verButton{
+    width: 50px;
+}
+
+@media (max-width: 500px) {
+    .tabla th {
+    padding: 2px;
+}
+.mainContainer{
+    flex-direction: column-reverse;
+}
+.tableContainer{
+    height: 1050px;
+    width: 450px;
+}
+.tabla{
+    width: 450px;
+}
+.tabla tr th {
+    width: 20px;
+}
+.tabla th:first-child{
+    width: 10px !important;
+}
+}

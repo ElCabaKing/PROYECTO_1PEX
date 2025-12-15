@@ -1,0 +1,12 @@
+@import url('../../styles/general.css');
+.cards{
+    margin: 10px;
+    border-radius: 10px;
+    height: 100px;
+    background-color: var(--primary);
+    color: var(--text)
+}
+.cards p {
+  margin: 2px 0; 
+  padding: 0;
+}

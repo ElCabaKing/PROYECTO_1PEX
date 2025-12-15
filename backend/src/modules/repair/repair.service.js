@@ -1,0 +1,120 @@
+import { AppError } from "../../utils/AppError.js";
+import repairModel from "./repair.model.js";
+import jwt from 'jsonwebtoken';
+
+export const repairService = {
+
+    decodeToken(token) {
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        return decodedToken;
+    },
+
+    async createNewRepair({ cedula_cliente, modelo, repair_problem }) {
+
+        if (!cedula_cliente || !modelo || !repair_problem) {
+            throw new AppError("No se proporciono los datos necesarios", 400)
+        };
+        await repairModel.createNewRepair({
+            cedula_cliente, modelo, repair_problem
+        });
+        return { message: "Guardado" }
+    },
+
+    async getToWorkList() {
+        try {
+            const toWorkList = await repairModel.getRepairOnWork();
+            return toWorkList;
+        }
+        catch (error) {
+            throw new AppError("Error en getToWorkList");
+        }
+    },
+
+    async updateHead({ token, new_status, repair_id }) {
+
+        const decodedToken = this.decodeToken(token);
+        if (new_status === 2) {
+            const reg = await repairModel.getRepairCountById({ user_id: decodedToken.id });
+            console.log(reg)
+            if (reg[0].total >= 5) {
+                throw new AppError("Hijo de la semilla completa un trabajo", 400)
+            }
+
+            await repairModel.updateRepairHeader(
+                {
+                    user_id: decodedToken.id,
+                    new_status: new_status,
+                    repair_id: repair_id,
+                    message: "SE COMENZO LA REPARACION"
+                }
+            );
+
+            return {
+                response: "Reparación aceptada correctamente",
+                alert: `El usuario ${decodedToken.user_nombre} ha aceptado el pedido ${repair_id}`,
+            };
+        }
+        else {
+            await repairModel.updateRepairHeader(
+                {
+                    user_id: decodedToken.id,
+                    new_status: new_status,
+                    repair_id: repair_id,
+                    message: "LA REPARACION CONCLUYO"
+                }
+            );
+
+            return {
+                response: "Repracion concluida",
+                alert: `El usuario ${decodedToken.user_nombre} ha terminado el pedido ${repair_id}`
+            };
+        }
+    },
+
+    async getUsersRepair({ refresh_token, auth_token }) {
+        if (!refresh_token && !auth_token) { throw new AppError("No se proporciono los datos necesarios", 400) }
+        const token = auth_token || refresh_token;
+        const decodenToken = this.decodeToken(token);
+        const repair_list = await repairModel.getUsersRepair({ user_id: decodenToken.id });
+        return { repair_list: repair_list };
+    },
+
+    async getRepairData({ refresh_token, auth_token, repair_id }) {
+        if (!refresh_token || !auth_token || !repair_id) {
+            throw new AppError("No se proporciono los datos necesarios", 400);
+        };
+        let token = auth_token || refresh_token;
+        const decodedToken = this.decodeToken(token);
+        const repair_user_id = await repairModel.getRepairUserId({ repair_id });
+        const repair_data = await repairModel.getRepairDetailsById({ repair_id });
+
+        return {
+            repair_data: repair_data,
+            isUser: repair_user_id === decodedToken.id,
+        }
+
+    },
+
+    async createNewRepairDetail({ repair_id, detalle, valor }) {
+        if (!repair_id || !detalle || !valor) {
+            throw new AppError("No se proporciono los datos necesarios", 400)
+        };
+        await repairModel.createNewRepairDetail({repair_id, detalle, valor});
+        return { message: "Detalle creado correctamente" };
+    },
+
+    async getRepairDataClient({ repair_id }) {
+        if (!repair_id) { throw new AppError("No se proporciono los datos necesarios",400) }
+        const repair_data = await repairModel.getRepairHeader({repair_id});
+        if(!repair_data.id){throw new AppError("Registro no encontrado",404,"REGISTRO")}
+        return { repair_data: repair_data }
+    },
+
+    async getHistoryList({index_num}){
+        if(!index_num){throw new AppError("No se proporciono un index",400)}
+        const search_number = (index_num - 1) * 10
+        const historyList = await repairModel.getHistoryList({search_number});
+        if (!historyList) {throw new AppError("No se encontro registro",404,"REGISTRO")};
+        return {historyList: historyList};
+    }
+} 

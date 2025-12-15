@@ -1,0 +1,92 @@
+body {
+  font-family: "Nunito Sans", sans-serif;
+}
+
+/* ===== VARIABLES GLOBALES ===== */
+:root {
+  --primary: #7C3AED;
+  --primary-light: #A78BFA;
+  --primary-dark: #5B21B6;
+  --container-color: #FFFFFF;
+
+  --accent: #3B82F6;
+  --accent-pink: #EC4899;
+
+  --background: #0F0F1A;
+  --background-light: #1A1A2E;
+
+  --text: #F5F5F7;
+  --text-secondary: #9CA3AF;
+
+
+  --shadow-1: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-2: 0 8px 25px rgba(0, 0, 0, 0.35);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 16px;
+  --space-4: 24px;
+
+  --component-bg: var(--primary);
+  --component-bg-hover: #9757ff;
+  --component-bg-active: #c0a7e7;
+  --component-text: #FFFFFF;
+  --component-border: rgba(0,0,0,0.12);
+
+  --component-negative: #f1e0f5;
+  --text-negative: #483b4b;
+
+
+  --rayas: repeating-linear-gradient(
+      45deg,
+      rgba(255,255,255,0.1),
+      rgba(255,255,255,0.1) 10px,
+      transparent 10px,
+      transparent 20px
+    ),
+    var(--primary);
+
+  --ondas: linear-gradient(
+      45deg,
+      var(--primary-light),
+      var(--primary),
+      var(--primary-dark)
+    );
+}
+
+
+/* ===== CONTENEDORES ===== */
+.container {
+  padding: 20px;
+  background: var(--container-color);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+  display: flex;
+  width: 100%;
+  max-width: 900px;    
+  margin: 0 auto;      
+  box-sizing: border-box;
+  font-family: "Nunito Sans";
+}
+
+.container--row {
+  flex-direction: row;
+}
+
+.container--column {
+  flex-direction: column;
+}
+
+
+/* ===== RESPONSIVE ===== */
+@media screen  {
+  .container {
+    width: 600px;
+  }
+}
+@media screen and (max-width: 900px) {
+  .container {
+    width: 300px;
+  }
+}
+

@@ -1,0 +1,22 @@
+
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    flex-wrap: wrap; 
+}
+
+.mainContainer{
+    height: 100vh;
+}
+
+.buttomContainer{
+    width: 200px;
+    padding: 10px;
+}
+
+.mainButton{
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+}

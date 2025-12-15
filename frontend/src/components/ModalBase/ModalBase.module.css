@@ -1,0 +1,31 @@
+
+@import url("../../styles/general.css");
+
+.modalBase{
+    background-color: var(--container-color);
+    display: flex;
+    position: fixed;
+    flex-direction: column;
+    width: 300px;
+    padding: 15px;
+    border-radius: 5px;
+    border-style:double;
+    border-color: var(--primary);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 999; 
+
+  backdrop-filter: blur(3px); 
+}

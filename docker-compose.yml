@@ -1,17 +1,24 @@
 
 services:
   db:
-    image: postgres:16
-    container_name: postgres_db
+    image: mysql:8.0
+    container_name: mysql_db
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgresPass
-      POSTGRES_DB: Base_proyecto
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: postgresPass
+      MYSQL_DATABASE: Base_proyecto
     ports:
-      - "5432:5432"
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
       - ./initdb:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
 
   backend:
     build: ./backend
@@ -22,10 +29,12 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
-    command: npm start
+    command: npm run dev
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
+        
   frontend:
     build: ./frontend
     container_name: frontend_app
@@ -39,4 +48,4 @@ services:
       - backend
 
 volumes:
-  postgres_data:
+  mysql_data:
