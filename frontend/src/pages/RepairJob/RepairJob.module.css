@@ -8,6 +8,7 @@
 .tabla th {
     background-color: var(--primary-dark);
     color: var(--text);
+    height: 40px;
 }
 
 .tabla th:first-child {
@@ -15,7 +16,7 @@
 }
 
 .tabla th:last-child {
-    border-radius: 0px 10px 0px 0px;
+    border-radius: 0px 10px 10px 0px;
     width: 100px;
 }
 
