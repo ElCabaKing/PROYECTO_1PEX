@@ -3,7 +3,7 @@ function RepairCard({id,modelo,status_label,repair_problem,action}) {
   return (
     <>
     <button className={styles.cards} onClick={() => action(id,2)}>
-        <p>ID: {id}</p>
+        <p className={styles.id}>ID: {id}</p>
         <p>Modelo: {modelo}</p>
         <p>Estado: {status_label}</p>
         <p>Problema: {repair_problem}</p>
