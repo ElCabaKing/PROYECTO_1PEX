@@ -10,9 +10,6 @@ export function initSocket(server) {
     },
   });
 
-  io.on("connection", (socket) => {
-    console.log("Cliente conectado");
-  });
 
   io.use((socket, next) => {
     const rawCookie = socket.handshake.headers.cookie;
@@ -26,7 +23,12 @@ export function initSocket(server) {
       socket.join("admins");
     }
     next();
-  })
+  });
+
+  io.on("connection", (socket) => {
+    console.log("Cliente conectado");
+  });
+
 }
 
 

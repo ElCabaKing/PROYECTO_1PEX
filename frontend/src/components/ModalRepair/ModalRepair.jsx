@@ -5,12 +5,12 @@ import styles from "../ModalRepair/ModalRepair.module.css"
 import ModalBase from "../ModalBase/ModalBase"
 function ModalRepair({hideModal}) {
     const {setCedula_cliente,setModelo,setRepair_problem,
-        cedula_cliente,modelo,repair_problem,hkSaveRepair} = useRepair()
+        cedula_cliente,modelo,repair_problem,saveRepair} = useRepair()
   return (
 
     <ModalBase>
       <h3>Ingresar Nueva Reparacion</h3>
-    <form onSubmit={(e) => {e.preventDefault();hkSaveRepair();hideModal(false)}}> 
+    <form onSubmit={(e) => {e.preventDefault();saveRepair();hideModal(false)}}> 
       <div className={styles.rowContainer}>
         <Input maxLength="10" value={cedula_cliente} onChange={(e) => setCedula_cliente(e.target.value)} placeholder="Cedula del cliente"></Input>
         <Input value={modelo}  onChange={(e) => {setModelo(e.target.value)}} placeholder="Modelo del Telefono"></Input>

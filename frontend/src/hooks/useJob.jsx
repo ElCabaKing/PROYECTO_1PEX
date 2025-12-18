@@ -11,7 +11,7 @@ export default function useJob() {
     const navigate = useNavigate();
 
 
-    async function hkgetJob(repair_id) {
+    async function getJob(repair_id) {
         setNoData(false);
         setisUser(false);
         setJobBody([]);
@@ -19,9 +19,7 @@ export default function useJob() {
         console.log(("data", data_job))
         if (data_job.Nonexistent) { navigate("/empty"); return }
         setHeader(data_job.repair_data[0]);
-        console.log(data_job.repair_data[1].length)
-        console.log(data_job.repair_data[1].length == 0);
-        if (data_job.repair_data[1].length != 0) {
+        if (data_job.repair_data[1].length !== 0) {
             setJobBody(data_job.repair_data[1]);
             setisUser(data_job.isUser);
         }
@@ -30,13 +28,13 @@ export default function useJob() {
         }
 
     }
-    async function hkFinishRepair(repair_id) {
+    async function finishRepair(repair_id) {
         await appUpdateHead(repair_id, 3);
         return;
     }
 
     return {
-        hkgetJob,
+        getJob,
         header,
         jobBody,
         noData,
@@ -46,7 +44,7 @@ export default function useJob() {
         setRefetch,
         showModalDetail,
         setShowModalDetail,
-        hkFinishRepair
+        finishRepair
     }
 
 }

@@ -6,7 +6,7 @@ import Buttom from "../../components/Buttom/Buttom";
 import styles from "../Home/Home.module.css"
 function Home() {
     const { codeNumber, setCodeNumber, message,showError,
-        hkSearchCode,showModal,setShowModal,repairModalData } = useHome();
+        searchCode,showModal,setShowModal,repairModalData } = useHome();
     const navigate = useNavigate();
     return (
         <div className={styles.homeContainer}>
@@ -17,7 +17,7 @@ function Home() {
             {showError && (<p>{message}</p>)}
             <form onSubmit={(e) => {
                 e.preventDefault(); 
-                hkSearchCode(codeNumber);
+                searchCode(codeNumber);
             }}>
                 <Input name="codeNumber"
                     type="text"

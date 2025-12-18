@@ -7,15 +7,15 @@ import Buttom from "../../components/Buttom/Buttom";
 import styles from "../RepairJob/RepairJob.module.css";
 function RepairJob() {
   const { id } = useParams();
-  const { hkgetJob,navigate, jobBody, header, noData, isUser, setShowModalDetail, showModalDetail,
-    hkFinishRepair } = useJob();
-  const { hkUpdateHead } = useRepair();
+  const { getJob,navigate, jobBody, header, noData, isUser, setShowModalDetail, showModalDetail,
+    finishRepair } = useJob();
+  const { updateHead } = useRepair();
   const [inMaintance, setInMaintance] = useState(true)
 
 
   useEffect(() => {
-    hkgetJob(id);
-  }, [])
+    getJob(id);
+  }, [id])
 
   useEffect(() => {
     setInMaintance(
@@ -31,7 +31,7 @@ function RepairJob() {
         <p>Problema: {header.repair_problem}</p>
         <p>Estado: {header.status_label}</p>
         <p>Total: ${header.total}</p>
-        <Buttom extraClass={styles.mainButton} disable={inMaintance || !isUser} estilo={inMaintance || !isUser? "negativo" : "base"} action={async () => {await hkFinishRepair(id); navigate('/jobs'); }} label="Terminar" />
+        <Buttom extraClass={styles.mainButton} disable={inMaintance || !isUser} estilo={inMaintance || !isUser? "negativo" : "base"} action={async () => {await finishRepair(id); navigate('/jobs'); }} label="Terminar" />
       </div>
       <div className={styles.tablaContainer}>
         <table className={styles.tabla}>
@@ -47,10 +47,10 @@ function RepairJob() {
             {noData ? (
               <tr key="noData">
                 <td colSpan={2}>
-                  <a>Aun no se acepta este trabajo Aceptalo!!</a>
+                  <p>Aun no se acepta este trabajo Aceptalo!!</p>
                 </td>
                 <td colSpan={2}>
-                  <Buttom action={async () => { await hkUpdateHead(header.id, 2);navigate('/jobs') }} label="Aceptar" />
+                  <Buttom action={async () => { await updateHead(header.id, 2);navigate('/jobs') }} label="Aceptar" />
                 </td>
               </tr>
             ) : (
@@ -65,7 +65,7 @@ function RepairJob() {
           </tbody>
         </table>
       </div>
-      {showModalDetail && (<ModalRepairDetail refresh={hkgetJob} repair_id={header.id} cancel={setShowModalDetail} />)}
+      {showModalDetail && (<ModalRepairDetail refresh={getJob} repair_id={header.id} cancel={setShowModalDetail} />)}
     </>
   )
 }

@@ -4,11 +4,11 @@ import Buttom from "../../components/Buttom/Buttom"
 import styles from "../Users/Users.module.css"
 import ModalUser from "../../components/ModalUser/ModalUser";
 function Users() {
-  const { hkgetUser, userList, roles_list, message, hkchangeRole,
-    showAlert, hkalerStatus, showNewUserFrom, setShowNewUserFrom,
-    hksaveUser, indexMaxList, setIndexNum,indexNum } = UseUser();
+  const { getUser, userList, roles_list, message, changeRole,
+    showAlert, alertStatus, showNewUserFrom, setShowNewUserFrom,
+    saveUser, indexMaxList, setIndexNum,indexNum } = UseUser();
   useEffect(() => {
-    hkgetUser();
+    getUser();
   }, [indexNum])
 
   return (
@@ -41,11 +41,11 @@ function Users() {
               <td>{user.user_nombre}</td>
               <td>
                 <select className={styles.select} defaultValue={user.rol_id}
-                  onChange={(e) => hkchangeRole({ ID: user.ID, rol_id: e.target.value })}>
+                  onChange={(e) => changeRole({ ID: user.ID, rol_id: e.target.value })}>
                   {roles_list.map((rol) => (<option key={rol.id} value={rol.id}>{rol.rol_nombre}</option>))}
                 </select>
               </td>
-              <td><Buttom extraClass={styles.statusButton} value={user.estado} action={() => hkalerStatus(user.ID,user.estado)} label={user.estado ? "Activo" : "Inactivo"}/></td>
+              <td><Buttom extraClass={styles.statusButton} value={user.estado} action={() => alertStatus(user.ID,user.estado)} label={user.estado ? "Activo" : "Inactivo"}/></td>
             </tr>))}
           </tbody>
         </table>
@@ -55,7 +55,7 @@ function Users() {
               {indexMaxList.map((num) => (<option value={num} key={num}>{num}</option>))}
         </select>
         </div>
-      {showNewUserFrom && (<ModalUser saveUser={hksaveUser} closeModal={setShowNewUserFrom} rol_list={roles_list} />)}
+      {showNewUserFrom && (<ModalUser saveUser={saveUser} closeModal={setShowNewUserFrom} rol_list={roles_list} />)}
     </>
   )
 }

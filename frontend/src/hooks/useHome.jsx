@@ -8,7 +8,7 @@ export default function useHome(){
     const [showModal, setShowModal] = useState(false);
     const [showError, setShowError] = useState(false);
     const [message, setMessage] = useState("")
-    async function hkSearchCode(repair_id) {
+    async function searchCode(repair_id) {
         const repairData = await appGetRepairClient(repair_id);
         console.log(repairData)
         if(repairData.nonExistense){
@@ -22,7 +22,7 @@ export default function useHome(){
     }
     return {
         setCodeNumber,
-        hkSearchCode,
+        searchCode,
         codeNumber,
         repairModalData,
         showModal,

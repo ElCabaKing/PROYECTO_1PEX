@@ -8,15 +8,15 @@ import Buttom from "../../components/Buttom/Buttom";
 import { API_URL } from "../../utils/api";
 function MainMenu() {
     const [newButton, setNewButton] = useState(false)
-    const {repairList, hkGetList, hkUpdateHead, showModalRepair,setShowModalRepair} = useRepair();
+    const {repairList, getList, updateHead, showModalRepair,setShowModalRepair} = useRepair();
       useEffect(() => {
         const socket = io(API_URL, { withCredentials: true });
         socket.on("newRepair", () => {
-            hkGetList();
+            getList();
         });
 
         socket.on("refreschRepair", () => {
-            hkGetList();
+            getList();
         });
         return () => {
             socket.off("newRepair");
@@ -26,15 +26,15 @@ function MainMenu() {
     }, []);
 
     useEffect(() => {
-        hkGetList();
-    },[])
+        getList();
+    },[getList])
 
     useEffect(() => {
         const stored = localStorage.getItem("rol")
         if(stored){
-        const data = JSON.parse(atob(stored))=="admin";
+        const data = JSON.parse(atob(stored))==="admin";
         setNewButton(data);}
-    })
+    },[setNewButton])
 
     return (
       <> 
@@ -45,7 +45,7 @@ function MainMenu() {
         <h2 style={{marginLeft: "10px"}}>Tareas Disponibles</h2>
       <div className={styles.container}>
             {repairList.map((repair) => <RepairCard key={repair.id} id={repair.id} 
-            action={hkUpdateHead}
+            action={updateHead}
             modelo={repair.modelo} 
             status_label={repair.status_label}
             repair_problem={repair.repair_problem}

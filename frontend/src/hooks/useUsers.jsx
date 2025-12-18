@@ -1,6 +1,10 @@
 import { appGetUsers,appChangeRole,appAlterStatus,appSaveUser} from "../api/user.api";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"
 import { indexList } from "../utils/utilFunc";
+
+
+
 export default function UseUser(){
     const [roles_list, setRoles_list] = useState([]);
     const [userList, setUserList] = useState([]);
@@ -9,8 +13,9 @@ export default function UseUser(){
     const [message, setMessage] = useState("")
     const [showAlert, setShowAlert] = useState(false);  
     const [showNewUserFrom, setShowNewUserFrom] = useState(false)
-    async function hkgetUser() {
-        const raw_user = localStorage.getItem("user_name")
+    const navigate = useNavigate()
+    async function getUser() {
+        try{const raw_user = localStorage.getItem("user_name")
         if(raw_user){
         const user_nombre = JSON.parse(atob(raw_user));
         const user_list = await appGetUsers({user_name: user_nombre, index_number: indexNum});
@@ -18,9 +23,12 @@ export default function UseUser(){
         setindexMaxList(indexList(user_list.maxIndex))
         setUserList(user_list.listData[0]);
         setRoles_list(user_list.listData[1]);
-        console.log(user_list)}
+        console.log(user_list)}}
+        catch(error){
+            navigate('/main')
+        }
     }
-    async function hkalerStatus(ID,estado) {
+    async function alertStatus(ID,estado) {
         console.log("estado",estado)
         if(estado===0){
             setMessage(await appAlterStatus({ID:ID, estado: true}))
@@ -32,7 +40,7 @@ export default function UseUser(){
         
     }
 
-    async function hkchangeRole({ID,rol_id}) {
+    async function changeRole({ID,rol_id}) {
         const res = await appChangeRole({ID: ID, rol_id:rol_id})
         setMessage(res.message);
         miticMsg();
@@ -44,10 +52,10 @@ export default function UseUser(){
             setShowAlert(false);
             setMessage("");
         }, 3000);
-        hkgetUser();
+        getUser();
     }
 
-    async function hksaveUser({nombre,apellido,user_name,user_role}) {
+    async function saveUser({nombre,apellido,user_name,user_role}) {
         const res = await appSaveUser({nombre: nombre, 
             apellido: apellido, 
             user_name: user_name,
@@ -59,16 +67,16 @@ export default function UseUser(){
     }
 
     return {
-        hkgetUser,
+        getUser,
         userList,
         roles_list,
-        hkchangeRole,
+        changeRole,
         message,
         showAlert,
-        hkalerStatus,
+        alertStatus,
         setShowNewUserFrom,
         showNewUserFrom,
-        hksaveUser,
+        saveUser,
         indexMaxList,
         indexNum,
         setIndexNum

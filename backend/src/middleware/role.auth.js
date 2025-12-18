@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 export const tokenRoleAuthNx = (roles = []) => {
     return (req, res, next) => {
-        console.log("ola")
         const token = req.cookies.auth_token;
         if (!token) {
             return res.status(401).json({ message: "No hay o no se envió token, Recarga la pagina" });
@@ -10,7 +9,7 @@ export const tokenRoleAuthNx = (roles = []) => {
             const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
             const tieneRol = roles.includes(decodedToken.rol)
             if (!tieneRol) {
-                return res.status(403).json({ message: "No tienes permiso hacer eso" });
+                return res.status(403).json({ message: "No tienes permiso para hacer eso" });
             }
             next();
         }
