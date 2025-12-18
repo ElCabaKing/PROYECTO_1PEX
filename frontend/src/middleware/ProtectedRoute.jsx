@@ -44,7 +44,7 @@ function ProtectedRoute({ children }) {
             console.log("wtf llego al false")
             navigate("/login");
         }
-    }, [allow]);
+    }, [allow,navigate]);
 
 
     if (allow === null) {

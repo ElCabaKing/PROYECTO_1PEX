@@ -9,23 +9,23 @@ export default function useRepair() {
     const [userRepairList, setUserRepairList] = useState([]);
 
 
-    async function hkGetList() {
+    async function getList() {
         const list = await appGetRapairList();
         setRepairList(list);
     }
 
-    async function hkUpdateHead(id, new_status) {
+    async function updateHead(id, new_status) {
         await appUpdateHead(id, new_status);
-        hkGetList();
+        getList();
     }
 
-    async function hkSaveRepair() {
+    async function saveRepair() {
         await appSaveRepair(cedula_cliente, modelo, repair_problem);
         setShowModalRepair(false)
 
     }
 
-    async function hkGetUserRepairList() {
+    async function getUserRepairList() {
         const list = await appGetUserRepairList();
         setUserRepairList(list);
     }
@@ -33,18 +33,18 @@ export default function useRepair() {
 
     return {
         repairList,
-        hkGetList,
-        hkUpdateHead,
+        getList,
+        updateHead,
         showModalRepair,
         setShowModalRepair,
-        hkSaveRepair,
+        saveRepair,
         setCedula_cliente,
         setModelo,
         setRepair_problem,
         cedula_cliente,
         modelo,
         repair_problem,
-        hkGetUserRepairList,
+        getUserRepairList,
         userRepairList
     }
 }

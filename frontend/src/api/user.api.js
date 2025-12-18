@@ -13,14 +13,21 @@ export async function appSaveAns({ ans, user_password, user_name }) {
 }
 
 export async function appGetUsers({ user_name, index_number }) {
-    const res = await axios.get(`${API_URL}/user/getList`,
+    try{const res = await axios.get(`${API_URL}/user/getList`,
         {
             params: {
                 user_name,
                 index_number
-            }
+            },
+            withCredentials: true
         })
-    return res.data;
+    return res.data;}
+    catch(error){
+        if(error.status===403){
+            return alert(`${error.response.data.message}`)
+        }
+        return;
+    }
 }
 
 export async function appChangeRole({ ID, rol_id }) {
