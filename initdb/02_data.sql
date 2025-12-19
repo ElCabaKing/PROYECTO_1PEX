@@ -58,7 +58,7 @@ INSERT INTO
 
 INSERT INTO
     table_service (service_nombre, service_value)
-    VALUES ("LIMPIEZA", 15),
+    VALUES ("COMIENZO DE REPARACION", 0),("CONCLUSION DE REPARACION", 0),("DISPOSITIVO ENTREGADO", 0),("LIMPIEZA", 15),
     ("FORMATEO", 10);
 
 

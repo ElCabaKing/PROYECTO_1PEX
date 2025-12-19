@@ -78,19 +78,20 @@ export const getRepairDetailsById = async ({ repair_id }) => {
     }
 
     const [header] = await pool.query(`
-        SELECT  rh.id, SUM(
+        SELECT rh.id, SUM(
 COALESCE(dp.units * tp.part_value, ts.service_value)
-) AS Total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo , rh.repair_problem  FROM repair_details rd 
+) AS total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo, ts2.status_label, rh.repair_problem  FROM repair_details rd 
 LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
 LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id 
 LEFT JOIN table_part tp ON tp.id = rd.part_id  
 LEFT JOIN table_service ts ON ts.id  = rd.service_id 
+INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status 
 WHERE rd.repair_header_id = ?
     `, [repair_id]);
     const [body] = await pool.query(
         `SELECT rd.id,
 COALESCE(dp.units * tp.part_value, ts.service_value)
- AS Total, COALESCE(ts.service_nombre , tp.part_name) AS Detalle,
+ AS total, COALESCE(ts.service_nombre , tp.part_name) AS detalle,
  rd.fecha  FROM repair_details rd 
 LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
 LEFT JOIN table_part tp ON tp.id = rd.part_id  
@@ -111,16 +112,15 @@ export const getRepairClient = async ({ repair_id }) => {
     }
 
     const [header] = await pool.query(`
-        SELECT 
-            rh.id,
-            rh.modelo,
-            rh.repair_problem,
-            ts.status_label,
-            SUM(rd.valor) AS total
-        FROM repair_header rh
-        LEFT JOIN repair_details rd ON rd.repair_headerId = rh.id
-        INNER JOIN tb_status ts ON ts.status_id = rh.repair_status
-        WHERE rh.id = ?
+       SELECT rh.id, SUM(
+COALESCE(dp.units * tp.part_value, ts.service_value)
+) AS Total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo, ts2.status_label  FROM repair_details rd 
+LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
+LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id 
+LEFT JOIN table_part tp ON tp.id = rd.part_id  
+LEFT JOIN table_service ts ON ts.id  = rd.service_id 
+INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status 
+WHERE rd.repair_header_id = ?
     `, [repair_id]);
     return [header[0]];
 };
@@ -139,10 +139,17 @@ export const getRepairUserId = async ({ repair_id }) => {
 
 export const getRepairHeader = async ({ repair_id }) => {
     const [repair_header] = await pool.query(
-        `SELECT rh.id, rh.cedula_cliente , rh.fecha_inicio, rh.modelo, ts.status_label, rh.repair_problem, sum(rd.valor ) as Total FROM repair_header rh 
-        INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
-        LEFT JOIN repair_details rd ON rd.repair_headerId = rh.id 
-        WHERE rh.id = ?`,
+        `
+    SELECT rh.id, SUM(
+COALESCE(dp.units * tp.part_value, ts.service_value)
+) AS Total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo, ts2.status_label  FROM repair_details rd 
+LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
+LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id 
+LEFT JOIN table_part tp ON tp.id = rd.part_id  
+LEFT JOIN table_service ts ON ts.id  = rd.service_id 
+INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status 
+WHERE rd.repair_header_id = ?
+`,
         [repair_id]
     );
     return repair_header[0];
@@ -169,7 +176,7 @@ GROUP BY rh.id
 
 //UPDATE
 
-export const updateRepairHeader = async ({ user_id, new_status, repair_id, message }) => {
+export const updateRepairHeader = async ({ user_id, new_status, repair_id, service_id }) => {
     await pool.query(
         `UPDATE repair_header
         SET repair_status= ?, id_reparador= ?
@@ -177,9 +184,9 @@ export const updateRepairHeader = async ({ user_id, new_status, repair_id, messa
         [new_status, user_id, repair_id]);
     await pool.query(
         `INSERT INTO repair_details
-    (detalle, valor, repair_headerId)
-    VALUES(?, 0, ?);`,
-        [message, repair_id]
+    (repair_header_id, service_id)
+    VALUES(?, ?);`,
+        [repair_id, service_id]
     )
     return;
 };

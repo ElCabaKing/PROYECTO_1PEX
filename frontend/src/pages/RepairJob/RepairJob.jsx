@@ -57,8 +57,8 @@ function RepairJob() {
               jobBody.map((registro) => (
                 <tr key={registro.id}>
                   <td>{registro.detalle}</td>
-                  <td>{new Date(registro.fecha_ingreso).toLocaleString()}</td>
-                  <td>${registro.valor}</td>
+                  <td>{new Date(registro.fecha).toLocaleString()}</td>
+                  <td>{registro.total? `$${registro.total}` : ``}</td>
                 </tr>
               ))
             )}
