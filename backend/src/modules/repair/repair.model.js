@@ -12,12 +12,28 @@ export const createNewRepair = async ({ cedula_cliente, modelo, repair_problem }
     return;
 };
 
-export const createNewRepairDetail = async ({ repair_id, detalle, valor }) => {
+export const createNewRepairDetailService = async ({ repair_id, service_id }) => {
     await pool.query(
         `INSERT INTO repair_details
-    (detalle, valor, repair_headerId)
-    VALUES(?, ?, ?);`,
-        [detalle, valor, repair_id]);
+(repair_header_id, service_id)
+VALUES(?, ?);`,
+        [repair_id, service_id]);
+    return;
+}
+
+export const createNewRepairDetailPart = async ({ repair_id, part_id, units }) => {
+    const [detailId] = await pool.query(
+        `INSERT INTO repair_details
+(repair_header_id, part_id)
+VALUES(?, ?);`,
+        [repair_id, part_id]);
+
+        
+
+    await pool.query(`INSERT INTO detail_part
+(repair_details_id, units)
+VALUES(?, ?);`,
+    [detailId.insertId, units]);
     return;
 }
 
@@ -62,20 +78,24 @@ export const getRepairDetailsById = async ({ repair_id }) => {
     }
 
     const [header] = await pool.query(`
-        SELECT 
-            rh.id,
-            rh.modelo,
-            rh.repair_problem,
-            ts.status_label,
-            SUM(rd.valor) AS total
-        FROM repair_header rh
-        LEFT JOIN repair_details rd ON rd.repair_headerId = rh.id
-        INNER JOIN tb_status ts ON ts.status_id = rh.repair_status
-        WHERE rh.id = ?
+        SELECT  rh.id, SUM(
+COALESCE(dp.units * tp.part_value, ts.service_value)
+) AS Total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo , rh.repair_problem  FROM repair_details rd 
+LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
+LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id 
+LEFT JOIN table_part tp ON tp.id = rd.part_id  
+LEFT JOIN table_service ts ON ts.id  = rd.service_id 
+WHERE rd.repair_header_id = ?
     `, [repair_id]);
     const [body] = await pool.query(
-        `SELECT rd.id, rd.detalle, rd.fecha_ingreso, rd.valor  FROM repair_details rd 
-        WHERE rd.repair_headerId = ?`,
+        `SELECT rd.id,
+COALESCE(dp.units * tp.part_value, ts.service_value)
+ AS Total, COALESCE(ts.service_nombre , tp.part_name) AS Detalle,
+ rd.fecha  FROM repair_details rd 
+LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
+LEFT JOIN table_part tp ON tp.id = rd.part_id  
+LEFT JOIN table_service ts ON ts.id  = rd.service_id 
+WHERE rd.repair_header_id = ?`,
         [repair_id]);
     return [header[0], body];
 };
@@ -166,7 +186,8 @@ export const updateRepairHeader = async ({ user_id, new_status, repair_id, messa
 
 export default {
     createNewRepair,
-    createNewRepairDetail,
+    createNewRepairDetailService,
+    createNewRepairDetailPart,
 
     getRepairOnWork,
     getUsersRepair,

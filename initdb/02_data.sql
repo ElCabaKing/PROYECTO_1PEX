@@ -56,3 +56,13 @@ INSERT INTO
     (2, 3);
 
 
+INSERT INTO
+    table_service (service_nombre, service_value)
+    VALUES ("LIMPIEZA", 15),
+    ("FORMATEO", 10);
+
+
+INSERT INTO
+    table_part (part_name, stock,part_value)
+    VALUES ("PIN DE CARGA", 40, 5),
+    ("DISPLAY 5 PULGADAS", 10, 10);

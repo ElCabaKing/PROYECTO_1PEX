@@ -1,4 +1,5 @@
 import { AppError } from "../../utils/AppError.js";
+import { partService } from "../parts/parts.service.js";
 import repairModel from "./repair.model.js";
 import jwt from 'jsonwebtoken';
 
@@ -79,7 +80,7 @@ export const repairService = {
         return { repair_list: repair_list };
     },
 
-    async getRepairData({ refresh_token, auth_token, repair_id }) {
+    async getRepairData({ refresh_token, auth_token, repair_id}) {
         if (!refresh_token || !auth_token || !repair_id) {
             throw new AppError("No se proporciono los datos necesarios", 400);
         };
@@ -95,11 +96,22 @@ export const repairService = {
 
     },
 
-    async createNewRepairDetail({ repair_id, detalle, valor }) {
-        if (!repair_id || !detalle || !valor) {
+    async createNewRepairDetail({ repair_id, type, Sv_RpId, units}) {
+        if (!repair_id || !type || !Sv_RpId) {
             throw new AppError("No se proporciono los datos necesarios", 400)
         };
-        await repairModel.createNewRepairDetail({repair_id, detalle, valor});
+        switch (type){
+            case "SERVICIO":
+                console.log(type)
+                await repairModel.createNewRepairDetailService({repair_id: repair_id, service_id: Sv_RpId});
+            break;
+            case "PARTE":
+                if(!Sv_RpId || !units){throw new AppError("No se envio datos",400)}
+                await repairModel.createNewRepairDetailPart({repair_id: repair_id, part_id: Sv_RpId, units: units});
+                await partService.updateStock({newStock: units, type: "-", partId: Sv_RpId})
+            break;
+        }
+
         return { message: "Detalle creado correctamente" };
     },
 

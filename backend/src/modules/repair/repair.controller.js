@@ -69,8 +69,8 @@ export const getRepairData = async (req, res, next) => {
 
 export const createNewRepairDetail = async (req, res, next) => {
     try {
-        const { repair_id, detalle, valor } = req.body;
-        const { message } = await repairService.createNewRepairDetail({ repair_id, detalle, valor })
+        const { repair_id, type, Sv_RpId,part_id, units} = req.body;
+        const { message } = await repairService.createNewRepairDetail({ repair_id, type, Sv_RpId,part_id, units })
 
         return res.status(200).json(message);
     }
