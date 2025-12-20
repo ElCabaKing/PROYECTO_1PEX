@@ -4,7 +4,7 @@ import { indexList } from "../../../utils/utilFunc";
 
 export default function useParts() {
     const [partList, setPartList] = useState([]);
-    const [numIndex, setNumIndex] = useState("1");
+    const [numIndex, setNumIndex] = useState(1);
     const [maxIndex, setMaxIndex] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [partName, setPartName] = useState("")

@@ -9,6 +9,7 @@ import MyJobs from "./modules/MyJobs/pages/MyJobs";
 import RepairJob from "./modules/RepairJob/pages/RepairJob";
 import History from "./modules/History/pages/History";
 import Repuesto from "./modules/Repuesto/pages/Repuesto";
+import Servicio from "./modules/Servicio/pages/Servicio";
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +25,8 @@ function App() {
         <Route path="/repair/:id" element={<RepairJob/>} />
         <Route path="/historial" element={<History/>}/>
         <Route path="/repuestos" element={<Repuesto/>}/>
+        <Route path="/servicios" element={<Servicio/>}/>
+
       </Route>
       </Routes>
     </BrowserRouter>

@@ -35,7 +35,7 @@ function Repuesto() {
       <div className={styles.upThings}>
         <Buttom extraClass={styles.addButton} action={() => setShowModal(true)} label="+ Repuesto"></Buttom>
         <Input placeholder="Buscar un repuesto" onChange={(e) => { setPartName(e.target.value); setNumIndex(1) }} />
-        <Select value={numIndex} onChange={(e) => setNumIndex(e.target.value)}>
+        <Select value={maxIndex.includes(numIndex) ? numIndex : ''} onChange={(e) => setNumIndex(e.target.value)}>
           {maxIndex.map((n) => (<MenuItem value={n} key={n}>{n}</MenuItem>))}
         </Select>
       </div>

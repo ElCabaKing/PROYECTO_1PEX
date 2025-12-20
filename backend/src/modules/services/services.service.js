@@ -2,9 +2,17 @@ import { AppError } from '../../utils/AppError.js';
 import servicesModel from './services.model.js'
 
 export const servicesService = {
-    async getServicesList() {
-        const servicesList = await servicesModel.getServicesList();
+    async getServicesList({ numIndex }) {
+        const intIndex = (Number(numIndex) * 10) - 10;
+        const servicesList = await servicesModel.getServicesList({ numIndex: intIndex });
         return { servicesList };
+    },
+
+    async getServiceListbyName({ numIndex, servName }) {
+        if (!numIndex || !servName) { throw new AppError("No se proporciono los datos necesarios", 400) }
+        const IntIndex = (Number(numIndex) * 10) - 10;
+        const data = await servicesModel.getServiceByName({ listIndex: IntIndex, serviceName: servName });
+        return { servicesList: data.servicesList, maxIndex: data.maxIndex };
     },
 
     async createNewService({ service, vpe }) {
