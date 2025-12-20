@@ -15,10 +15,20 @@ export const partService = {
     },
 
     //Get
-    async getPartList() {
-        const partlist = await partsModel.getParts();
+    async getPartList({ numIndex }) {
+        if (!numIndex) { throw new AppError("No se proporciono los datos necesarios", 400) }
+        const IntIndex = (Number(numIndex) * 10) - 10;
+        const data = await partsModel.getParts({ listIndex: IntIndex });
+        console.log("Service", data)
+        return { partlist: data.partList, maxIndex: data.maxIndex };
+    },
 
-        return partlist;
+    async getPartListbyName({ numIndex,partName }) {
+        if (!numIndex || !partName) { throw new AppError("No se proporciono los datos necesarios", 400) }
+        const IntIndex = (Number(numIndex) * 10) - 10;
+        const data = await partsModel.getPartbyName({ listIndex: IntIndex,partName: partName});
+        console.log("Service", data)
+        return { partlist: data.partList, maxIndex: data.maxIndex };
     },
 
 

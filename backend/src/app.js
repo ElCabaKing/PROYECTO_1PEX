@@ -9,7 +9,8 @@ import authRoute from './modules/auth/auth.route.js';
 import userRoute from './modules/user/user.route.js';
 import repairRoute from './modules/repair/repair.route.js';
 import recoveryRoute from './modules/recovery/recovery.route.js';
-import partsRoute from './modules/parts/parts.route.js'
+import partsRoute from './modules/parts/parts.route.js';
+import servicesRoute from './modules/services/services.route.js';
 // socket
 import { initSocket } from "./socket.js";
 //middleware
@@ -36,6 +37,8 @@ app.use("/user",userRoute);
 app.use("/repair",repairRoute);
 app.use("/recovery",recoveryRoute);
 app.use("/parts",partsRoute);
+app.use("/services",servicesRoute);
+
 
 //middleware global para manejo de errores
 app.use(errorHandler);

@@ -32,7 +32,7 @@ export const repairService = {
     },
 
     async updateHead({ token, new_status, repair_id }) {
-
+        if(!token || !new_status || !repair_id){throw new AppError("No se proporciono los datos necesariosd",400)}
         const decodedToken = this.decodeToken(token);
 
         switch (new_status) {

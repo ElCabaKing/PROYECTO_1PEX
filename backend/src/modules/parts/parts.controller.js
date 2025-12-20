@@ -15,9 +15,22 @@ export const createNewPart = async (req, res, next) => {
 
 export const getPartList = async (req, res, next) => {
     try{
-        const partList = await partService.getPartList();
+        const {numIndex} = req.query;
 
-        return res.status(200).json(partList)
+        const {partlist,maxIndex} = await partService.getPartList({numIndex});
+        return res.status(200).json({partlist,maxIndex})
+    }
+    catch(error){
+        next(error)
+    }
+}
+
+export const getPartListbyName = async (req, res, next) => {
+    try{
+        const {numIndex,partName} = req.query;
+
+        const {partlist,maxIndex} = await partService.getPartListbyName({numIndex,partName});
+        return res.status(200).json({partlist,maxIndex})
     }
     catch(error){
         next(error)
@@ -42,6 +55,7 @@ export default {
     createNewPart,
 
     getPartList,
+    getPartListbyName,
 
     updatePartStock
     

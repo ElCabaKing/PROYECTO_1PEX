@@ -1,13 +1,14 @@
 //Aqui haremos las rutas, aqui solo llaman a las pages junto con su URL
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login/Login";
-import Home from "./pages/Home/Home"
-import MainMenu from "./pages/MainMenu/MainMenu";
-import Users from "./pages/Users/Users";
+import Login from "./modules/Login/pages/Login";
+import Home from "./modules/Home/pages/Home"
+import MainMenu from "./modules/MainMenu/pages/MainMenu";
+import Users from "./modules/User/pages/Users";
 import MasterLayout from "./middleware/MasterLayout";
-import MyJobs from "./pages/MyJobs/MyJobs";
-import RepairJob from "./pages/RepairJob/RepairJob";
-import History from "./pages/History/History";
+import MyJobs from "./modules/MyJobs/pages/MyJobs";
+import RepairJob from "./modules/RepairJob/pages/RepairJob";
+import History from "./modules/History/pages/History";
+import Repuesto from "./modules/Repuesto/pages/Repuesto";
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/jobs" element={<MyJobs/>} />
         <Route path="/repair/:id" element={<RepairJob/>} />
         <Route path="/historial" element={<History/>}/>
+        <Route path="/repuestos" element={<Repuesto/>}/>
       </Route>
       </Routes>
     </BrowserRouter>
