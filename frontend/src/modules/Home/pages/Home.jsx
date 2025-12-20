@@ -4,6 +4,7 @@ import useHome from "../hooks/useHome";
 import ModalBase from "../../../components/ModalBase/ModalBase"
 import Buttom from "../../../components/Buttom/Buttom";
 import styles from "./Home.module.css"
+import Chat from "../../../components/Chat/Chat";
 function Home() {
     const { codeNumber, setCodeNumber, message,showError,
         searchCode,showModal,setShowModal,repairModalData } = useHome();
@@ -32,6 +33,8 @@ function Home() {
            <Buttom extraClass={styles.ButtomExtra} label="Ir al login" action={() => navigate('/login')}/>
             {showModal && (
                 <ModalBase>
+                    <div className={styles.chatContainer}>
+                        <div>
                     <p>Id: {`${repairModalData.id}`}</p>
                     <p>Cliente: {`${repairModalData.cedula_cliente}`}</p>
                     <p>Inicio: {`${new Date(repairModalData.fecha_inicio).toLocaleString()}`}</p>
@@ -39,7 +42,11 @@ function Home() {
                         Estado: {`${repairModalData.status_label}`}</p>
                     <p>Total: ${repairModalData.Total? repairModalData.Total: "0"}</p>
                     <Buttom  extraClass={styles.ButtomExtra} label="Listo" action={() => {setCodeNumber("");setShowModal(false)}}/>
+                        </div>
+                <Chat repairId={codeNumber}></Chat>
+                </div>
                 </ModalBase>
+                
             )}
 
         </div>

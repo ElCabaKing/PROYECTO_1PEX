@@ -22,3 +22,8 @@
     margin-top: 2px;
 }
 
+.chatContainer{
+    display: flex;
+    flex-direction: row;
+}
+
