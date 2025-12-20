@@ -8,7 +8,8 @@ export default function useHistory() {
     const [currentIndex, setCurrentIndex] = useState("1");
 
     async function getHistoryList() {
-        const resHistoryList = await appGetHistoryList(currentIndex);
+        const resHistoryList = await appGetHistoryList({index_num: currentIndex});
+        console.log(resHistoryList)
         setHistoryList(resHistoryList[0]);
         setMaxIndex(indexList(resHistoryList[1]));
         console.log(resHistoryList)

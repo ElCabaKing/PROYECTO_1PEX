@@ -28,12 +28,12 @@ export const createNewRepairDetailPart = async ({ repair_id, part_id, units }) =
 VALUES(?, ?);`,
         [repair_id, part_id]);
 
-        
+
 
     await pool.query(`INSERT INTO detail_part
 (repair_details_id, units)
 VALUES(?, ?);`,
-    [detailId.insertId, units]);
+        [detailId.insertId, units]);
     return;
 }
 
@@ -78,15 +78,28 @@ export const getRepairDetailsById = async ({ repair_id }) => {
     }
 
     const [header] = await pool.query(`
-        SELECT rh.id, SUM(
-COALESCE(dp.units * tp.part_value, ts.service_value)
-) AS total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo, ts2.status_label, rh.repair_problem  FROM repair_details rd 
-LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
-LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id 
-LEFT JOIN table_part tp ON tp.id = rd.part_id  
-LEFT JOIN table_service ts ON ts.id  = rd.service_id 
-INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status 
-WHERE rd.repair_header_id = ?
+         SELECT 
+  rh.id,
+  SUM(
+    CASE
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = FALSE THEN 0
+      WHEN rd.part_id IS NOT NULL THEN dp.units * tp.part_value
+      WHEN rd.service_id IS NOT NULL THEN ts.service_value
+      ELSE 0
+    END
+  ) AS total,
+  rh.cedula_cliente,
+  rh.fecha_inicio,
+  rh.id_reparador,
+  rh.modelo,
+  ts2.status_label
+FROM repair_details rd
+LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id
+LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id
+LEFT JOIN table_part tp ON tp.id = rd.part_id
+LEFT JOIN table_service ts ON ts.id = rd.service_id
+INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status
+WHERE rd.repair_header_id = ?;
     `, [repair_id]);
     const [body] = await pool.query(
         `SELECT rd.id,
@@ -112,15 +125,28 @@ export const getRepairClient = async ({ repair_id }) => {
     }
 
     const [header] = await pool.query(`
-       SELECT rh.id, SUM(
-COALESCE(dp.units * tp.part_value, ts.service_value)
-) AS Total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo, ts2.status_label  FROM repair_details rd 
-LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
-LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id 
-LEFT JOIN table_part tp ON tp.id = rd.part_id  
-LEFT JOIN table_service ts ON ts.id  = rd.service_id 
-INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status 
-WHERE rd.repair_header_id = ?
+         SELECT 
+  rh.id,
+  SUM(
+    CASE
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = FALSE THEN 0
+      WHEN rd.part_id IS NOT NULL THEN dp.units * tp.part_value
+      WHEN rd.service_id IS NOT NULL THEN ts.service_value
+      ELSE 0
+    END
+  ) AS Total,
+  rh.cedula_cliente,
+  rh.fecha_inicio,
+  rh.id_reparador,
+  rh.modelo,
+  ts2.status_label
+FROM repair_details rd
+LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id
+LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id
+LEFT JOIN table_part tp ON tp.id = rd.part_id
+LEFT JOIN table_service ts ON ts.id = rd.service_id
+INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status
+WHERE rd.repair_header_id = ?;
     `, [repair_id]);
     return [header[0]];
 };
@@ -140,15 +166,28 @@ export const getRepairUserId = async ({ repair_id }) => {
 export const getRepairHeader = async ({ repair_id }) => {
     const [repair_header] = await pool.query(
         `
-    SELECT rh.id, SUM(
-COALESCE(dp.units * tp.part_value, ts.service_value)
-) AS Total, rh.cedula_cliente, rh.fecha_inicio , rh.id_reparador , rh.modelo, ts2.status_label  FROM repair_details rd 
-LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
-LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id 
-LEFT JOIN table_part tp ON tp.id = rd.part_id  
-LEFT JOIN table_service ts ON ts.id  = rd.service_id 
-INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status 
-WHERE rd.repair_header_id = ?
+    SELECT 
+  rh.id,
+  SUM(
+    CASE
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = FALSE THEN 0
+      WHEN rd.part_id IS NOT NULL THEN dp.units * tp.part_value
+      WHEN rd.service_id IS NOT NULL THEN ts.service_value
+      ELSE 0
+    END
+  ) AS Total,
+  rh.cedula_cliente,
+  rh.fecha_inicio,
+  rh.id_reparador,
+  rh.modelo,
+  ts2.status_label
+FROM repair_details rd
+LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id
+LEFT JOIN repair_header rh ON rh.id = rd.repair_header_id
+LEFT JOIN table_part tp ON tp.id = rd.part_id
+LEFT JOIN table_service ts ON ts.id = rd.service_id
+INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status
+WHERE rd.repair_header_id = ?;
 `,
         [repair_id]
     );
@@ -157,13 +196,11 @@ WHERE rd.repair_header_id = ?
 
 export const getHistoryList = async ({ search_number }) => {
     const [historyList] = await pool.query(
-        `SELECT rh.id , rh.cedula_cliente, rh.fecha_inicio , ts.status_label , u.user_nombre, sum(rd.valor ) as Total  FROM repair_header rh 
-INNER JOIN tb_status ts ON ts.status_id = rh.repair_status 
-LEFT JOIN users u ON u.id = rh.id_reparador 
-LEFT JOIN repair_details rd ON rd.repair_headerId = rh.id 
-GROUP BY rh.id
-	ORDER BY rh.id DESC
-	LIMIT ?,10`,
+        `SELECT rh.id ,rh.cedula_cliente ,rh.fecha_inicio , ts.status_label, u.user_nombre  FROM repair_header rh 
+INNER JOIN tb_status ts ON ts.status_id  = rh.repair_status 
+INNER JOIN users u ON u.id  = rh.id_reparador  
+ORDER BY rh.id DESC
+LIMIT ?,10`,
         [search_number]
     );
     const [number] = await pool.query(
