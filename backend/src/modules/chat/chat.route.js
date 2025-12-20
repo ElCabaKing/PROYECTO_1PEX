@@ -1,8 +1,9 @@
 import { Router } from "express";
-import RecoveryController from "./recovery.controller.js";
+import chatController from "./chat.controller.js";
 const router = Router();
 
-router.post('/SecurityCode',RecoveryController.getSecurityCode);
-router.patch('/ChangePassword',RecoveryController.updateUserPassword);
+router.post('/createNewMessage',chatController.createNewMessage);
+router.post('/updatePartStatus',chatController.updatePartStatus);
+router.get('/getChatbyId',chatController.getChatbyId);
 
 export default router;

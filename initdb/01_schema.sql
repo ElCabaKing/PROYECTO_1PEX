@@ -76,19 +76,33 @@ CREATE TABLE repair_details (
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE table_part_status (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    status_label VARCHAR(255) NOT NULL
+);
+
+INSERT INTO
+    table_part_status (status_label)
+VALUES ("PENDIENTE"),
+    ("ACEPTADO"),
+    ("DENEGADO");
+
+
 CREATE TABLE detail_part (
     id INT AUTO_INCREMENT PRIMARY KEY,
     repair_details_id INT,
     FOREIGN KEY (repair_details_id) REFERENCES repair_details (id),
     units INT,
-    accepted BOOLEAN DEFAULT FALSE
+    accepted INT DEFAULT 1,
+    FOREIGN KEY (accepted) REFERENCES table_part_status(id)
 );
 
 CREATE TABLE table_repair_chat (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    isTeam BOOLEAN,
     repair_header_id INT,
     FOREIGN KEY (repair_header_id) REFERENCES repair_header (id),
-    isTeam BOOLEAN,
-    isPart BOOLEAN,
-    mensaje VARCHAR(255) NOT NULL
+    mensaje VARCHAR(255) NOT NULL,
+    partId INT,
+    FOREIGN KEY (partId) REFERENCES detail_part(id)
 );

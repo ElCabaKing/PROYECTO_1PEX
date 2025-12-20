@@ -1,32 +1,44 @@
-import { recoveryService } from "./chat.service.js";
+import { chatService } from "./chat.service.js";
 
-const saltRounds = 10;
-export const getSecurityCode = async (req, res, next) => {
+export const createNewMessage = async (req, res, next) => {
     try {
-        const { userName, securityCode } = req.body;
-        
-        const {isCorrect} = await recoveryService.getSecurityCode({userName, securityCode});
+        const { message, repairId, isTeam } = req.body;
 
-        return res.status(200).json({isCorrect: isCorrect});
+        await chatService.createNewMessage({ message, repairId, isTeam });
+
+        return res.status(200).json({ isCorrect: isCorrect });
     }
     catch (error) {
         next(error);
     }
 }
 
-export const updateUserPassword = async (req, res, next) => {
-    try {
-        const { userName, newPassword } = req.body;
-        const {response} = await recoveryService.updateUserPassword({userName, newPassword});
 
-        return res.status(200).json({response: response});
+export const updatePartStatus = async (req, res, next) => {
+    try {
+        
     }
     catch (error) {
-        next(error)
+
+    }
+}
+
+
+export const getChatbyId = async (req, res, next) => {
+    try{
+        const {repairId} = req.query;
+
+        const {chat} = await chatService.getChatbyIf({repairId});
+
+        return res.status(200).json(chat);
+    }
+    catch(error){
+        next(error);
     }
 }
 
 export default {
-    getSecurityCode,
-    updateUserPassword
+    createNewMessage,
+    updatePartStatus,
+    getChatbyId
 }

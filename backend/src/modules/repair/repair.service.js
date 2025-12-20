@@ -128,7 +128,6 @@ export const repairService = {
             case "PARTE":
                 if (!Sv_RpId || !units) { throw new AppError("No se envio datos", 400) }
                 await repairModel.createNewRepairDetailPart({ repair_id: repair_id, part_id: Sv_RpId, units: units });
-                await partService.updateStock({ newStock: units, type: "-", partId: Sv_RpId })
                 break;
         }
 

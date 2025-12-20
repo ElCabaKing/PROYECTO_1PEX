@@ -1,28 +1,28 @@
 import { AppError } from "../../utils/AppError.js";
-import recoveryModel from "./chat.model.js";
-import bcrypt from 'bcrypt';
+import { partService } from "../parts/parts.service.js";
+import chatModel from "./chat.model.js";
 
-const saltRounds = 10
-export const recoveryService = {
-    async getSecurityCode({ userName, securityCode }) {
-        console.log(userName, securityCode)
-        if (!userName || !securityCode) { throw new AppError("No se proporciono los datos necesarios", 400) }
-        const userSecurityCoded = await recoveryModel.getSecurityCode({userName});
-        console.log(userSecurityCoded)
-        if (!userSecurityCoded) { throw new AppError("No se encontro el usuaio o nunca a iniciado sesion", 404) }
-        if (!(await bcrypt.compare(securityCode, userSecurityCoded))) { throw new AppError("Usuario o Codigo no validos", 403) };
 
+export const chatService = {
+    async createNewMessage({ message, repairId, isTeam }) {
+
+        if (!message || !repairId || !isTeam) { throw new AppError("No se proporciono los datos necesarios", 400) }
+        await chatModel.createNewMessage({ message, repairId, isTeam })
         return {
             isCorrect: true
         }
     },
 
-    async updateUserPassword({userName, newPassword }) {
-        if(!userName, !newPassword){throw new AppError("No se proporciono los datos necesarios",400)}
-        const newPasswordHash = await bcrypt.hash(newPassword, saltRounds);
-        await recoveryModel.updateUserPassword({userName, newPasswordHash});
-        return {
-            response: "Cambio existoso"
-        }
-    }
+    async updatePartStatus({newStock, partId, type, detailPart, newStatus}){
+        await chatModel.updateDetailPartStatus({detailPart, newStatus})
+        await partService.updateStock({newStock, partId, type})
+    },
+
+    async getChatbyIf({repairId}){
+        console.log(repairId)
+        if(!repairId){ throw new AppError("No se proporciono los datos necesarios", 400) };
+       const chat =  await chatModel.getChatbyId({repairId});
+
+       return {chat}
+    },
 }

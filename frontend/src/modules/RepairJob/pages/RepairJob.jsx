@@ -10,7 +10,13 @@ function RepairJob() {
   const { getJob,navigate, jobBody, header, noData, isUser, setShowModalDetail, showModalDetail,
     finishRepair } = useJob();
   const { updateHead } = useRepair();
-  const [inMaintance, setInMaintance] = useState(true)
+  const [inMaintance, setInMaintance] = useState(true);
+
+  const acceptedColors = {
+  1: "#99918fff", // pendiente
+  2: "#e22a2aff", // rechazado
+  3: "#4bc44bff", // aceptado
+};
 
 
   useEffect(() => {
@@ -56,10 +62,11 @@ function RepairJob() {
               </tr>
             ) : (
               jobBody.map((registro) => (
-                <tr key={registro.id}>
+                <tr style={{backgroundColor: acceptedColors[registro.accepted] || "",}} key={registro.id}>
                   <td>{registro.detalle}</td>
                   <td>{new Date(registro.fecha).toLocaleString()}</td>
                   <td>{registro.total? `$${registro.total}` : ``}</td>
+                  <td></td>
                 </tr>
               ))
             )}

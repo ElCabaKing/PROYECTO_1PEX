@@ -30,10 +30,17 @@ VALUES(?, ?);`,
 
 
 
-    await pool.query(`INSERT INTO detail_part
+   const [detailPart] = await pool.query(`INSERT INTO detail_part
 (repair_details_id, units)
 VALUES(?, ?);`,
         [detailId.insertId, units]);
+
+
+    await pool.query(`
+        INSERT INTO table_repair_chat
+(isTeam, repair_header_id, mensaje, partId)
+VALUES(1, ?, 'SE SOLICITA SU AUTORIZACION CON UNA PIEZA', ?);
+        `,[repair_id,detailPart.insertId]);
     return;
 }
 
@@ -102,14 +109,14 @@ INNER JOIN tb_status ts2 ON ts2.status_id = rh.repair_status
 WHERE rd.repair_header_id = ?;
     `, [repair_id]);
     const [body] = await pool.query(
-        `SELECT rd.id,
+        `SELECT rd.id,dp.accepted ,
 COALESCE(dp.units * tp.part_value, ts.service_value)
  AS total, COALESCE(ts.service_nombre , tp.part_name) AS detalle,
  rd.fecha  FROM repair_details rd 
 LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
 LEFT JOIN table_part tp ON tp.id = rd.part_id  
 LEFT JOIN table_service ts ON ts.id  = rd.service_id 
-WHERE rd.repair_header_id = ?`,
+WHERE rd.repair_header_id = 1`,
         [repair_id]);
     return [header[0], body];
 };
