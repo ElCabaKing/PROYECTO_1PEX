@@ -14,10 +14,6 @@ function Servicio() {
     setShowModal, maxIndex, index, setIndex, serviceName,
     setServiceName,getServiceListbyNameFunc } = useServicio();
 
-  useEffect(() => {
-    getServiceListFunc()
-
-  }, [index])
 
   useEffect(() => {
     if (serviceName !== "") return
@@ -41,7 +37,7 @@ function Servicio() {
       <h2 style={{ marginLeft: "10px" }}>Servicios</h2>
       <div className={styles.upThings} >
         <Buttom extraClass={styles.addButton} action={() => setShowModal(true)} label="+ Servicio"></Buttom>
-        <Input value={serviceName} onChange={(e) => setServiceName(e.target.value)}></Input>
+        <Input placeholder="Buscar por nombre" value={serviceName} onChange={(e) => setServiceName(e.target.value)}></Input>
         <Select value={maxIndex.includes(index) ? index : ''} onChange={(e) => setIndex(e.target.value)}>
           {maxIndex.map((n) => (<MenuItem value={n}>{n}</MenuItem>))}
         </Select>

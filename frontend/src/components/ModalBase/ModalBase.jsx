@@ -1,9 +1,9 @@
 import styles from "../ModalBase/ModalBase.module.css"
 
-function ModalBase({children}) {
+function ModalBase({children, extraClass}) {
   return (
     <div className={styles.backdrop}>
-        <div className={styles.modalBase}>
+        <div  className={`${styles.modalBase} ${extraClass}`}>
             {children}
         </div>
     </div>

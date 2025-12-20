@@ -1,26 +1,24 @@
 import { useState } from "react";
-import { appSaveRepairDetail } from "../../services/repairDetails.api.js";
+import { saveServiceDetail, savePartDetail } from "../../services/repairDetails.api.js";
 
 
 export default function useRepairDetail() {
-    const [valor, setValor] = useState(0);
-    const [detalle, setDetalle] = useState("");
     
 
-    async function hkSaveRepairDetail(repair_id) {
-        console.log(valor,detalle,repair_id)
-        await appSaveRepairDetail(repair_id,detalle,valor);
+    async function savePartDetailfunc({repair_id, Sv_RpId, units}) {
+        await savePartDetail({repair_id, Sv_RpId, units});
+        return;
+    }
+
+    async function saveServiceDetailfunc({repair_id,Sv_RpId}) {
+        await saveServiceDetail({repair_id,Sv_RpId});
         return;
     }
 
 
-
     return {
-        hkSaveRepairDetail,
-        valor,
-        setValor,
-        detalle,
-        setDetalle,
+        savePartDetailfunc,
+        saveServiceDetailfunc,
     }
 
 

@@ -1,16 +1,14 @@
-.ButtonContainer{
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 5px;
+.modalSize{
+    height: 600px;
 }
 
-.ButtonContainer :last-child{
-    margin-left: 5px;
-}
-
-.Button{
-    padding: 5px;
-    width: 100px;
-    height: 30px;
+.button{
+    width: 50%;
+    height: 40px;
     border-radius: 5px;
+}
+
+.buttonContainer{
+    display: flex;
+    flex-direction: row;
 }

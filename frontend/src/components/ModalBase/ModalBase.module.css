@@ -6,7 +6,6 @@
     display: flex;
     position: fixed;
     flex-direction: column;
-    width: 300px;
     padding: 15px;
     border-radius: 5px;
     border-style:double;
