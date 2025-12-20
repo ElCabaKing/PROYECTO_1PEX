@@ -43,7 +43,7 @@ function Servicio() {
         </Select>
       </div>
       <div className={styles.distContainer}>
-        <div className={styles.tableContainer}>
+        <div>
           <table className={styles.tabla}>
             <thead>
               <tr>

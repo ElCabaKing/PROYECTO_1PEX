@@ -21,7 +21,8 @@ export async function getServicesList({ numIndex }) {
         `, [numIndex]);
 
     const [servNum] = await pool.query(`
-            SELECT count(*) as total FROM table_service;
+            SELECT count(*) as total FROM table_service
+            WHERE id!=1 AND id!=2 AND id!=3;
             `);
 
     const maxIndex = Math.ceil(servNum[0].total / 10);
