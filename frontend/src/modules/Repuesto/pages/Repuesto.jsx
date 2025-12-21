@@ -60,7 +60,7 @@ const [stockValues, setStockValues] = useState({});
                   <td>{parte.stock}</td>
                   <td>{`$${parte.part_value}`}</td>
                   <td>
-                    <Input type="number" min={0} value={stockValues[parte.id] || ""}
+                    <Input type="number" min={1} value={stockValues[parte.id] || ""}
                       onChange={(e) =>
                         setStockValues(prev => ({
                           ...prev,
