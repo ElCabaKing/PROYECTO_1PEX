@@ -23,14 +23,12 @@ export const userService = {
             throw new AppError("No se proporciono los datos necesarios", 400);
         };
         const firstPass = await bcrypt.hash(user_name, saltRounds);
-        console.log(firstPass);
         await modelUser.createNewUser({ user_name, apellido, nombre, user_role, firstPass });
 
         return { response: "Usuario guardado correctamente" }
     },
 
     async getUserList({ user_name, index_number }) {
-        console.log(user_name, index_number)
         if (!user_name || !index_number) {
             throw new AppError("No se proporciono los datos necesarios", 400);
         };

@@ -21,7 +21,6 @@ export default function useLogin() {
     async function validateLogin() {
         try {
             const res = await Login({ user_nombre, user_password });
-            console.log("login response:", res);
 
             if (res.login) {
                 saveUserData(res);

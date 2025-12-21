@@ -5,7 +5,6 @@ import partsModel from "./parts.model.js";
 export const partService = {
     //Create
     async createNewPart({ partName, baseStock, pve }) {
-        console.log("llega")
         if (!partName || !baseStock || !pve) { throw new AppError("No se proporciono los datos necesarios", 400, "CREATE") }
         await partsModel.createNewPart({ partName, baseStock, pve });
 
@@ -19,7 +18,6 @@ export const partService = {
         if (!numIndex) { throw new AppError("No se proporciono los datos necesarios", 400) }
         const IntIndex = (Number(numIndex) * 10) - 10;
         const data = await partsModel.getParts({ listIndex: IntIndex });
-        console.log("Service", data)
         return { partlist: data.partList, maxIndex: data.maxIndex };
     },
 
@@ -27,7 +25,6 @@ export const partService = {
         if (!numIndex || !partName) { throw new AppError("No se proporciono los datos necesarios", 400) }
         const IntIndex = (Number(numIndex) * 10) - 10;
         const data = await partsModel.getPartbyName({ listIndex: IntIndex,partName: partName});
-        console.log("Service", data)
         return { partlist: data.partList, maxIndex: data.maxIndex };
     },
 

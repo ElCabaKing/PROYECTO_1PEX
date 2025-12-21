@@ -1,4 +1,4 @@
-import { appGetRepairHead_Details, appUpdateHead } from "../../RepairJob/services/repair.api";
+import { appGetRepairHead_Details, appUpdateHead } from "../services/repair.api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 export default function useJob() {
@@ -16,7 +16,6 @@ export default function useJob() {
         setisUser(false);
         setJobBody([]);
         const data_job = await appGetRepairHead_Details(repair_id);
-        console.log(("data", data_job))
         if (data_job.Nonexistent) { navigate("/empty"); return }
         setHeader(data_job.repair_data[0]);
         if (data_job.repair_data[1].length !== 0) {
@@ -28,10 +27,11 @@ export default function useJob() {
         }
 
     }
-    async function finishRepair(repair_id) {
-        await appUpdateHead(repair_id, 3);
+    async function alterRepair(repair_id,status) {
+        await appUpdateHead(repair_id, status);
         return;
     }
+
 
     return {
         getJob,
@@ -44,7 +44,8 @@ export default function useJob() {
         setRefetch,
         showModalDetail,
         setShowModalDetail,
-        finishRepair
+        alterRepair,
+
     }
 
 }

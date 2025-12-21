@@ -9,10 +9,8 @@ export default function useHistory() {
 
     async function getHistoryList() {
         const resHistoryList = await appGetHistoryList({index_num: currentIndex});
-        console.log(resHistoryList)
         setHistoryList(resHistoryList[0]);
         setMaxIndex(indexList(resHistoryList[1]));
-        console.log(resHistoryList)
         return;
     }
 

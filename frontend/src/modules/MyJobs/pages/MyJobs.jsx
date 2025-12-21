@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useRepair from "../../RepairJob/hooks/useRepair"
+import useRepair from "../hooks/useRepair"
 import styles from "./MyJobs.module.css"
 import { useNavigate } from "react-router-dom";
 import shIncon from "../../../media/shIcon.avif"

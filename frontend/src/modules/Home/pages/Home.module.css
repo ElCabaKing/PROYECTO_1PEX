@@ -4,6 +4,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
 }
 
 .formContainer{
@@ -27,3 +28,11 @@
     flex-direction: row;
 }
 
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataContainer > :last-child {
+  margin-top: auto;
+}

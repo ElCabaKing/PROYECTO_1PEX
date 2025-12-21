@@ -86,7 +86,6 @@ export async function appGetRepairHead_Details(repair_id) {
         return repair_data.data
     }
     catch (error) {
-        console.log(error)
         if (error.response.status === 404) {
             return {Nonexistent: error.response.data.Nonexistent};
         }

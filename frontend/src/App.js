@@ -10,6 +10,8 @@ import RepairJob from "./modules/RepairJob/pages/RepairJob";
 import History from "./modules/History/pages/History";
 import Repuesto from "./modules/Repuesto/pages/Repuesto";
 import Servicio from "./modules/Servicio/pages/Servicio";
+import ChatPage from "./modules/ChatM/page/ChatPage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +28,7 @@ function App() {
         <Route path="/historial" element={<History/>}/>
         <Route path="/repuestos" element={<Repuesto/>}/>
         <Route path="/servicios" element={<Servicio/>}/>
+        <Route path="/chats" element={<ChatPage/>}/>
 
       </Route>
       </Routes>

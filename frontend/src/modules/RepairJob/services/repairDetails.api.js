@@ -2,7 +2,6 @@ import axios from "axios";
 import { API_URL } from "../../../utils/api";
 
 export async function saveServiceDetail({repair_id,Sv_RpId}) {
-    console.log("api",repair_id,Sv_RpId)
     await axios.post(`${API_URL}/repair/saveRepairDetail`,
         {
             repair_id,

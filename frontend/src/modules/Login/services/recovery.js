@@ -3,7 +3,6 @@ import { API_URL } from "../../../utils/api";
 
 
 export async function getValidateWord(userName,securityCode) {
-    console.log(userName,securityCode)
     try{
         const validate = await axios.post(`${API_URL}/recovery/SecurityCode`,
             {

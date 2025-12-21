@@ -1,22 +1,28 @@
 import { useParams } from "react-router-dom";
-import useJob from "../../MyJobs/hooks/useJob";
 import { useEffect, useState } from "react";
-import useRepair from "../hooks/useRepair";
 import ModalRepairDetail from "../components/ModalRepairDetail/ModalRepairDetail";
 import Buttom from "../../../components/Buttom/Buttom";
 import styles from "./RepairJob.module.css";
+import useJob from "../hooks/useJob";
+import useRepair from "../../MyJobs/hooks/useRepair";
 function RepairJob() {
   const { id } = useParams();
-  const { getJob,navigate, jobBody, header, noData, isUser, setShowModalDetail, showModalDetail,
-    finishRepair } = useJob();
+  const { getJob, navigate, jobBody, header, noData, isUser, setShowModalDetail, showModalDetail,
+    alterRepair, } = useJob();
   const { updateHead } = useRepair();
   const [inMaintance, setInMaintance] = useState(true);
 
   const acceptedColors = {
-  1: "#99918fff", // pendiente
-  2: "#e22a2aff", // rechazado
-  3: "#4bc44bff", // aceptado
-};
+    1: "#99918fff", // pendiente
+    3: "#e22a2aff", // aceptado
+    2: "#4bc44bff", // rechazado
+  };
+
+  const fontColors = {
+    1: "#464140ff", // pendiente
+    3: "#5a1919ff", // aceptado
+    2: "#204e20ff", // rechazado
+  };
 
 
   useEffect(() => {
@@ -25,9 +31,8 @@ function RepairJob() {
 
   useEffect(() => {
     setInMaintance(
-      header.status_label === "REPARADO" ||
       header.status_label === "DISPONIBLE" ||
-      header.status_label === "ENTREGADO"
+      header.status_label === "ENTREGADO" 
     );
   }, [header]);
 
@@ -38,7 +43,11 @@ function RepairJob() {
         <p>Problema: {header.repair_problem}</p>
         <p>Estado: {header.status_label}</p>
         <p>Total: ${header.total}</p>
-        <Buttom extraClass={styles.mainButton} disable={inMaintance || !isUser} estilo={inMaintance || !isUser? "negativo" : "base"} action={async () => {await finishRepair(id); navigate('/jobs'); }} label="Terminar" />
+        <Buttom extraClass={styles.mainButton}
+         disable={inMaintance || !isUser } 
+         estilo={inMaintance || !isUser ? "negativo" : "base"} 
+         action={async () => { await alterRepair(id,header.status_label==="EN REPARACION"? 3 : 4); navigate('/jobs'); }} 
+         label={header.status_label==="REPARADO"? "ENTREGAR" : "TERMINAR"} />
       </div>
       <div className={styles.tablaContainer}>
         <table className={styles.tabla}>
@@ -57,15 +66,15 @@ function RepairJob() {
                   <p>Aun no se acepta este trabajo Aceptalo!!</p>
                 </td>
                 <td colSpan={2}>
-                  <Buttom action={async () => { await updateHead(header.id, 2);navigate('/jobs') }} label="Aceptar" />
+                  <Buttom action={async () => { await updateHead(header.id, 2); navigate('/jobs') }} label="Aceptar" />
                 </td>
               </tr>
             ) : (
               jobBody.map((registro) => (
-                <tr style={{backgroundColor: acceptedColors[registro.accepted] || "",}} key={registro.id}>
-                  <td>{registro.detalle}</td>
-                  <td>{new Date(registro.fecha).toLocaleString()}</td>
-                  <td>{registro.total? `$${registro.total}` : ``}</td>
+                <tr style={{ backgroundColor: acceptedColors[registro.accepted] || "",   }} key={registro.id}>
+                  <td style={{ color: fontColors[registro.accepted] || "" }}>{registro.detalle}</td>
+                  <td style={{ color: fontColors[registro.accepted] || "" }}>{new Date(registro.fecha).toLocaleString()}</td>
+                  <td style={{ color: fontColors[registro.accepted] || "" }}> {registro.total ? `$${registro.total}` : ``}</td>
                   <td></td>
                 </tr>
               ))

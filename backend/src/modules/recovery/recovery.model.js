@@ -6,7 +6,6 @@ export const getSecurityCode = async ({ userName }) => {
     SELECT u.security_code FROM users u  
     WHERE u.user_nombre = ?;`,
         [userName]);
-    console.log(securityRow.length)
     if (securityRow.length === 0) { throw new AppError("No se encontro el usuario", 404) }
     return securityRow[0].security_code;
 }

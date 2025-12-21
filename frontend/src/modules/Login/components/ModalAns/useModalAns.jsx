@@ -28,7 +28,6 @@ export default function useModalAns() {
             navigate('/main');
         }
         catch (error) {
-            console.log(error);
         }
     }
 

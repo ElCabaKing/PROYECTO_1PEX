@@ -34,7 +34,7 @@ function Home() {
             {showModal && (
                 <ModalBase>
                     <div className={styles.chatContainer}>
-                        <div>
+                        <div className={styles.dataContainer}>
                     <p>Id: {`${repairModalData.id}`}</p>
                     <p>Cliente: {`${repairModalData.cedula_cliente}`}</p>
                     <p>Inicio: {`${new Date(repairModalData.fecha_inicio).toLocaleString()}`}</p>
@@ -43,7 +43,7 @@ function Home() {
                     <p>Total: ${repairModalData.Total? repairModalData.Total: "0"}</p>
                     <Buttom  extraClass={styles.ButtomExtra} label="Listo" action={() => {setCodeNumber("");setShowModal(false)}}/>
                         </div>
-                <Chat repairId={codeNumber}></Chat>
+                <Chat repairId={codeNumber} isTeam={false}></Chat>
                 </div>
                 </ModalBase>
                 

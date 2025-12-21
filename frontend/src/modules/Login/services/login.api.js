@@ -10,7 +10,6 @@ export async function Login({ user_nombre, user_password }) {
             withCredentials: true
         }
     );
-    console.log(res);
     return res.data;
 }
 

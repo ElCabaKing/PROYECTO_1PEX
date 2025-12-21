@@ -16,14 +16,12 @@ export default function useRecovery(){
     async function saveAll(cancel) {
         setShowError(false);
         setMessage("");
-        console.log(userFirstPass, userSecondPass)
         if (userFirstPass !== userSecondPass) {
             setMessage("Las contrasenas deben coincidir");
             setShowError(true);
             return;
         }
         const res = await updateUserPassword(user_name,userSecondPass);
-        console.log(res)
         setMessage(res.response);
         setShowError(true);
         setTimeout(() => {
@@ -35,7 +33,6 @@ export default function useRecovery(){
     async function validateWord() {
         try{
             const validate = await getValidateWord(user_name,securityCode);
-            console.log(validate)
             if(validate.isCorrect){setBeggin(false);setIsCorrect(true)}
             return;
         }

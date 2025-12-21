@@ -29,7 +29,6 @@ export const tokenRoleAuth = (roles = []) => {
         if (!token && refresh_token) {
             try {
                 const decode = jwt.verify(refresh_token, process.env.JWT_SECRET_REFRESH);
-                console.log(decode, roles)
                 const tieneRol = roles.includes(decode.rol);
                 if (!tieneRol) {
                     return res.status(401).json({ validation: false, message: "No tienes permisos" });

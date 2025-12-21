@@ -26,7 +26,6 @@ export function initSocket(server) {
   });
 
   io.on("connection", (socket) => {
-    console.log("Cliente conectado");
   });
 
 }

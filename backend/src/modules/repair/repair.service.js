@@ -38,7 +38,6 @@ export const repairService = {
         switch (new_status) {
             case 2:
                 const reg = await repairModel.getRepairCountById({ user_id: decodedToken.id });
-                console.log(reg)
                 if (reg[0].total >= 5) {
                     throw new AppError("Hijo de la semilla completa un trabajo", 400)
                 }
@@ -122,7 +121,6 @@ export const repairService = {
         };
         switch (type) {
             case "SERVICIO":
-                console.log(type)
                 await repairModel.createNewRepairDetailService({ repair_id: repair_id, service_id: Sv_RpId });
                 break;
             case "PARTE":

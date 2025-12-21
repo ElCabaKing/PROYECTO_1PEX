@@ -30,7 +30,6 @@ export const getServiceListbyName = async (req, res, next) => {
         const {numIndex,serviceName} = req.query;
 
         const {servicesList,maxIndex} = await servicesService.getServiceListbyName({numIndex: numIndex,servName: serviceName});
-    console.log("controller",servicesList,maxIndex)
         return res.status(200).json({servicesList,maxIndex})
     }
     catch(error){

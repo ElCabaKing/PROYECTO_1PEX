@@ -1,4 +1,4 @@
-import { appGetRapairList, appGetUserRepairList, appSaveRepair, appUpdateHead } from "../services/repair.api";
+import { appGetRapairList, appGetUserRepairList, appSaveRepair, appUpdateHead } from "../../RepairJob/services/repair.api";
 import { useState } from "react";
 export default function useRepair() {
     const [repairList, setRepairList] = useState([]);

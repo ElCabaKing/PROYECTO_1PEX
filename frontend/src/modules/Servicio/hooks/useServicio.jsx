@@ -20,7 +20,6 @@ export default function useServicio() {
 
     async function getServiceListbyNameFunc() {
         const data = await getServiceybyName({ numIndex: index,serviceName: serviceName });
-        console.log(data)
         setServiceList(data.servicesList);
         setMaxIndex(indexList(data.maxIndex).filter(n => n !== 0));
 

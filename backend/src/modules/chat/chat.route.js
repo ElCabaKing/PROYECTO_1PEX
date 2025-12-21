@@ -5,5 +5,6 @@ const router = Router();
 router.post('/createNewMessage',chatController.createNewMessage);
 router.post('/updatePartStatus',chatController.updatePartStatus);
 router.get('/getChatbyId',chatController.getChatbyId);
+router.get('/getChatList',chatController.getChatList);
 
 export default router;

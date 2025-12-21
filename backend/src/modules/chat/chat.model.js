@@ -4,7 +4,7 @@ import { AppError } from "../../utils/AppError.js";
 export const createNewMessage = async ({ message, repairId, isTeam }) => {
     await pool.query(`
     INSERT INTO table_repair_chat
-    (isTeam, repair_header_id, mensaje, partId)
+    (isTeam, repair_header_id, mensaje)
     VALUES(?, ?, ?);
     `, [isTeam, repairId, message]);
     return;
@@ -12,13 +12,16 @@ export const createNewMessage = async ({ message, repairId, isTeam }) => {
 
 export const getChatbyId = async ({ repairId }) => {
     const [chat] = await pool.query(`
-        SELECT
+             SELECT
   trc.mensaje,
   tp.part_name,
+  tp.part_value ,
   trc.isTeam,
   dp.accepted,
+  dp.id as detail_id,
   tps.status_label,
-  dp.units 
+  dp.units ,
+  tp.id as part_id
 FROM table_repair_chat trc
 LEFT JOIN detail_part dp 
   ON dp.id = trc.partId
@@ -32,20 +35,30 @@ WHERE trc.repair_header_id = ?;
         `, [repairId]);
 
     return chat;
-}
+};
+
+export const getHeadChatActive = async() => {
+  const [list] = await pool.query(`
+SELECT id,cedula_cliente FROM repair_header rh 
+WHERE rh.repair_status = 2 OR rh.repair_status = 3
+ORDER BY rh.id DESC
+    `);
+    return list;
+};
 
 export const updateDetailPartStatus = async ({ detailPart, newStatus }) => {
     await pool.query(`
         UPDATE detail_part
 SET  accepted=?
 WHERE id=?;
-        `, [detailPart, newStatus])
-}
+        `, [newStatus,detailPart])
+};
 export default {
     createNewMessage,
 
     getChatbyId,
+    getHeadChatActive,
 
     updateDetailPartStatus
 
-}
+};

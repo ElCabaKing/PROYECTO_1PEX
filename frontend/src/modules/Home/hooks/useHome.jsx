@@ -10,7 +10,6 @@ export default function useHome(){
     const [message, setMessage] = useState("")
     async function searchCode(repair_id) {
         const repairData = await appGetRepairClient(repair_id);
-        console.log(repairData)
         if(repairData.nonExistense){
             setShowError(true);
             setMessage(repairData.error);

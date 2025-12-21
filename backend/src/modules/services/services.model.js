@@ -45,7 +45,6 @@ export async function getServiceByName({ listIndex, serviceName }) {
             `,[serviceName]);
     const maxIndex = Math.ceil(servNum[0].total / 10);
     const data = {servicesList,maxIndex}
-    console.log(data)
     return data;
 };
 

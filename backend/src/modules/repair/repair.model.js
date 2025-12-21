@@ -30,7 +30,7 @@ VALUES(?, ?);`,
 
 
 
-   const [detailPart] = await pool.query(`INSERT INTO detail_part
+    const [detailPart] = await pool.query(`INSERT INTO detail_part
 (repair_details_id, units)
 VALUES(?, ?);`,
         [detailId.insertId, units]);
@@ -40,7 +40,7 @@ VALUES(?, ?);`,
         INSERT INTO table_repair_chat
 (isTeam, repair_header_id, mensaje, partId)
 VALUES(1, ?, 'SE SOLICITA SU AUTORIZACION CON UNA PIEZA', ?);
-        `,[repair_id,detailPart.insertId]);
+        `, [repair_id, detailPart.insertId]);
     return;
 }
 
@@ -87,9 +87,11 @@ export const getRepairDetailsById = async ({ repair_id }) => {
     const [header] = await pool.query(`
          SELECT 
   rh.id,
+  rh.repair_problem ,
   SUM(
     CASE
-      WHEN rd.part_id IS NOT NULL AND dp.accepted = FALSE THEN 0
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = 3 THEN 0
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = 1 THEN 0
       WHEN rd.part_id IS NOT NULL THEN dp.units * tp.part_value
       WHEN rd.service_id IS NOT NULL THEN ts.service_value
       ELSE 0
@@ -116,7 +118,7 @@ COALESCE(dp.units * tp.part_value, ts.service_value)
 LEFT JOIN detail_part dp ON dp.repair_details_id = rd.id 
 LEFT JOIN table_part tp ON tp.id = rd.part_id  
 LEFT JOIN table_service ts ON ts.id  = rd.service_id 
-WHERE rd.repair_header_id = 1`,
+WHERE rd.repair_header_id = ?`,
         [repair_id]);
     return [header[0], body];
 };
@@ -136,7 +138,8 @@ export const getRepairClient = async ({ repair_id }) => {
   rh.id,
   SUM(
     CASE
-      WHEN rd.part_id IS NOT NULL AND dp.accepted = FALSE THEN 0
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = 3 THEN 0
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = 1 THEN 0
       WHEN rd.part_id IS NOT NULL THEN dp.units * tp.part_value
       WHEN rd.service_id IS NOT NULL THEN ts.service_value
       ELSE 0
@@ -164,7 +167,6 @@ export const getRepairUserId = async ({ repair_id }) => {
         WHERE rh.id = ?`, [repair_id]
     );
     if (repair_user.length === 0) {
-        console.log("error")
         throw new AppError("No se encontro el registro", 404, "REGISTRO")
     }
     return repair_user[0].id_reparador;
@@ -177,7 +179,8 @@ export const getRepairHeader = async ({ repair_id }) => {
   rh.id,
   SUM(
     CASE
-      WHEN rd.part_id IS NOT NULL AND dp.accepted = FALSE THEN 0
+       WHEN rd.part_id IS NOT NULL AND dp.accepted = 3 THEN 0
+      WHEN rd.part_id IS NOT NULL AND dp.accepted = 1 THEN 0
       WHEN rd.part_id IS NOT NULL THEN dp.units * tp.part_value
       WHEN rd.service_id IS NOT NULL THEN ts.service_value
       ELSE 0
@@ -205,7 +208,7 @@ export const getHistoryList = async ({ search_number }) => {
     const [historyList] = await pool.query(
         `SELECT rh.id ,rh.cedula_cliente ,rh.fecha_inicio , ts.status_label, u.user_nombre  FROM repair_header rh 
 INNER JOIN tb_status ts ON ts.status_id  = rh.repair_status 
-INNER JOIN users u ON u.id  = rh.id_reparador  
+LEFT JOIN users u ON u.id  = rh.id_reparador  
 ORDER BY rh.id DESC
 LIMIT ?,10`,
         [search_number]
