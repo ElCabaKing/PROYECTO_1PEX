@@ -8,22 +8,7 @@
 
 PROYECTO_1PEX es una aplicación web full-stack que sigue una arquitectura cliente-servidor con separación clara entre frontend y backend.
 
-```
-┌─────────────────┐    HTTP/HTTPS    ┌─────────────────┐
-│   Frontend      │◄────────────────►│   Backend       │
-│   (React)       │                  │   (Node.js)     │
-│                 │    WebSocket     │                 │
-│   - Componentes │◄────────────────►│   - API REST    │
-│   - Hooks       │                  │   - Socket.io    │
-│   - Context     │                  │   - JWT Auth     │
-└─────────────────┘                  └─────────────────┘
-                                              │
-                                              ▼
-                                   ┌─────────────────┐
-                                   │   Base de Datos │
-                                   │   (MySQL)       │
-                                   └─────────────────┘
-```
+![arquitectura](./arquitectura.png)
 
 ## Tecnologías Utilizadas
 
