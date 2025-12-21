@@ -10,6 +10,7 @@ export default function useRepair() {
 
 
     async function getList() {
+        console.log("este")
         const list = await appGetRapairList();
         setRepairList(list);
     }

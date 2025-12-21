@@ -4,7 +4,7 @@ import ModalRepairDetail from "../components/ModalRepairDetail/ModalRepairDetail
 import Buttom from "../../../components/Buttom/Buttom";
 import styles from "./RepairJob.module.css";
 import useJob from "../hooks/useJob";
-import useRepair from "../../MyJobs/hooks/useRepair";
+import useRepair from "../../MainMenu/hooks/useRepair";
 function RepairJob({ repairId, isChat=false, setBandera}) {
   const params = useParams();
   const id = repairId ?? params.id;

@@ -5,7 +5,7 @@ import RepairCard from "../components/RepairCard/RepairCard"
 import ModalRepair from "../components/ModalRepair/ModalRepair";
 import Buttom from "../../../components/Buttom/Buttom";
 import { API_URL } from "../../../utils/api";
-import useRepair from "../../MyJobs/hooks/useRepair";
+import useRepair from "../hooks/useRepair";
 function MainMenu() {
     const [newButton, setNewButton] = useState(false)
     const {repairList, getList, updateHead, showModalRepair,setShowModalRepair} = useRepair();

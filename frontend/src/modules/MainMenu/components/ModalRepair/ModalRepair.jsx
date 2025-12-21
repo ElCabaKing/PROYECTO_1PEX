@@ -2,7 +2,7 @@ import Buttom from "../../../../components/Buttom/Buttom"
 import Input from "../../../../components/Input/Input"
 import styles from "./ModalRepair.module.css"
 import ModalBase from "../../../../components/ModalBase/ModalBase"
-import useRepair from "../../../MyJobs/hooks/useRepair"
+import useRepair from "../../hooks/useRepair"
 function ModalRepair({hideModal}) {
     const {setCedula_cliente,setModelo,setRepair_problem,
         cedula_cliente,modelo,repair_problem,saveRepair} = useRepair()
