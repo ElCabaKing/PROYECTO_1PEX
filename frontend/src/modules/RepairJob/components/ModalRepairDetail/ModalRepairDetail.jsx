@@ -4,7 +4,7 @@ import ModalBase from '../../../../components/ModalBase/ModalBase'
 import ServiceMenuDetail from '../MenusDetail/ServiceMenuDetail/ServiceMenuDetail'
 import PartMenuDetail from '../MenusDetail/PartMenuDetail/PartMenuDetail'
 import styles from './ModalRepairDetail.module.css'
-function ModalRepairDetail({ cancel, repair_id, refresh }) {
+function ModalRepairDetail({ cancel, repair_id, refresh,setBandera}) {
   const [currentSecction, setCurrentSecction] = useState("Servicio");
   return (
     <ModalBase extraClass={styles.modalSize}>
@@ -17,7 +17,7 @@ function ModalRepairDetail({ cancel, repair_id, refresh }) {
       )
       }
       {currentSecction === "Repuesto" && (<PartMenuDetail cancel={cancel}
-        repair_id={repair_id} refresh={refresh} />
+        repair_id={repair_id} refresh={refresh} setBandera={setBandera} />
       )
       }
     </ModalBase>

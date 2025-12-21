@@ -45,7 +45,7 @@ VALUES ('Mis Tareas', '/jobs'),
     ('Users', '/users'),
     ('Historial', '/historial'),
     ('Servicios', '/servicios'),
-    ('Repuestos', '/repuestos'),
+    ('Repuestos', '/repuestos');
 
     
 

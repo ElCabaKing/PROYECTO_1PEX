@@ -37,12 +37,15 @@ WHERE trc.repair_header_id = ?;
     return chat;
 };
 
-export const getHeadChatActive = async() => {
+export const getHeadChatActive = async({userId}) => {
   const [list] = await pool.query(`
-SELECT id,cedula_cliente FROM repair_header rh 
-WHERE rh.repair_status = 2 OR rh.repair_status = 3
+SELECT u.id as userid, rh.id ,rh.cedula_cliente  FROM repair_header rh 
+INNER JOIN users u ON u.id = rh.id_reparador 
+WHERE u.id = ? AND  (rh.repair_status = 2 OR rh.repair_status = 3 )
 ORDER BY rh.id DESC
-    `);
+    `,[userId]);
+
+    console.log(list,userId)
     return list;
 };
 

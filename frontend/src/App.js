@@ -5,7 +5,6 @@ import Home from "./modules/Home/pages/Home"
 import MainMenu from "./modules/MainMenu/pages/MainMenu";
 import Users from "./modules/User/pages/Users";
 import MasterLayout from "./middleware/MasterLayout";
-import MyJobs from "./modules/MyJobs/pages/MyJobs";
 import RepairJob from "./modules/RepairJob/pages/RepairJob";
 import History from "./modules/History/pages/History";
 import Repuesto from "./modules/Repuesto/pages/Repuesto";

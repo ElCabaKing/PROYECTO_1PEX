@@ -5,7 +5,7 @@ import Buttom from "../../../components/Buttom/Buttom";
 import styles from "./RepairJob.module.css";
 import useJob from "../hooks/useJob";
 import useRepair from "../../MyJobs/hooks/useRepair";
-function RepairJob({ repairId, isChat=false}) {
+function RepairJob({ repairId, isChat=false, setBandera}) {
   const params = useParams();
   const id = repairId ?? params.id;
   const { getJob, navigate, jobBody, header, noData, isUser, setShowModalDetail, showModalDetail,
@@ -83,7 +83,7 @@ function RepairJob({ repairId, isChat=false}) {
           </tbody>
         </table>
       </div>
-      {showModalDetail && (<ModalRepairDetail refresh={getJob} repair_id={header.id} cancel={setShowModalDetail} />)}
+      {showModalDetail && (<ModalRepairDetail refresh={getJob} repair_id={header.id} cancel={setShowModalDetail} setBandera={setBandera} />)}
     </>
   )
 }

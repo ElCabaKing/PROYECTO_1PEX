@@ -5,6 +5,7 @@ import RepairJob from "../../RepairJob/pages/RepairJob"
 function ChatPage() {
   const [repairId, setRepairId] = useState(0)
   const [showChat, setShowChat] = useState(false)
+  const [bandera, setBandera] = useState(0)
   return (
     <div style={{ display: 'flex', flexDirection: 'row' }}>
       <div style={{ width: '200px' }}>
@@ -14,9 +15,9 @@ function ChatPage() {
       <div style={{ display: 'flex', alignItems: 'center', marginLeft: '20px'}}>
         {showChat &&
           <div style={{display: 'flex', flexDirection: 'row', alignItems: "center"}}>
-            <Chat repairId={repairId} isTeam={true}></Chat>
+            <Chat repairId={repairId} isTeam={true} bandera={bandera}></Chat>
             <div style={{width: '600px', height: "600px", boxSizing: "border-box", overflowY: "auto"}}>
-            <RepairJob isChat={true} repairId={repairId}></RepairJob>
+            <RepairJob isChat={true} repairId={repairId} setBandera={setBandera}></RepairJob>
             </div>
           </div>
         }

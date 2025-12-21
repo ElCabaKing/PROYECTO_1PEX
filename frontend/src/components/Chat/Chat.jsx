@@ -4,7 +4,7 @@ import { API_URL } from "../../utils/api";
 import { useEffect } from "react";
 import Buttom from "../Buttom/Buttom";
 import styles from './Chat.module.css';
-function Chat({ repairId,isTeam}) {
+function Chat({ repairId,isTeam, bandera}) {
     const [mensajes, setMensajes] = useState([]);
     const [mensaje, setMensaje] = useState("")
 
@@ -52,7 +52,7 @@ function Chat({ repairId,isTeam}) {
         getMessagges()
 
 
-    }, [repairId]);
+    }, [repairId, bandera]);
 
     return (
         <div className={styles.chatContainer}>

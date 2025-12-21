@@ -42,8 +42,9 @@ export const getChatbyId = async (req, res, next) => {
 
 export const getChatList = async (req, res, next) => {
     try{
+        const token = req.cookies.auth_token;
 
-        const {chatList} = await chatService.getChatList();
+        const {chatList} = await chatService.getChatList({token});
 
         return res.status(200).json(chatList);
     }

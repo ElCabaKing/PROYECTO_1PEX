@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useEffect, useRef, useState } from 'react';
 import useRepairDetail from '../../ModalRepairDetail/useRepairDetail';
-function PartMenuDetail({ cancel, repair_id, refresh }) {
+function PartMenuDetail({ cancel, repair_id, refresh, setBandera}) {
     const [unitsByPart, setUnitsByPart] = useState({});
     const isFirstNameRender = useRef(true);
     const { partList, getPartList, getPartListByName,
@@ -67,6 +67,7 @@ function PartMenuDetail({ cancel, repair_id, refresh }) {
                                         } type="number"></input></td>
                                     <td><Buttom action={async () => {await savePartDetailfunc({repair_id: repair_id,Sv_RpId: part.id,units: unitsByPart[part.id]? unitsByPart[part.id]: 1})
                                         refresh(repair_id);
+                                        await setBandera(prev => prev + 1);
                                         cancel(false)
                                 }} label="+"></Buttom></td>
                                 </tr>
