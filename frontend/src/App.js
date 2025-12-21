@@ -23,12 +23,11 @@ function App() {
         <Route path="/main" element={<MainMenu />} />
         <Route path="*" />
         <Route path="/users" element={<Users />} />
-        <Route path="/jobs" element={<MyJobs/>} />
+        <Route path="/jobs" element={<ChatPage/>} />
         <Route path="/repair/:id" element={<RepairJob/>} />
         <Route path="/historial" element={<History/>}/>
         <Route path="/repuestos" element={<Repuesto/>}/>
         <Route path="/servicios" element={<Servicio/>}/>
-        <Route path="/chats" element={<ChatPage/>}/>
 
       </Route>
       </Routes>

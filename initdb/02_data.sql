@@ -46,7 +46,7 @@ VALUES ('Mis Tareas', '/jobs'),
     ('Historial', '/historial'),
     ('Servicios', '/servicios'),
     ('Repuestos', '/repuestos'),
-    ('Chats', '/chats');
+
     
 
 
@@ -57,7 +57,6 @@ INSERT INTO
     (1, 3),
     (1, 4),
     (1, 5),
-    (1, 6),
     (2, 1),
     (2, 3);
 

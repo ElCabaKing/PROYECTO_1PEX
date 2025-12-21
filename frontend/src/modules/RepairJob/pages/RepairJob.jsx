@@ -5,8 +5,9 @@ import Buttom from "../../../components/Buttom/Buttom";
 import styles from "./RepairJob.module.css";
 import useJob from "../hooks/useJob";
 import useRepair from "../../MyJobs/hooks/useRepair";
-function RepairJob() {
-  const { id } = useParams();
+function RepairJob({ repairId, isChat=false}) {
+  const params = useParams();
+  const id = repairId ?? params.id;
   const { getJob, navigate, jobBody, header, noData, isUser, setShowModalDetail, showModalDetail,
     alterRepair, } = useJob();
   const { updateHead } = useRepair();
@@ -32,7 +33,7 @@ function RepairJob() {
   useEffect(() => {
     setInMaintance(
       header.status_label === "DISPONIBLE" ||
-      header.status_label === "ENTREGADO" 
+      header.status_label === "ENTREGADO"
     );
   }, [header]);
 
@@ -44,10 +45,10 @@ function RepairJob() {
         <p>Estado: {header.status_label}</p>
         <p>Total: ${header.total}</p>
         <Buttom extraClass={styles.mainButton}
-         disable={inMaintance || !isUser } 
-         estilo={inMaintance || !isUser ? "negativo" : "base"} 
-         action={async () => { await alterRepair(id,header.status_label==="EN REPARACION"? 3 : 4); navigate('/jobs'); }} 
-         label={header.status_label==="REPARADO"? "ENTREGAR" : "TERMINAR"} />
+          disable={inMaintance || !isUser}
+          estilo={inMaintance || !isUser ? "negativo" : "base"}
+          action={async () => { await alterRepair(id, header.status_label === "EN REPARACION" ? 3 : 4); if(!isChat){navigate('/jobs')}else{getJob(id)}; }}
+          label={header.status_label === "REPARADO" ? "ENTREGAR" : "TERMINAR"} />
       </div>
       <div className={styles.tablaContainer}>
         <table className={styles.tabla}>
@@ -71,7 +72,7 @@ function RepairJob() {
               </tr>
             ) : (
               jobBody.map((registro) => (
-                <tr style={{ backgroundColor: acceptedColors[registro.accepted] || "",   }} key={registro.id}>
+                <tr style={{ backgroundColor: acceptedColors[registro.accepted] || "", }} key={registro.id}>
                   <td style={{ color: fontColors[registro.accepted] || "" }}>{registro.detalle}</td>
                   <td style={{ color: fontColors[registro.accepted] || "" }}>{new Date(registro.fecha).toLocaleString()}</td>
                   <td style={{ color: fontColors[registro.accepted] || "" }}> {registro.total ? `$${registro.total}` : ``}</td>
