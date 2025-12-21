@@ -36,8 +36,9 @@ Después del login, accederá al menú principal con las siguientes opciones:
 
 - **Mis Trabajos**: Ver trabajos asignados
 - **Usuarios**: Gestión de usuarios (solo administradores)
+- **Servicios**: Gestión de servicios (solo administradores)
+- **Repuestos**: Gestión de repuestos (solo administradores)
 - **Historial**: Ver trabajos pendientes y completados
-- **Chats Activos**: Ver lista de chats activos (solo técnicos/administradores)
 
 ### Consulta de Reparación (Clientes)
 
@@ -89,14 +90,24 @@ Una vez aceptado un trabajo:
 
 2. **Agregar Detalles de Reparación**:
    - Haga clic en el botón "+" en la tabla
-   - Ingrese la descripción del trabajo realizado
-   - Especifique el costo
+   - Seleccione el tipo de detalle (Servicio o Repuesto)
+   - En caso de ser un Repuesto especificar unidades (en caso de no
+   especificar sera entendido por 1 unidad)
    - Guarde los cambios
 
 3. **Finalizar Reparación**:
    - Una vez completado todo el trabajo
    - Haga clic en "Terminar"
    - El trabajo pasará a estado "Completado"
+
+4. **Entrega del equipo**
+   - Una vez el cliente venga  a retirar su equipo seleccione la opcion Historia
+   en el menu de inicio
+   - En caso de ser el tecnico designado puede acceder desde sus tareas
+   - En caso de ser un servicio seleccione el deseado haciendo doble click
+   - Dar en la opcion ENTREGAR y suministre el dispositivo al cliente
+   - El trabajo pasara a estado "Entregado"
+
 
 ### Gestión de Usuarios (Solo Administradores)
 
@@ -123,19 +134,11 @@ Una vez aceptado un trabajo:
 3. Cambie el rol si es necesario
 4. Active/desactive el usuario según corresponda
 
-### Gestión de Chats Activos (Solo Administradores)
-
-1. Acceda al módulo "Chats Activos"
-2. Verá una lista de todas las reparaciones activas con chats
-3. Cada entrada muestra: ID de reparación, cédula del cliente
-4. Haga clic en un chat para acceder directamente al detalle y chat
 
 ### Historial de Reparaciones
 
 1. Acceda al módulo "Historial"
-2. Verá todos los trabajos completados
-3. Puede filtrar por fecha, técnico, etc.
-4. Exporte reportes si es necesario
+2. Verá todos los trabajos enlistado
 
 ## Roles y Permisos
 
@@ -145,19 +148,17 @@ Una vez aceptado un trabajo:
 - Ver todos los trabajos
 - Modificar cualquier reparación
 - Acceso a todos los chats activos
+- Administrar Servicios
+- Administrar stock de repuestos
 
-### Técnico
+### Usuario (Técnico)
+- Acceso limitado al sistema
 - Ver trabajos asignados
 - Gestionar reparaciones en progreso
 - Agregar detalles técnicos
 - Finalizar trabajos
 - Acceso a chats de reparaciones asignadas
 - Solicitar aprobación de partes a clientes
-
-### Usuario Básico
-- Ver trabajos asignados
-- Acceso limitado a información
-- Comunicación vía chat con el equipo técnico
 
 ## Consejos de Uso
 
@@ -167,8 +168,7 @@ Una vez aceptado un trabajo:
 2. **Sea específico**: Describa claramente los trabajos realizados
 3. **Verifique costos**: Asegúrese de que los costos sean precisos
 4. **Complete trabajos**: No deje trabajos pendientes sin finalizar
-5. **Use el chat**: Comuníquese con el equipo técnico para consultas rápidas
-6. **Revise solicitudes de partes**: Aprobar o rechazar partes solicitadas de manera oportuna
+6. **Revise solicitudes de partes(Clientes)**: Aprobar o rechazar partes solicitadas de manera oportuna
 
 
 ## Solución de Problemas
