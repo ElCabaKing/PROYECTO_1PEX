@@ -25,7 +25,7 @@ function PartMenuDetail({ cancel, repair_id, refresh, setBandera}) {
             isFirstNameRender.current = false;
             return;
         }
-        if (partName != "") {
+        if (partName !== "") {
             getPartListByName();
         }
     }, [numIndex, partName]);

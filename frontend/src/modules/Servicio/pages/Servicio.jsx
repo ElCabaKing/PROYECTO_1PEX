@@ -26,7 +26,7 @@ function Servicio() {
       isFirstNameRender.current = false;
       return;
     }
-    if (serviceName != "") {
+    if (serviceName !== "") {
       getServiceListbyNameFunc();
     }
   }, [index, serviceName]);

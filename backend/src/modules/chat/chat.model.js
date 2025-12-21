@@ -45,7 +45,6 @@ WHERE u.id = ? AND  (rh.repair_status = 2 OR rh.repair_status = 3 )
 ORDER BY rh.id DESC
     `,[userId]);
 
-    console.log(list,userId)
     return list;
 };
 

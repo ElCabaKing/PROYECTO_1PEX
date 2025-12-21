@@ -5,9 +5,7 @@ import jwt from 'jsonwebtoken';
 
 export const chatService = {
     decodeToken(token) {
-        console.log(token)
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        console.log("decode",decodedToken)
         return decodedToken;
     },
     async createNewMessage({ message, repairId, isTeam }) {
@@ -34,10 +32,8 @@ export const chatService = {
     },
 
     async getChatList({ token }) {
-        console.log("llega service")
         if (!token) { throw new AppError("No se proporciono los datos necesarios", 400) };
         const decodedToken = this.decodeToken(token);
-        console.log(decodedToken)
         const chatList = await chatModel.getHeadChatActive({userId: decodedToken.id});
 
         return { chatList };

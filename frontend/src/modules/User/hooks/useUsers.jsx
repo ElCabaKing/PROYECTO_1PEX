@@ -64,7 +64,6 @@ export default function UseUser() {
             user_name: user_name,
             user_role: user_role
         });
-        console.log(res);
         setMessage(res);
         setShowNewUserFrom(false);
         miticMsg();
