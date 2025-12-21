@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useParts from "../hooks/useParts"
 import Buttom from "../../../components/Buttom/Buttom";
 import ModalNewPart from "../components/ModalNewPart/ModalNewPart";
@@ -10,7 +10,9 @@ function Repuesto() {
   const isFirstNameRender = useRef(true);
   const { partList, getPartList, numIndex, maxIndex,
     setNumIndex, showModal, setShowModal,
-    partName, setPartName, getPartListByName } = useParts();
+    partName, setPartName, getPartListByName, updateStock } = useParts();
+    
+const [stockValues, setStockValues] = useState({});
 
   useEffect(() => {
     if (partName !== "") return
@@ -47,6 +49,8 @@ function Repuesto() {
                 <th>PIEZA</th>
                 <th>STOCK</th>
                 <th>PRECIO</th>
+                <th></th>
+
               </tr>
             </thead>
             <tbody>
@@ -55,6 +59,24 @@ function Repuesto() {
                   <td>{parte.part_name}</td>
                   <td>{parte.stock}</td>
                   <td>{`$${parte.part_value}`}</td>
+                  <td>
+                    <Input type="number" min={0} value={stockValues[parte.id] || ""}
+                      onChange={(e) =>
+                        setStockValues(prev => ({
+                          ...prev,
+                          [parte.id]: e.target.value
+                        }))
+                      }
+                      extraClass={styles.inputStock}
+                    />
+
+                    <Buttom label="+"
+                      action={() =>  {updateStock({partId: parte.id,newStock: Number(stockValues[parte.id])
+                        }); setStockValues({})}
+                      }
+                    />
+                  </td>
+
                 </tr>
               ))}
             </tbody>

@@ -52,3 +52,19 @@ export async function getPartbyName({numIndex,partName}) {
     }
     
 }
+
+export async function updateStockCall({newStock,partId}) {
+    try{
+        await axios.patch(`${API_URL}/parts/updatePart`,
+            {
+                newStock,
+                partId,
+                type: "+"
+            }
+        )
+        return;
+    }
+    catch(error){
+        return alert(error);
+    }
+}
