@@ -17,12 +17,15 @@
     border-collapse: collapse;
     table-layout: fixed;
     border-radius: 10px;
+    width: 700px;
+    height: 50px;
 }
 
 .tabla th {
     background-color: var(--primary-dark);
     color: var(--text);
     padding: 10px;
+        height: 10px;
 }
 
 .tabla th:first-child {
