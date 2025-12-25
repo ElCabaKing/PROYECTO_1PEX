@@ -4,13 +4,12 @@ import styles from "./MainMenu.module.css";
 import RepairCard from "../components/RepairCard/RepairCard"
 import ModalRepair from "../components/ModalRepair/ModalRepair";
 import Buttom from "../../../components/Buttom/Buttom";
-import { API_URL } from "../../../utils/api";
+import socket from "../../../utils/socket.js"
 import useRepair from "../hooks/useRepair";
 function MainMenu() {
     const [newButton, setNewButton] = useState(false)
     const {repairList, getList, updateHead, showModalRepair,setShowModalRepair} = useRepair();
       useEffect(() => {
-        const socket = io(API_URL, { withCredentials: true });
         socket.on("newRepair", () => {
             getList();
         });
@@ -27,7 +26,7 @@ function MainMenu() {
 
     useEffect(() => {
         getList();
-    },[getList])
+    },[])
 
     useEffect(() => {
         const stored = localStorage.getItem("rol")

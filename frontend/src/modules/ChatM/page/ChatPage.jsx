@@ -2,21 +2,22 @@ import { useState } from "react"
 import ChatList from "../../../components/ChatList/ChatList"
 import Chat from "../../../components/Chat/Chat"
 import RepairJob from "../../RepairJob/pages/RepairJob"
+import styles from './ChatPage.module.css'
 function ChatPage() {
   const [repairId, setRepairId] = useState(0)
   const [showChat, setShowChat] = useState(false)
   const [bandera, setBandera] = useState(0)
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
-      <div style={{ width: '200px' }}>
+    <div className={styles.container}>
+      <div className={styles.chatListWrapper}>
         <ChatList change={setRepairId} show={setShowChat}></ChatList>
 
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', marginLeft: '20px'}}>
+      <div className={styles.contentWrapper}>
         {showChat &&
-          <div style={{display: 'flex', flexDirection: 'row', alignItems: "center"}}>
+          <div className={styles.chatAndRepair}>
             <Chat repairId={repairId} isTeam={true} bandera={bandera}></Chat>
-            <div style={{width: '600px', height: "600px", boxSizing: "border-box", overflowY: "auto"}}>
+            <div className={styles.repairWrapper}>
             <RepairJob isChat={true} repairId={repairId} setBandera={setBandera}></RepairJob>
             </div>
           </div>

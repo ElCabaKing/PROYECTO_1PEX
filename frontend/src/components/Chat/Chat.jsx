@@ -4,7 +4,9 @@ import { API_URL } from "../../utils/api";
 import { useEffect } from "react";
 import Buttom from "../Buttom/Buttom";
 import styles from './Chat.module.css';
-function Chat({ repairId,isTeam, bandera}) {
+import socket from "../../utils/socket";
+
+function Chat({ repairId, isTeam, bandera }) {
     const [mensajes, setMensajes] = useState([]);
     const [mensaje, setMensaje] = useState("")
 
@@ -54,13 +56,32 @@ function Chat({ repairId,isTeam, bandera}) {
 
     }, [repairId, bandera]);
 
+    useEffect(() => {
+        socket.emit("joinRepairRoom", repairId);
+
+    }, [repairId]);
+
+    useEffect(() => {
+
+        socket.on("ChatRefresh", () => {
+            getMessagges()
+        });
+
+        return () => {
+            socket.off("ChatRefresh");
+        };
+
+    }, [])
+
+
+
     return (
         <div className={styles.chatContainer}>
             <div className={styles.messages}>
                 {mensajes.map((mensaje, index) => (
                     <div key={mensaje.id || index} className={`${styles.message} ${mensaje.isTeam ? styles.left : styles.right}`}>
-                        <p className={styles.messageText}>{`${mensaje.mensaje}${mensaje.units? ': '+mensaje.units : ''} ${mensaje.part_name? mensaje.part_name: ''} ${mensaje.part_value? 'por $'+mensaje.part_value+'c/u': ''} ${mensaje.accepted === 2 ? ": APROBADA" : mensaje.accepted === 3 ? ": RECHAZADA" : ''}`}</p>
-                        {mensaje.accepted=== 1 && isTeam===false &&(
+                        <p className={styles.messageText}>{`${mensaje.mensaje}${mensaje.units ? ': ' + mensaje.units : ''} ${mensaje.part_name ? mensaje.part_name : ''} ${mensaje.part_value ? 'por $' + mensaje.part_value + 'c/u' : ''} ${mensaje.accepted === 2 ? ": APROBADA" : mensaje.accepted === 3 ? ": RECHAZADA" : ''}`}</p>
+                        {mensaje.accepted === 1 && isTeam === false && (
                             <div className={styles.buttons}>
                                 <button
                                     onClick={async () => {
@@ -86,7 +107,7 @@ function Chat({ repairId,isTeam, bandera}) {
             </div>
             <div className={styles.inputArea}>
                 <textarea value={mensaje} onChange={(e) => setMensaje(e.target.value.toUpperCase())} className={styles.textarea} placeholder="Escribe un mensaje..." rows="3"></textarea>
-                <Buttom action={() => {sendMensaje();setMensaje("")}} label="ENVIAR"></Buttom>
+                <Buttom action={() => { sendMensaje(); setMensaje("") }} label="ENVIAR"></Buttom>
             </div>
         </div>
     )

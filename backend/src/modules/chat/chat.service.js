@@ -11,7 +11,8 @@ export const chatService = {
     async createNewMessage({ message, repairId, isTeam }) {
 
         if (!message) { throw new AppError("No se proporciono los datos necesarios", 400) }
-        await chatModel.createNewMessage({ message, repairId, isTeam })
+        await chatModel.createNewMessage({ message, repairId, isTeam });
+        
         return {
             isCorrect: true
         }

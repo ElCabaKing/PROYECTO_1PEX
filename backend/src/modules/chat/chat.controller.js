@@ -1,3 +1,4 @@
+import { chatAct } from "../../socket.js";
 import { chatService } from "./chat.service.js";
 
 export const createNewMessage = async (req, res, next) => {
@@ -5,6 +6,7 @@ export const createNewMessage = async (req, res, next) => {
         const { message, repairId, isTeam } = req.body;
         await chatService.createNewMessage({ message, repairId, isTeam });
 
+        chatAct(repairId);
         return res.status(200).json({ isCorrect: true });
     }
     catch (error) {

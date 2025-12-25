@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.chatListWrapper {
+    width: 200px;
+}
+
+.contentWrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.chatAndRepair {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.repairWrapper {
+    width: 600px;
+    height: 600px;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .container{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chatListWrapper {
+        width: 100%;
+    }
+
+    .chatAndRepair{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center 
+    }
+
+    .repairWrapper{
+        width: 100%;
+    }
+
+    
+}

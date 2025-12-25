@@ -36,3 +36,10 @@
 .chatClient {
     color: #666;
 }
+
+@media (max-width: 768px) {
+    .chatListContainer {
+        flex-direction: row;
+        height: 150px;
+    }
+}
