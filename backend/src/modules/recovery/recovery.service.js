@@ -5,10 +5,8 @@ import bcrypt from 'bcrypt';
 const saltRounds = 10
 export const recoveryService = {
     async getSecurityCode({ userName, securityCode }) {
-        console.log(userName, securityCode)
         if (!userName || !securityCode) { throw new AppError("No se proporciono los datos necesarios", 400) }
         const userSecurityCoded = await recoveryModel.getSecurityCode({userName});
-        console.log(userSecurityCoded)
         if (!userSecurityCoded) { throw new AppError("No se encontro el usuaio o nunca a iniciado sesion", 404) }
         if (!(await bcrypt.compare(securityCode, userSecurityCoded))) { throw new AppError("Usuario o Codigo no validos", 403) };
 

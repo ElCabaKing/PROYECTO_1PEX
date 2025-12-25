@@ -1,0 +1,66 @@
+import Buttom from "../../../../components/Buttom/Buttom"
+import Input from "../../../../components/Input/Input"
+import ModalBase from "../../../../components/ModalBase/ModalBase"
+import styles from "./ModalPassword.module.css"
+import useRecovery from "./useRecovery"
+function ModalPassword({ cancel, }) {
+  const {
+    user_name,
+    setUser_name,
+    isCorrect,
+    setUserFirstPass,
+    userFirstPass,
+    userSecondPass,
+    setUserSecondPass,
+    validateWord,
+    securityCode,
+    setSecurityCode,
+    message,
+    showError,
+    setShowError,beggin,saveAll } = useRecovery()
+  return (
+    <div>
+      {beggin && (<ModalBase>
+        <h1>Cambio de contrasena</h1>
+        {showError && (<p>{message}</p>)}
+        <form onSubmit={(e) => { e.preventDefault(); validateWord() }}>
+          <Input placeholder="Nombre de Usuario" value={user_name} onChange={(e) => { setUser_name(e.target.value) }} />
+          <Input placeholder="Codigo de seguridad" value={securityCode} onChange={(e) => { setSecurityCode(e.target.value) }} />
+          <div className={styles.buttonContainer}>
+            <Buttom extraClass={styles.formButtom} label="Vereficar" type="submit" />
+            <Buttom extraClass={styles.formButtom} label="Cancelar" estilo="negativo" action={() => cancel(false)} />
+          </div>
+        </form>
+
+      </ModalBase>)}
+      {isCorrect && (
+        <ModalBase>
+          <p>Cambia tu contrasena</p>
+          {showError && (<p>{message}</p>)}
+          <form onSubmit={(e) => {e.preventDefault();saveAll(cancel)}}>
+            <Input
+            name="userNewPassword"
+            type="password"
+            placeholder="Nueva contrasena"
+            value={userFirstPass}
+            onChange={(e) => setUserFirstPass(e.target.value)}
+          ></Input>
+          <Input
+            name="userNewPassword"
+            type="password"
+            placeholder="Confirmar contrasena"
+            value={userSecondPass}
+            onChange={(e) => setUserSecondPass(e.target.value)}
+          ></Input>
+          <div className={styles.buttonContainer}>
+          <Buttom extraClass={styles.formButtom} label="Cambiar" type="submit"/>
+          <Buttom extraClass={styles.formButtom} action={() => cancel(false)} label="Cancelar" estilo="negativo"/>
+          </div>
+          </form>
+        </ModalBase>
+      )}
+    </div>
+  )
+}
+
+export default ModalPassword

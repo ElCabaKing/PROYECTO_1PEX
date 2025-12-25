@@ -5,15 +5,22 @@
     color: var(--text);
     border-style: none;
     cursor: pointer;
+    border-radius: 6px;
+    box-shadow: var(--shadow-1);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    border: 1px solid transparent;
 }
 
 .Buttom_base:hover {
     background-color: var(--component-bg-hover);
     cursor: pointer;
+    box-shadow: var(--shadow-2);
+    transform: translateY(-2px);
 }
 
 .Buttom_base:active {
     background-color: var(--component-bg-active);
+    transform: translateY(0);
 }
 
 .Buttom_negative {
@@ -21,11 +28,16 @@
     color: var(--text-negative);
     border-style: none;
     cursor: pointer;
-
+    border-radius: 6px;
+    box-shadow: var(--shadow-1);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .Buttom_negative:hover {
     cursor: pointer;
+    box-shadow: var(--shadow-2);
+    transform: translateY(-2px);
 }
 
 .Buttom_disable {

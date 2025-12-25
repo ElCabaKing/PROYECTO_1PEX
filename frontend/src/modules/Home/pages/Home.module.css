@@ -1,0 +1,38 @@
+.homeContainer {
+    background: var(--ondas);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.formContainer{
+    width: 400px !important;
+}
+
+.repared{
+    background-color: var(--primary);
+    color: var(--text);
+}
+
+.ButtomExtra{
+    width: 100%;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 2px;
+}
+
+.chatContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+.dataContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.dataContainer > :last-child {
+  margin-top: auto;
+}

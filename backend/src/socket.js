@@ -13,22 +13,46 @@ export function initSocket(server) {
 
   io.use((socket, next) => {
     const rawCookie = socket.handshake.headers.cookie;
-    if (!rawCookie) { return next(new Error("No token")); }
-    let tokenCookie = rawCookie.split("; ").find(c => c.startsWith("auth_token="));
-    let secret = process.env.JWT_SECRET
-    const token = tokenCookie.split("=")[1];
-    const decoded = jwt.verify(token, secret);
-    const hasAdmin = decoded.rol.includes('admin');
-    if (hasAdmin) {
-      socket.join("admins");
+
+    if (rawCookie) {
+      const tokenCookie = rawCookie
+        .split("; ")
+        .find(c => c.startsWith("auth_token="));
+
+      if (tokenCookie) {
+        try {
+          const token = tokenCookie.split("=")[1];
+          const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+          socket.user = decoded; 
+          if (decoded.rol?.includes("admin")) {
+            socket.join("admins");
+          }
+        } catch (err) {
+          console.warn("Token inválido, conexión como invitado");
+        }
+      }
     }
+
     next();
   });
 
+
+
   io.on("connection", (socket) => {
-    console.log("Cliente conectado");
+    socket.on("joinRepairRoom", (repairId) => {
+      const room = `repair_${repairId}`;
+      socket.join(room);
+      console.log(`Socket ${socket.id} entró a ${room}`);
+    });
   });
 
+}
+
+export function chatAct(repairId) {
+  if (io) {
+    io.to(`repair_${repairId}`).emit("ChatRefresh");
+  }
 }
 
 

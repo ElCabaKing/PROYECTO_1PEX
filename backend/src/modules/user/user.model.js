@@ -10,7 +10,6 @@ export const updateSecurityCode = async ({ user_name, SecurityCode, user_passwor
         return {created: true};
     }
     catch (error) {
-        console.log("DATABASE ERROR: SaveSecurityCode: ", error);
         throw new Error("DATABASE_ERROR");
     }
 }
@@ -24,7 +23,6 @@ export const getSecurityCode = async ({ user_name }) => {
         return rows[0];
     }
     catch (error) {
-        console.log("DATABASE ERROR: GetSecurityCode: ", error);
         throw new Error("DATABASE_ERROR");
     }
 }
@@ -40,7 +38,6 @@ export const createNewUser = async ({ user_name, apellido, nombre, user_role, fi
         return {succes: true};
     }
     catch (error) {
-        console.log("DATABASE ERROR: SaveNewUser: ", error);
         throw new Error("DATABASE_ERROR");
     }
 }
@@ -54,7 +51,6 @@ export const getUserIndex = async () => {
         return number_pages;
     }
     catch (error) {
-        console.log("DATABASE ERROR: GetUserIndex: ", error);
         throw new Error("DATABASE_ERROR");
     }
 }
@@ -75,7 +71,6 @@ export const getUserList = async ({ user_name, number_index }) => {
         return [lista_user, lista_roles];
     }
     catch (error) {
-        console.log("DATABASE ERROR: GetUserList: ", error);
         throw new Error("DATABASE_ERROR");
     }
 }
@@ -91,7 +86,6 @@ export const updateUserRol = async ({ID, rol_id}) => {
         return {updated: true};
     }
     catch (error) {
-        console.log("DATABASE ERROR: UpdateUserRol: ", error);
         throw new Error("DATABASE_ERROR");
     }
 }
@@ -107,7 +101,6 @@ export const updateUserStatus = async ({ID, estado}) => {
         return {updated: true}
     }
     catch (error) {
-        console.log("DATABASE ERROR: UpdateUserStatus: ", error);
         throw new Error("DATABASE_ERROR");
     }
 }

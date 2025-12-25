@@ -1,10 +1,10 @@
-# Manual de Usuario - PROYECTO_1PEX
+# Manual de Usuario - PROYECTO_1
 
 ## Sistema de Gestión de Reparaciones
 
 ### Introducción
 
-PROYECTO_1PEX es un sistema completo para la gestión de reparaciones de equipos. Permite a los usuarios y administradores gestionar trabajos de reparación, controlar el progreso y mantener un historial completo de todas las operaciones.
+PROYECTO_1 es un sistema completo para la gestión de reparaciones de equipos. Permite a los usuarios y administradores gestionar trabajos de reparación, controlar el progreso, mantener un historial completo de todas las operaciones y comunicarse en tiempo real a través de un sistema de chat integrado. Incluye funcionalidades avanzadas como aprobación de partes y seguimiento detallado de reparaciones.
 
 ## Primeros Pasos
 
@@ -21,6 +21,13 @@ Si olvidó su contraseña:
 2. Ingrese su nombre de usuario y su codigo de seguridad
 3. Si todo esta correcta proceda a cambiar su contraseña
 
+### 3. Consulta de Reparación por Código (Clientes)
+
+Si es un cliente y tiene un código de reparación:
+1. En la página principal, ingrese el código en el campo "Código"
+2. Haga clic en "Buscar"
+3. Verá los detalles de su reparación y podrá chatear con el equipo técnico
+
 ## Funcionalidades Principales
 
 ### Dashboard Principal
@@ -29,7 +36,33 @@ Después del login, accederá al menú principal con las siguientes opciones:
 
 - **Mis Trabajos**: Ver trabajos asignados
 - **Usuarios**: Gestión de usuarios (solo administradores)
+- **Servicios**: Gestión de servicios (solo administradores)
+- **Repuestos**: Gestión de repuestos (solo administradores)
 - **Historial**: Ver trabajos pendientes y completados
+
+### Consulta de Reparación (Clientes)
+
+1. Ingrese el código de reparación proporcionado
+2. Verá los detalles: ID, cliente, fecha de inicio, estado, total
+3. Podrá chatear con el equipo técnico para consultas o actualizaciones
+
+### Sistema de Chat
+
+#### Chatear con el Equipo Técnico
+
+1. Desde la vista de detalles de reparación, acceda al chat
+2. Envíe mensajes escribiendo en el campo de texto y presionando "ENVIAR"
+3. Reciba respuestas del equipo técnico en tiempo real
+
+#### Aprobación de Partes (Clientes)
+
+Cuando el técnico solicite aprobación para una parte:
+1. Aparecerán botones "Aceptar" y "Rechazar" en el mensaje correspondiente
+2. Haga clic en "Aceptar" para aprobar la solicitud de parte
+3. Haga clic en "Rechazar" para denegar la solicitud
+4. El estado se actualizará automáticamente ("APROBADA" o "RECHAZADA")
+
+### Gestión de Reparaciones
 
 ### Gestión de Reparaciones
 
@@ -57,14 +90,24 @@ Una vez aceptado un trabajo:
 
 2. **Agregar Detalles de Reparación**:
    - Haga clic en el botón "+" en la tabla
-   - Ingrese la descripción del trabajo realizado
-   - Especifique el costo
+   - Seleccione el tipo de detalle (Servicio o Repuesto)
+   - En caso de ser un Repuesto especificar unidades (en caso de no
+   especificar sera entendido por 1 unidad)
    - Guarde los cambios
 
 3. **Finalizar Reparación**:
    - Una vez completado todo el trabajo
    - Haga clic en "Terminar"
    - El trabajo pasará a estado "Completado"
+
+4. **Entrega del equipo**
+   - Una vez el cliente venga  a retirar su equipo seleccione la opcion Historia
+   en el menu de inicio
+   - En caso de ser el tecnico designado puede acceder desde sus tareas
+   - En caso de ser un servicio seleccione el deseado haciendo doble click
+   - Dar en la opcion ENTREGAR y suministre el dispositivo al cliente
+   - El trabajo pasara a estado "Entregado"
+
 
 ### Gestión de Usuarios (Solo Administradores)
 
@@ -91,12 +134,11 @@ Una vez aceptado un trabajo:
 3. Cambie el rol si es necesario
 4. Active/desactive el usuario según corresponda
 
+
 ### Historial de Reparaciones
 
 1. Acceda al módulo "Historial"
-2. Verá todos los trabajos completados
-3. Puede filtrar por fecha, técnico, etc.
-4. Exporte reportes si es necesario
+2. Verá todos los trabajos enlistado
 
 ## Roles y Permisos
 
@@ -105,16 +147,18 @@ Una vez aceptado un trabajo:
 - Gestión de usuarios
 - Ver todos los trabajos
 - Modificar cualquier reparación
+- Acceso a todos los chats activos
+- Administrar Servicios
+- Administrar stock de repuestos
 
-### Técnico
+### Usuario (Técnico)
+- Acceso limitado al sistema
 - Ver trabajos asignados
 - Gestionar reparaciones en progreso
 - Agregar detalles técnicos
 - Finalizar trabajos
-
-### Usuario Básico
-- Ver trabajos asignados
-- Acceso limitado a información
+- Acceso a chats de reparaciones asignadas
+- Solicitar aprobación de partes a clientes
 
 ## Consejos de Uso
 
@@ -124,6 +168,7 @@ Una vez aceptado un trabajo:
 2. **Sea específico**: Describa claramente los trabajos realizados
 3. **Verifique costos**: Asegúrese de que los costos sean precisos
 4. **Complete trabajos**: No deje trabajos pendientes sin finalizar
+6. **Revise solicitudes de partes(Clientes)**: Aprobar o rechazar partes solicitadas de manera oportuna
 
 
 ## Solución de Problemas
@@ -143,6 +188,16 @@ Una vez aceptado un trabajo:
 - Actualice la página (F5)
 - Verifique permisos de usuario
 
+#### Problemas con el chat
+- Asegúrese de tener conexión a internet
+- Los mensajes se actualizan automáticamente
+- Si no ve botones de aprobación, recargue la página
+
+#### Código de reparación no encontrado
+- Verifique que el código sea correcto
+- Contacte al técnico asignado si el problema persiste
+
 ---
 
-*Versión 1.0 - Diciembre 2025*
+*Versión 1.1 - Diciembre 2025*
+*Incluye funcionalidades de chat y aprobación de partes*

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Card.module.css";
-import { LogOut } from "../../api/login.api";
+import { LogOut } from "../../modules/Login/services/login.api";
 const Card = ({menu_label, closefun, menu_path}) => {
   const navigate = useNavigate()
   async function closeSession() {
