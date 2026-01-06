@@ -1,15 +1,11 @@
 import { authService } from "./auth.service.js";
-import CookieGenerator from "../../utils/CookieGenerator.js";
 
 export const authToken = async (req,res,next) => {
     try{
-    const accessToken = req.cookies.auth_token;
-    const refreshToken = req.cookies.refresh_token;
+    const {accessToken, refreshToken} = req.body;
     const {newAccessToken , newRefreshToken} = await authService.refreshToken({accessToken,refreshToken});
 
-    CookieGenerator(res,"auth_token",newAccessToken,15 * 60 * 1000);
-    CookieGenerator(res,"refresh_token",newRefreshToken,4 * 60 * 60 * 1000);
-    return res.status(200).json({validation: true})
+    return res.status(200).json({accessToken: newAccessToken,refreshToken: newRefreshToken, validation: true})
     }
     catch(error){
         next(error);

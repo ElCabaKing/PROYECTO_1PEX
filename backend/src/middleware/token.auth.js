@@ -3,32 +3,21 @@ import jwt from "jsonwebtoken";
 const createToken = (payload, expiresIn) =>
   jwt.sign(payload, process.env.JWT_SECRET, { expiresIn });
 
-const setCookie = (res, name, value, maxAge) => {
-  res.cookie(name, value, {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    path: "/",
-    maxAge,
-  });
-};
 
 export const tokenAuthNx = (req, res, next) => {
-    const token = req.cookies.auth_token;
-    const refresh_token = req.cookies.refresh_token;
+    console.log("middle",req.body)
+   const {auth_token,refresh_token} = req.body;
 
-    if (!token && !refresh_token) {
+    if (!auth_token && !refresh_token) {
         return res.status(401).json({ validation: false,message: "No autenticado" });
     }
 
-    if (!token && refresh_token) {
+    if (!auth_token && refresh_token) {
         try {
-            const decode = jwt.verify(refresh_token, process.env.JWT_SECRET);
+            const decode = jwt.verify(refresh_token, process.env.JWT_SECRET_REFRESH);
             const payload = { id: decode.id, user_nombre: decode.user_nombre, rol: decode.rol }
             const newToken = createToken(payload,"15m")
             const newRefreshToken = createToken(payload,"4h");
-            setCookie(res,"auth_token",newToken,15 * 60 * 1000)
-            setCookie(res,"refresh_token",newRefreshToken, 4 * 60 * 60 * 1000);
             return next();
         }
         catch (error) {
@@ -36,7 +25,8 @@ export const tokenAuthNx = (req, res, next) => {
         }
     }
     try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
+        const decode = jwt.verify(auth_token, process.env.JWT_SECRET);
+        console.log("sale next")
         return next();
     }
     catch (error) {

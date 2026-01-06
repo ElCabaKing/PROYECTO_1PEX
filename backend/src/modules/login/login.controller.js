@@ -1,5 +1,4 @@
 import { emitLoginToAdmins } from "../../socket.js";
-import CookieGenerator from "../../utils/CookieGenerator.js";
 import { loginService } from "./login.service.js";
 
 export const login = async (req, res, next) => {
@@ -8,8 +7,6 @@ export const login = async (req, res, next) => {
     const { accessToken, refreshToken, userPermissions, rol, user } =
       await loginService.login({ user_nombre, user_password });
 
-    await CookieGenerator(res, "auth_token", accessToken, 15 * 60 * 1000);
-    await CookieGenerator(res, "refresh_token", refreshToken, 4 * 60 * 60 * 1000);
 
     emitLoginToAdmins(user_nombre);
 
@@ -19,6 +16,8 @@ export const login = async (req, res, next) => {
       rol: rol.rol_nombre,
       first_time: !user.security_code,
       user_name: user_nombre,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     });
 
   } catch (error) {

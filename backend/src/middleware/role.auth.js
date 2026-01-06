@@ -1,12 +1,12 @@
 import jwt from "jsonwebtoken";
 export const tokenRoleAuthNx = (roles = []) => {
     return (req, res, next) => {
-        const token = req.cookies.auth_token;
-        if (!token) {
+        const {auth_token} = req.body;
+        if (!auth_token) {
             return res.status(401).json({ message: "No hay o no se envió token, Recarga la pagina" });
         }
         try {
-            const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+            const decodedToken = jwt.verify(auth_token, process.env.JWT_SECRET);
             const tieneRol = roles.includes(decodedToken.rol)
             if (!tieneRol) {
                 return res.status(403).json({ message: "No tienes permiso para hacer eso" });
@@ -21,12 +21,12 @@ export const tokenRoleAuthNx = (roles = []) => {
 
 export const tokenRoleAuth = (roles = []) => {
     return (req, res) => {
-        const token = req.cookies.auth_token;
-        const refresh_token = req.cookies.refresh_token;
-        if (!token && !refresh_token) {
+        console("esta 2")
+        const {auth_token,refresh_token} = req.body;
+        if (!auth_token && !refresh_token) {
             return res.status(401).json({ validation: false });
         }
-        if (!token && refresh_token) {
+        if (!auth_token && refresh_token) {
             try {
                 const decode = jwt.verify(refresh_token, process.env.JWT_SECRET_REFRESH);
                 const tieneRol = roles.includes(decode.rol);

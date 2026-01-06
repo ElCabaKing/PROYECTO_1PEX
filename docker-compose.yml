@@ -34,18 +34,33 @@ services:
       db:
         condition: service_healthy
 
+
+  gateway:
+    build: ./gateway
+    container_name: gateway_app
+    env_file: ./gateway/.env
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./gateway:/app
+      - /app/node_modules
+    command: npm run dev
+    depends_on:
+      - backend
         
   frontend:
-    build: ./frontend
+    build: ./gateway/frontend
     container_name: frontend_app
+    env_file: ./gateway/frontend/.env
     ports:
       - "3000:3000"
     command: npm start
     volumes:
-      - ./frontend:/app
+      - ./gateway/frontend:/app
       - /app/node_modules
     depends_on:
-      - backend
+      - gateway
+      
 
 volumes:
   mysql_data:
